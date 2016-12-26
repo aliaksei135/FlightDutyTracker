@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.aliakseipilko.flightdutytracker"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    testCompile 'junit:junit:4.12'
+
+    //Dependency Injection
+    compile 'com.google.dagger:dagger:2.8'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    //JSON handling
+    compile 'com.google.code.gson:gson:2.4'
+
+    //MVP Framework
+    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
+    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+
+    //UI Libraries
+    compile 'com.github.xiprox.markview:library:1.1.0'
+    compile 'com.redbooth:WelcomeCoordinator:1.0.1'
+    compile 'com.github.clans:fab:1.6.4'
+
+    //Opensource licences display
+    compile('com.mikepenz:aboutlibraries:5.9.1@aar') {
+        transitive = true
+    }
+
+    //Permissions Handling
+    compile 'com.karumi:dexter:3.0.0'
+
+}
