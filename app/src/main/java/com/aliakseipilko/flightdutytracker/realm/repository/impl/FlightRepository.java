@@ -226,4 +226,9 @@ public class FlightRepository implements IFlightRepository {
             callback.OnError("Flights not loaded");
         }
     }
+
+    @Override
+    public long getNextID() {
+        return realm.where(Flight.class).max("id").longValue() + 1;
+    }
 }

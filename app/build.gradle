@@ -39,19 +39,18 @@ dependencies {
     //JSON handling
     compile 'com.google.code.gson:gson:2.4'
 
-    //MVP Framework
-    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
-    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
-
     //UI Libraries
     compile 'com.github.xiprox.markview:library:1.1.0'
     compile 'com.redbooth:WelcomeCoordinator:1.0.1'
-    compile 'com.github.clans:fab:1.6.4'
+    compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
+    compile 'com.malinskiy:superrecyclerview:1.1.4'
 
     //Opensource licences display
     compile('com.mikepenz:aboutlibraries:5.9.1@aar') {
         transitive = true
     }
+
+    compile 'io.realm:android-adapters:1.4.0'
 
     //Permissions Handling
     compile 'com.karumi:dexter:3.0.0'

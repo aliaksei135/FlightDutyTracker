@@ -1,11 +1,14 @@
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
+import android.view.View;
+
 import com.aliakseipilko.flightdutytracker.presenter.IFlightPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
-import com.aliakseipilko.flightdutytracker.view.activity.FlightActivity;
+
+import java.util.Date;
 
 import io.realm.RealmResults;
 
@@ -17,17 +20,36 @@ public class FlightPresenter implements IFlightPresenter {
     private IFlightRepository.OnGetSingleFlightCallback getSingleFlightCallback;
     private IFlightRepository.OnDeleteFlightCallback deleteFlightCallback;
 
-    private FlightActivity view;
+    private View view;
 
     private FlightRepository repository;
 
-    public FlightPresenter(FlightActivity view) {
+    public FlightPresenter(View view) {
         this.view = view;
         repository = new FlightRepository();
     }
 
     @Override
     public void addFlight(Flight flight) {
+
+        repository.addFlight(flight, addFlightCallback);
+    }
+
+    @Override
+    public void addFlight(String departureIATACode, String departureICAOCode, String arrivalIATACode, String arrivalICAOCode, Date startDutyTime, Date startFlightTime, Date endFlightTime, Date endDutyTime, String acType, String flightNumber) {
+        Flight flight = new Flight();
+
+        flight.setId(repository.getNextID());
+        flight.setDepartureIATACode(departureIATACode);
+        flight.setDepartureICAOCode(departureICAOCode);
+        flight.setArrivalIATACode(arrivalIATACode);
+        flight.setArrivalICAOCode(arrivalICAOCode);
+        flight.setStartDutyTime(startDutyTime);
+        flight.setStartFlightTime(startFlightTime);
+        flight.setEndFlightTime(endFlightTime);
+        flight.setEndDutyTime(endDutyTime);
+        flight.setAcType(acType);
+        flight.setFlightNumber(flightNumber);
 
         repository.addFlight(flight, addFlightCallback);
     }
@@ -82,7 +104,7 @@ public class FlightPresenter implements IFlightPresenter {
 
     @Override
     public void subscribeAllCallbacks() {
-
+        //TODO impl callbacks
         addFlightCallback = new IFlightRepository.OnAddFlightCallback() {
             @Override
             public void OnSuccess() {
