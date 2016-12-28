@@ -1,9 +1,11 @@
 package com.aliakseipilko.flightdutytracker.view.activity;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
+import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +33,8 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+    @BindView(R.id.fragment_container)
+    FrameLayout fragmentContainer;
 
     @Override
     protected void initComponents() {
@@ -39,6 +46,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,21 +99,44 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment newFragment = null;
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch (id) {
+            case R.id.nav_flights:
 
-        } else if (id == R.id.nav_slideshow) {
+                //Set Fragment to switch
+                newFragment = new FlightFragment();
 
-        } else if (id == R.id.nav_manage) {
+                //Change FAB to 'add' icon
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fab.setImageDrawable(getDrawable(R.drawable.ic_add_white));
+                } else {
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white));
+                }
+                break;
+            case R.id.nav_gallery:
 
-        } else if (id == R.id.nav_share) {
+                break;
+            case R.id.nav_slideshow:
 
-        } else if (id == R.id.nav_send) {
-            startActivity(new Intent(this, FlightActivity.class));
+                break;
+            case R.id.nav_manage:
+
+                break;
+            case R.id.nav_share:
+
+                break;
+            case R.id.nav_send:
+
+                break;
+            default:
+
+                break;
         }
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.commitNow();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

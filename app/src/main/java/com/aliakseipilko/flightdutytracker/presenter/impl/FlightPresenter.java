@@ -1,15 +1,17 @@
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
-import android.view.View;
-
 import com.aliakseipilko.flightdutytracker.presenter.IFlightPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
+import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
+import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
 import java.util.Date;
 
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 
@@ -20,12 +22,15 @@ public class FlightPresenter implements IFlightPresenter {
     private IFlightRepository.OnGetSingleFlightCallback getSingleFlightCallback;
     private IFlightRepository.OnDeleteFlightCallback deleteFlightCallback;
 
-    private View view;
+    private FlightFragment view;
+    private FlightAdapter adapter;
 
     private FlightRepository repository;
 
-    public FlightPresenter(View view) {
+    public FlightPresenter(FlightFragment view, FlightAdapter adapter) {
+
         this.view = view;
+        this.adapter = adapter;
         repository = new FlightRepository();
     }
 
@@ -36,7 +41,17 @@ public class FlightPresenter implements IFlightPresenter {
     }
 
     @Override
-    public void addFlight(String departureIATACode, String departureICAOCode, String arrivalIATACode, String arrivalICAOCode, Date startDutyTime, Date startFlightTime, Date endFlightTime, Date endDutyTime, String acType, String flightNumber) {
+    public void addFlight(String departureIATACode,
+                          String departureICAOCode,
+                          String arrivalIATACode,
+                          String arrivalICAOCode,
+                          Date startDutyTime,
+                          Date startFlightTime,
+                          Date endFlightTime,
+                          Date endDutyTime,
+                          String acType,
+                          String flightNumber) {
+
         Flight flight = new Flight();
 
         flight.setId(repository.getNextID());
@@ -103,53 +118,66 @@ public class FlightPresenter implements IFlightPresenter {
     }
 
     @Override
+    public void getMultipleFlightsByIdCount(long startId, int count) {
+
+        repository.getMultipleFlightsByIdCount(startId, count, getMultipleFlightsCallback);
+    }
+
+    @Override
+    public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
+
+        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
+    }
+
+    @Override
     public void subscribeAllCallbacks() {
-        //TODO impl callbacks
+
         addFlightCallback = new IFlightRepository.OnAddFlightCallback() {
             @Override
             public void OnSuccess() {
-
+                view.showSuccess("Successfully Added!");
             }
 
             @Override
             public void OnError(String message) {
-
+                view.showError(message);
             }
         };
 
         getMultipleFlightsCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-
+                adapter.addMoreData(flights);
             }
 
             @Override
             public void OnError(String message) {
-
+                view.showError(message);
             }
         };
 
         getSingleFlightCallback = new IFlightRepository.OnGetSingleFlightCallback() {
             @Override
             public void OnSuccess(Flight flight) {
-
+                OrderedRealmCollection<Flight> flights = new RealmList<>(flight);
+                adapter.addMoreData(flights);
             }
 
             @Override
             public void OnError(String message) {
-
+                view.showError(message);
             }
         };
 
         deleteFlightCallback = new IFlightRepository.OnDeleteFlightCallback() {
             @Override
             public void OnSuccess() {
-
+                view.showSuccess("Successfully deleted!");
             }
 
             @Override
             public void OnError(String message) {
-
+                view.showError(message);
             }
         };
     }

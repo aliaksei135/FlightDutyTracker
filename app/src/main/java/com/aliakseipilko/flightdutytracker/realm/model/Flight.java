@@ -19,9 +19,11 @@ public class Flight extends RealmObject {
     private String arrivalICAOCode;
 
     //Times
-    @Required private Date startDutyTime;
+    @Required
+    private Date startDutyTime;
     private Date startFlightTime;
-    @Required private Date endDutyTime;
+    @Required
+    private Date endDutyTime;
     private Date endFlightTime;
 
     private String acType;

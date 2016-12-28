@@ -15,8 +15,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class AirportCodeConverter {
-    @Inject Gson gson;
-    @Inject Context ctx;
+    @Inject
+    Gson gson;
+    @Inject
+    Context ctx;
 
     List<Airport> airports;
 
@@ -25,7 +27,7 @@ public class AirportCodeConverter {
 
     }
 
-    private void generateAirports(){
+    private void generateAirports() {
         try {
             airports = gson.fromJson(new JsonReader(new FileReader(new File(String.valueOf(ctx.getResources().openRawResource(R.raw.airports))))), Airport.class);
         } catch (FileNotFoundException e) {
@@ -33,20 +35,20 @@ public class AirportCodeConverter {
         }
     }
 
-    public String convertIATAtoICAO(String IATACode){
-        if(airports == null){
+    public String convertIATAtoICAO(String IATACode) {
+        if (airports == null) {
             generateAirports();
         }
-        for (Airport airport: airports) {
-            if(airport.getIATACode().equalsIgnoreCase(IATACode)){
+        for (Airport airport : airports) {
+            if (airport.getIATACode().equalsIgnoreCase(IATACode)) {
                 return airport.getICAOCode();
             }
         }
         return null;
     }
 
-    public String convertICAOtoIATA(String ICAOCode){
-        if(airports == null){
+    public String convertICAOtoIATA(String ICAOCode) {
+        if (airports == null) {
             generateAirports();
         }
         for (Airport airport : airports) {
@@ -57,7 +59,7 @@ public class AirportCodeConverter {
         return null;
     }
 
-    private class Airport{
+    private class Airport {
         long UID;
         String name;
         String city;

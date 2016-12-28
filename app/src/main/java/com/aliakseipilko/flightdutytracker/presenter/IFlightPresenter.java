@@ -26,4 +26,8 @@ public interface IFlightPresenter extends IBasePresenter {
     void getMultipleFlightsByAirportCode(AirportCode.CODE_TYPES codeType, AirportCode.CODE_PLACES codePlace, String airportCode);
 
     void getAllFlights();
+
+    void getMultipleFlightsByIdCount(long startId, int count);
+
+    void getMultipleFlightsByDateRange(Date startDate, Date endDate);
 }

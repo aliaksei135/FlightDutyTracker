@@ -22,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showSnackbar(String message, boolean isSuccessful) {
-        Snackbar sb = Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG);
+        Snackbar sb = Snackbar.make(findViewById(R.id.root_coord_lo), message, Snackbar.LENGTH_LONG);
 
         if (isSuccessful) {
             sb.getView().setBackgroundColor(successColor);

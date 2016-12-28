@@ -2,9 +2,13 @@ package com.aliakseipilko.flightdutytracker.realm.repository.impl;
 
 import android.support.annotation.NonNull;
 
+import com.aliakseipilko.flightdutytracker.dagger.components.DaggerRepositoryComponent;
+import com.aliakseipilko.flightdutytracker.dagger.components.RepositoryComponent;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -15,7 +19,15 @@ import static com.aliakseipilko.flightdutytracker.utils.AirportCode.CODE_TYPES.I
 
 public class FlightRepository implements IFlightRepository {
 
-    @Inject Realm realm;
+    @Inject
+    Realm realm;
+    private RepositoryComponent component;
+
+    public FlightRepository() {
+        component = DaggerRepositoryComponent.create();
+        realm = component.inject();
+//        realm = Realm.getDefaultInstance();
+    }
 
     @Override
     public void addFlight(final Flight flight, @NonNull final OnAddFlightCallback callback) {
@@ -121,7 +133,7 @@ public class FlightRepository implements IFlightRepository {
 
         if (result.isLoaded()) {
             callback.OnSuccess(result);
-        }else{
+        } else {
             callback.OnError("Flight not loaded");
         }
     }
@@ -134,7 +146,7 @@ public class FlightRepository implements IFlightRepository {
 
         if (results.isLoaded()) {
             callback.OnSuccess(results);
-        }else{
+        } else {
             callback.OnError("Flights not loaded");
         }
     }
@@ -147,7 +159,7 @@ public class FlightRepository implements IFlightRepository {
 
         if (results.isLoaded()) {
             callback.OnSuccess(results);
-        }else{
+        } else {
             callback.OnError("Flights not loaded");
         }
     }
@@ -157,51 +169,51 @@ public class FlightRepository implements IFlightRepository {
 
         RealmResults<Flight> results;
 
-        if(codePlace == null){
-            if(codeType == ICAO_CODE) {
+        if (codePlace == null) {
+            if (codeType == ICAO_CODE) {
                 results = realm.where(Flight.class)
                         .equalTo("departureICAOCode", airportCode)
                         .or()
                         .equalTo("arrivalICAOCode", airportCode)
                         .findAll();
-            }else{
+            } else {
                 results = realm.where(Flight.class)
                         .equalTo("departureIATACode", airportCode)
                         .or()
                         .equalTo("arrivalIATACode", airportCode)
                         .findAll();
             }
-        }else if(codeType == null){
-            if(codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE){
+        } else if (codeType == null) {
+            if (codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE) {
                 results = realm.where(Flight.class)
                         .equalTo("departureICAOCode", airportCode)
                         .or()
                         .equalTo("departureIATACode", airportCode)
                         .findAll();
-            }else{
+            } else {
                 results = realm.where(Flight.class)
                         .equalTo("arrivalICAOCode", airportCode)
                         .or()
                         .equalTo("arrivalIATACode", airportCode)
                         .findAll();
             }
-        }else{
-            if(codeType == ICAO_CODE){
-                if(codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE){
+        } else {
+            if (codeType == ICAO_CODE) {
+                if (codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE) {
                     results = realm.where(Flight.class)
                             .equalTo("departureICAOCode", airportCode)
                             .findAll();
-                }else{
+                } else {
                     results = realm.where(Flight.class)
                             .equalTo("arrivalICAOCode", airportCode)
                             .findAll();
                 }
-            }else{
-                if(codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE){
+            } else {
+                if (codePlace == AirportCode.CODE_PLACES.DEPARTURE_CODE) {
                     results = realm.where(Flight.class)
                             .equalTo("departureIATACode", airportCode)
                             .findAll();
-                }else{
+                } else {
                     results = realm.where(Flight.class)
                             .equalTo("arrivalIATACode", airportCode)
                             .findAll();
@@ -209,9 +221,9 @@ public class FlightRepository implements IFlightRepository {
             }
         }
 
-        if(results.isLoaded()){
+        if (results.isLoaded()) {
             callback.OnSuccess(results);
-        }else{
+        } else {
             callback.OnError("Flights not loaded");
         }
     }
@@ -220,9 +232,35 @@ public class FlightRepository implements IFlightRepository {
     public void getAllFlights(@NonNull OnGetMultipleFlightsCallback callback) {
         RealmResults<Flight> results = realm.where(Flight.class).findAll();
 
-        if(results.isLoaded()){
+        if (results.isLoaded()) {
             callback.OnSuccess(results);
-        }else{
+        } else {
+            callback.OnError("Flights not loaded");
+        }
+    }
+
+    @Override
+    public void getMultipleFlightsByIdCount(long startId, int count, @NonNull OnGetMultipleFlightsCallback callback) {
+        RealmResults<Flight> results = realm.where(Flight.class)
+                .between("id", startId, startId + count)
+                .findAll();
+
+        if (results.isLoaded()) {
+            callback.OnSuccess(results);
+        } else {
+            callback.OnError("Flights not loaded");
+        }
+    }
+
+    @Override
+    public void getMultipleFlightsByDateRange(Date startDate, Date endDate, @NonNull OnGetMultipleFlightsCallback callback) {
+        RealmResults<Flight> results = realm.where(Flight.class)
+                .between("startDutyTime", startDate, endDate)
+                .findAll();
+
+        if (results.isLoaded()) {
+            callback.OnSuccess(results);
+        } else {
             callback.OnError("Flights not loaded");
         }
     }

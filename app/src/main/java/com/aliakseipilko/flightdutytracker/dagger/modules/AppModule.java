@@ -12,49 +12,39 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 @Module
 public class AppModule {
 
+    private static final String PREFS_NAME = "prefs";
     private Application mApplication;
 
-    private static final String PREFS_NAME = "prefs";
-
-    public AppModule(Application application){
+    public AppModule(Application application) {
         mApplication = application;
     }
 
     @Provides
     @Singleton
-    Application provideApplication(){
+    Application provideApplication() {
         return mApplication;
     }
 
     @Provides
     @Singleton
-    SharedPreferences provideSharedPreferences(){
+    SharedPreferences provideSharedPreferences() {
         return mApplication.getSharedPreferences(PREFS_NAME, 0);
     }
 
     @Provides
     @Singleton
-    public Context provideApplicationContext(){
+    public Context provideApplicationContext() {
         return mApplication.getApplicationContext();
     }
 
-    @Provides
-    @Singleton
-    public Realm provideRealm(){
-        return Realm.getInstance(new RealmConfiguration.Builder()
-                .name("db.realm")
-                .build());
-    }
 
     @Provides
     @Singleton
-    public Gson provideGson(){
+    public Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE);
         return gsonBuilder.create();

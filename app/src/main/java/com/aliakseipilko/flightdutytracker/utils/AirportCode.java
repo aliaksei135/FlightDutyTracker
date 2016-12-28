@@ -4,11 +4,11 @@ public class AirportCode {
 
     public enum CODE_TYPES {
         ICAO_CODE,
-        IATA_CODE;
+        IATA_CODE
     }
 
-    public enum CODE_PLACES{
+    public enum CODE_PLACES {
         DEPARTURE_CODE,
-        ARRIVAL_CODE;
+        ARRIVAL_CODE
     }
 }
