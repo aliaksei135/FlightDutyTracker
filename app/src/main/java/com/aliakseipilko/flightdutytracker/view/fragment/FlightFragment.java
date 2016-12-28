@@ -1,10 +1,7 @@
 package com.aliakseipilko.flightdutytracker.view.fragment;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +12,7 @@ import android.view.ViewGroup;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.FlightPresenter;
 import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
+import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
@@ -27,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
-public class FlightFragment extends Fragment {
+public class FlightFragment extends BaseFragment {
 
     @BindView(R.id.flight_recylerview)
     SuperRecyclerView recyclerView;
@@ -77,6 +75,7 @@ public class FlightFragment extends Fragment {
     private void setupRecyclerView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         recyclerView.setAdapter(adapter);
         recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -110,24 +109,8 @@ public class FlightFragment extends Fragment {
         recyclerView.setOnScrollListener(scroller.getOnScrollListener());
     }
 
-    public void showError(String message) {
-        Snackbar sb = Snackbar.make(getView(), message, Snackbar.LENGTH_LONG);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            sb.getView().setBackgroundColor(getResources().getColor(R.color.failureColor, null));
-        } else {
-            sb.getView().setBackgroundColor(getResources().getColor(R.color.failureColor));
-        }
-        sb.show();
-    }
+    public void onFABClicked() {
 
-    public void showSuccess(String message) {
-        Snackbar sb = Snackbar.make(getView(), message, Snackbar.LENGTH_LONG);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            sb.getView().setBackgroundColor(getResources().getColor(R.color.successColor, null));
-        } else {
-            sb.getView().setBackgroundColor(getResources().getColor(R.color.successColor));
-        }
-        sb.show();
     }
 
     @Override

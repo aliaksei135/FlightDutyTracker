@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
 
+
     @Override
     protected void initComponents() {
 

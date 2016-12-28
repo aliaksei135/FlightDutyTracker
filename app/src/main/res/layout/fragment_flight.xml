@@ -5,10 +5,12 @@
     android:background="@color/cardview_light_background"
     tools:context="com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment">
 
-    <com.malinskiy.superrecyclerview.SuperRecyclerView
+    <com.malinskiy.superrecyclerview.SuperRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/flight_recylerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/layout_flight_empty"
+        app:layout_moreProgress="@layout/layout_more_progress" />
 
     <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
         android:id="@+id/flight_fast_scroller"

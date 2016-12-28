@@ -34,13 +34,11 @@ public class FlightPresenter implements IFlightPresenter {
         repository = new FlightRepository();
     }
 
-    @Override
     public void addFlight(Flight flight) {
 
         repository.addFlight(flight, addFlightCallback);
     }
 
-    @Override
     public void addFlight(String departureIATACode,
                           String departureICAOCode,
                           String arrivalIATACode,

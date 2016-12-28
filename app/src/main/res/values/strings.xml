@@ -9,4 +9,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="flight_empty_view">No flights to display\nTap the + button to add one</string>
 </resources>
