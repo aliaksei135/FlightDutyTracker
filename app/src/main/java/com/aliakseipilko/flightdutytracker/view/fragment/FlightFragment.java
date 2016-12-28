@@ -107,10 +107,23 @@ public class FlightFragment extends BaseFragment {
 
         scroller.setRecyclerView(recyclerView.getRecyclerView());
         recyclerView.setOnScrollListener(scroller.getOnScrollListener());
+
+        if (adapter.getItemCount() == 0) {
+            hideScroller();
+        }
     }
 
+    @Override
     public void onFABClicked() {
 
+    }
+
+    public void showScroller() {
+        scroller.setVisibility(View.VISIBLE);
+    }
+
+    public void hideScroller() {
+        scroller.setVisibility(View.INVISIBLE);
     }
 
     @Override

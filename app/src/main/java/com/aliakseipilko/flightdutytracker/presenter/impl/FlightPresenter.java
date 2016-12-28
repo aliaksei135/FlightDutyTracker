@@ -10,14 +10,11 @@ import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
 import java.util.Date;
 
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 
 public class FlightPresenter implements IFlightPresenter {
 
-    private IFlightRepository.OnAddFlightCallback addFlightCallback;
     private IFlightRepository.OnGetMultipleFlightsCallback getMultipleFlightsCallback;
     private IFlightRepository.OnGetSingleFlightCallback getSingleFlightCallback;
     private IFlightRepository.OnDeleteFlightCallback deleteFlightCallback;
@@ -32,39 +29,6 @@ public class FlightPresenter implements IFlightPresenter {
         this.view = view;
         this.adapter = adapter;
         repository = new FlightRepository();
-    }
-
-    public void addFlight(Flight flight) {
-
-        repository.addFlight(flight, addFlightCallback);
-    }
-
-    public void addFlight(String departureIATACode,
-                          String departureICAOCode,
-                          String arrivalIATACode,
-                          String arrivalICAOCode,
-                          Date startDutyTime,
-                          Date startFlightTime,
-                          Date endFlightTime,
-                          Date endDutyTime,
-                          String acType,
-                          String flightNumber) {
-
-        Flight flight = new Flight();
-
-        flight.setId(repository.getNextID());
-        flight.setDepartureIATACode(departureIATACode);
-        flight.setDepartureICAOCode(departureICAOCode);
-        flight.setArrivalIATACode(arrivalIATACode);
-        flight.setArrivalICAOCode(arrivalICAOCode);
-        flight.setStartDutyTime(startDutyTime);
-        flight.setStartFlightTime(startFlightTime);
-        flight.setEndFlightTime(endFlightTime);
-        flight.setEndDutyTime(endDutyTime);
-        flight.setAcType(acType);
-        flight.setFlightNumber(flightNumber);
-
-        repository.addFlight(flight, addFlightCallback);
     }
 
     @Override
@@ -83,12 +47,6 @@ public class FlightPresenter implements IFlightPresenter {
     public void deleteFlightByFlightNumber(String flightNumber) {
 
         repository.deleteFlightByFlightNumber(flightNumber, deleteFlightCallback);
-    }
-
-    @Override
-    public void getSingleFlightById(long id) {
-
-        repository.getSingleFlightById(id, getSingleFlightCallback);
     }
 
     @Override
@@ -130,34 +88,9 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void subscribeAllCallbacks() {
 
-        addFlightCallback = new IFlightRepository.OnAddFlightCallback() {
-            @Override
-            public void OnSuccess() {
-                view.showSuccess("Successfully Added!");
-            }
-
-            @Override
-            public void OnError(String message) {
-                view.showError(message);
-            }
-        };
-
         getMultipleFlightsCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-                adapter.addMoreData(flights);
-            }
-
-            @Override
-            public void OnError(String message) {
-                view.showError(message);
-            }
-        };
-
-        getSingleFlightCallback = new IFlightRepository.OnGetSingleFlightCallback() {
-            @Override
-            public void OnSuccess(Flight flight) {
-                OrderedRealmCollection<Flight> flights = new RealmList<>(flight);
                 adapter.addMoreData(flights);
             }
 
@@ -182,10 +115,7 @@ public class FlightPresenter implements IFlightPresenter {
 
     @Override
     public void unsubscribeAllCallbacks() {
-
-        addFlightCallback = null;
         getMultipleFlightsCallback = null;
-        getSingleFlightCallback = null;
         deleteFlightCallback = null;
     }
 }

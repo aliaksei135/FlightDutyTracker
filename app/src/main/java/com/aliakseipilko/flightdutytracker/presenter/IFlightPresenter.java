@@ -13,8 +13,6 @@ public interface IFlightPresenter extends IBasePresenter {
 
     void deleteFlightByFlightNumber(String flightNumber);
 
-    void getSingleFlightById(long id);
-
     void getMultipleFlightsByFlightNumber(String flightNumber);
 
     void getMultipleFlightsByACType(String ACType);

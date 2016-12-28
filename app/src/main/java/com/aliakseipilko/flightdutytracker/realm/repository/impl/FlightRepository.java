@@ -26,7 +26,6 @@ public class FlightRepository implements IFlightRepository {
     public FlightRepository() {
         component = DaggerRepositoryComponent.create();
         realm = component.inject();
-//        realm = Realm.getDefaultInstance();
     }
 
     @Override
