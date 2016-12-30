@@ -28,13 +28,17 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Fragment constants
+    static final String FRAGMENT_FLIGHT = "FRAGMENT_FLIGHT";
+    static final String FRAGMENT_DUTIES = "FRAGMENT_DUTIES";
+    static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
+    static String CURRENT_FRAGMENT_TAG;
     @BindColor(R.color.successColor)
     int successColor;
     @BindColor(R.color.warningColor)
     int warningColor;
     @BindColor(R.color.failureColor)
     int failureColor;
-
     @BindView(R.id.main_toolbar)
     Toolbar toolbar;
     @BindView(R.id.fab)
@@ -45,7 +49,6 @@ public class MainActivity extends BaseActivity
     NavigationView navigationView;
     @BindView(R.id.main_fragment_container)
     FrameLayout fragmentContainer;
-
 
     @Override
     protected void initComponents() {
@@ -93,6 +96,14 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (CURRENT_FRAGMENT_TAG != null) {
+            showCurrentFragment();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -123,20 +134,62 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("CURRENT_FRAGMENT", CURRENT_FRAGMENT_TAG);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        CURRENT_FRAGMENT_TAG = savedInstanceState.getString("CURRENT_FRAGMENT");
+        showCurrentFragment();
+    }
+
+    void showCurrentFragment() {
+
+        Fragment newFragment = null;
+
+        switch (CURRENT_FRAGMENT_TAG) {
+            case FRAGMENT_FLIGHT:
+                //Set Fragment to switch
+                newFragment = FlightFragment.newInstance();
+
+                //Change FAB to 'add' icon
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fab.setImageDrawable(getDrawable(R.drawable.ic_add_white));
+                } else {
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white));
+                }
+                break;
+            case FRAGMENT_DUTIES:
+
+                break;
+            case FRAGMENT_HOURS:
+
+                break;
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_fragment_container, newFragment, CURRENT_FRAGMENT_TAG);
+        transaction.commitNow();
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment newFragment = null;
-        String TAG = null;
 
         switch (id) {
             case R.id.nav_flights:
 
                 //Set Fragment to switch
                 newFragment = FlightFragment.newInstance();
-                TAG = "FLIGHT_FRAGMENT";
+                CURRENT_FRAGMENT_TAG = FRAGMENT_FLIGHT;
 
                 //Change FAB to 'add' icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -151,22 +204,10 @@ public class MainActivity extends BaseActivity
             case R.id.nav_slideshow:
 
                 break;
-            case R.id.nav_manage:
-
-                break;
-            case R.id.nav_share:
-
-                break;
-            case R.id.nav_send:
-
-                break;
-            default:
-
-                break;
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_fragment_container, newFragment, TAG);
+        transaction.replace(R.id.main_fragment_container, newFragment, CURRENT_FRAGMENT_TAG);
         transaction.commitNow();
         drawer.closeDrawer(GravityCompat.START);
         return true;
