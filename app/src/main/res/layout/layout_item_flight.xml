@@ -2,11 +2,12 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="80dp"
     android:layout_gravity="center"
-    card_view:cardBackgroundColor="@color/about_libraries_card"
+    android:layout_margin="@dimen/margin_small"
+    card_view:cardBackgroundColor="@color/about_libraries_window_background"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
+    card_view:cardElevation="6dp"
     card_view:contentPadding="2dp">
 
     <RelativeLayout
@@ -23,7 +24,8 @@
             android:layout_toLeftOf="@+id/arrow_vh_iv"
             android:layout_toStartOf="@+id/arrow_vh_iv"
             android:gravity="center"
-            android:text="DEP" />
+            android:text="DEP"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
         <TextView
             android:id="@+id/date_vh_tv"
@@ -37,7 +39,8 @@
             android:layout_marginLeft="@dimen/margin_large"
             android:layout_marginStart="@dimen/margin_large"
             android:gravity="center"
-            android:text="28/07/16" />
+            android:text="28/07/16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
 
         <TextView
             android:id="@+id/flight_number_vh_tv"
@@ -50,7 +53,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:gravity="center"
-            android:text="FLT NO." />
+            android:text="FLT NO."
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <ImageView
             android:id="@+id/arrow_vh_iv"
@@ -71,7 +75,8 @@
             android:layout_toEndOf="@+id/arrow_vh_iv"
             android:layout_toRightOf="@+id/arrow_vh_iv"
             android:gravity="center"
-            android:text="ARR" />
+            android:text="ARR"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
     </RelativeLayout>
 

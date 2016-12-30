@@ -266,6 +266,12 @@ public class FlightRepository implements IFlightRepository {
 
     @Override
     public long getNextID() {
-        return realm.where(Flight.class).max("id").longValue() + 1;
+        Number idNum = realm.where(Flight.class).max("id");
+        if (idNum == null) {
+            return 1;
+        } else {
+            long id = idNum.longValue();
+            return id + 1;
+        }
     }
 }

@@ -14,6 +14,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     int successColor;
     @BindColor(R.color.warningColor)
     int warningColor;
+    @BindColor(R.color.failureColor)
+    int failureColor;
 
     abstract protected void initComponents();
 
@@ -27,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isSuccessful) {
             sb.getView().setBackgroundColor(successColor);
         } else {
-            sb.getView().setBackgroundColor(warningColor);
+            sb.getView().setBackgroundColor(failureColor);
         }
 
         sb.show();

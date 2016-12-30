@@ -1,6 +1,6 @@
 package com.aliakseipilko.flightdutytracker.view.fragment;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +11,12 @@ import android.view.ViewGroup;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.FlightPresenter;
+import com.aliakseipilko.flightdutytracker.view.activity.CreateFlightActivity;
 import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,21 +50,15 @@ public class FlightFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        presenter = new FlightPresenter(this);
+        presenter.subscribeAllCallbacks();
+        presenter.initAdapaterData();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_flight, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        adapter = new FlightAdapter(getContext(), null);
-
-        presenter = new FlightPresenter(this, adapter);
-        presenter.subscribeAllCallbacks();
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -7);
-        //Get all flights between today and 7 days ago to start with
-        presenter.getMultipleFlightsByDateRange(new Date(), cal.getTime());
-
-        adapter = new FlightAdapter(getContext(), null);
         setupRecyclerView();
 
         return view;
@@ -115,7 +107,15 @@ public class FlightFragment extends BaseFragment {
 
     @Override
     public void onFABClicked() {
+        getActivity().startActivity(new Intent(getContext(), CreateFlightActivity.class));
+    }
 
+    public FlightAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(FlightAdapter adapter) {
+        this.adapter = adapter;
     }
 
     public void showScroller() {
@@ -127,19 +127,9 @@ public class FlightFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
 }

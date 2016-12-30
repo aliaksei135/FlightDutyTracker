@@ -8,6 +8,7 @@ import com.aliakseipilko.flightdutytracker.utils.AirportCode;
 import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import io.realm.RealmResults;
@@ -16,7 +17,6 @@ import io.realm.RealmResults;
 public class FlightPresenter implements IFlightPresenter {
 
     private IFlightRepository.OnGetMultipleFlightsCallback getMultipleFlightsCallback;
-    private IFlightRepository.OnGetSingleFlightCallback getSingleFlightCallback;
     private IFlightRepository.OnDeleteFlightCallback deleteFlightCallback;
 
     private FlightFragment view;
@@ -24,11 +24,20 @@ public class FlightPresenter implements IFlightPresenter {
 
     private FlightRepository repository;
 
-    public FlightPresenter(FlightFragment view, FlightAdapter adapter) {
+    public FlightPresenter(FlightFragment view) {
 
         this.view = view;
-        this.adapter = adapter;
         repository = new FlightRepository();
+    }
+
+    public void initAdapaterData() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -7);
+        //Get all flights between today and 7 days ago to start with
+        adapter = new FlightAdapter(view.getContext(), null);
+        view.setAdapter(adapter);
+        getMultipleFlightsByDateRange(new Date(), cal.getTime());
     }
 
     @Override
@@ -82,8 +91,10 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
 
-        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
+//        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
+        repository.getAllFlights(getMultipleFlightsCallback);
     }
+
 
     @Override
     public void subscribeAllCallbacks() {

@@ -18,6 +18,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
+import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapter.FlightViewHolder> {
@@ -32,7 +33,7 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
     @Override
     public FlightViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_flight, parent);
+                .inflate(R.layout.layout_item_flight, parent, false);
         return new FlightViewHolder(itemView);
     }
 
@@ -57,6 +58,9 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
     }
 
     public void addMoreData(OrderedRealmCollection<Flight> moreFlights) {
+        if (flights == null) {
+            flights = new RealmList<>();
+        }
         for (Flight f : moreFlights) {
             flights.add(f);
         }
@@ -82,7 +86,7 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
 
         @Override
         public void onClick(View view) {
-            //TODO Switch to flight details fragment
+
         }
     }
 }

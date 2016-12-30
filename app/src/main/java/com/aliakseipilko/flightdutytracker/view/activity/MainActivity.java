@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar)
+    @BindView(R.id.main_toolbar)
     Toolbar toolbar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -33,7 +34,7 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    @BindView(R.id.fragment_container)
+    @BindView(R.id.main_fragment_container)
     FrameLayout fragmentContainer;
 
 
@@ -46,13 +47,18 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSnackbar("Replace with your own action", false);
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+                if (currentFragment instanceof BaseFragment) {
+                    ((BaseFragment) currentFragment).onFABClicked();
+                } else {
+                    showSnackbar("Not implemented yet!", false);
+                }
             }
         });
 
@@ -101,12 +107,14 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment newFragment = null;
+        String TAG = null;
 
         switch (id) {
             case R.id.nav_flights:
 
                 //Set Fragment to switch
-                newFragment = new FlightFragment();
+                newFragment = FlightFragment.newInstance();
+                TAG = "FLIGHT_FRAGMENT";
 
                 //Change FAB to 'add' icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -136,7 +144,7 @@ public class MainActivity extends BaseActivity
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.main_fragment_container, newFragment, TAG);
         transaction.commitNow();
         drawer.closeDrawer(GravityCompat.START);
         return true;
