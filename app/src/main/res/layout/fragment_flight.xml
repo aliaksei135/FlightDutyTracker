@@ -12,11 +12,4 @@
         app:layout_empty="@layout/layout_flight_empty"
         app:layout_moreProgress="@layout/layout_more_progress" />
 
-    <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-        android:id="@+id/flight_fast_scroller"
-        android:layout_width="@dimen/fast_scroller_width"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true" />
-
 </RelativeLayout>

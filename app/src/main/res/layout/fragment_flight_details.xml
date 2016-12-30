@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aliakseipilko.flightdutytracker.view.fragment.FlightDetailsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/detail_departure_et"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:inputType="textNoSuggestions"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/detail_departure_et"
+            android:layout_centerHorizontal="true"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/ic_arrow_forward_black" />
+
+        <TextView
+            android:id="@+id/detail_arrival_et"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_large"
+            android:inputType="textNoSuggestions"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" />
+
+        <View
+            android:id="@+id/detail_duty_time_view_splitter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/detail_departure_et"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/detail_duty_from_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/detail_duty_time_view_splitter"
+            android:layout_margin="@dimen/margin_small"
+            android:text="Duty From" />
+
+        <TextView
+            android:id="@+id/detail_duty_from_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_duty_from_title_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:paddingBottom="2dp"
+            android:paddingEnd="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="2dp" />
+
+        <TextView
+            android:id="@+id/detail_duty_to_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/detail_duty_from_date_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Duty To" />
+
+        <TextView
+            android:id="@+id/detail_duty_to_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_duty_to_title_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:paddingBottom="2dp"
+            android:paddingEnd="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="2dp" />
+
+        <View
+            android:id="@+id/detail_flight_time_view_splitter"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/detail_duty_to_date_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/detail_flight_from_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/detail_flight_time_view_splitter"
+            android:layout_margin="@dimen/margin_small"
+            android:text="Flight From" />
+
+        <TextView
+            android:id="@+id/detail_flight_from_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_flight_from_title_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:paddingBottom="2dp"
+            android:paddingEnd="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="2dp" />
+
+        <TextView
+            android:id="@+id/detail_flight_to_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/detail_flight_from_date_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="Flight To" />
+
+        <TextView
+            android:id="@+id/detail_flight_to_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_flight_to_title_tv"
+            android:layout_margin="@dimen/margin_small"
+            android:paddingBottom="2dp"
+            android:paddingEnd="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="2dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

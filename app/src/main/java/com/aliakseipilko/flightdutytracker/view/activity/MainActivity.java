@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -20,11 +21,19 @@ import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @BindColor(R.color.successColor)
+    int successColor;
+    @BindColor(R.color.warningColor)
+    int warningColor;
+    @BindColor(R.color.failureColor)
+    int failureColor;
 
     @BindView(R.id.main_toolbar)
     Toolbar toolbar;
@@ -41,6 +50,19 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initComponents() {
 
+    }
+
+    @Override
+    public void showSnackbar(String message, boolean isSuccess) {
+        Snackbar sb = Snackbar.make(findViewById(R.id.root_coord_lo), message, Snackbar.LENGTH_LONG);
+
+        if (isSuccess) {
+            sb.getView().setBackgroundColor(successColor);
+        } else {
+            sb.getView().setBackgroundColor(failureColor);
+        }
+
+        sb.show();
     }
 
     @Override

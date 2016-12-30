@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
 
     private OrderedRealmCollection<Flight> flights;
 
+    private onRecyclerItemClickListener itemClickCallback;
+
     public FlightAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Flight> data) {
         super(context, data, true);
         flights = data;
@@ -34,21 +37,34 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
     public FlightViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_item_flight, parent, false);
+
         return new FlightViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(FlightViewHolder holder, int position) {
+    public void onBindViewHolder(final FlightViewHolder holder, int position) {
 
         Flight flight = flights.get(position);
 
         holder.fltNumTv.setText(flight.getFlightNumber());
         //TODO Allow user to switch between IATA and ICAO
         //Hardcode IATA for now
-        holder.depCodeTv.setText(flight.getDepartureIATACode());
-        holder.arrCodeTv.setText(flight.getArrivalIATACode());
+        if (TextUtils.isEmpty(flight.getDepartureIATACode())) {
+            holder.depCodeTv.setText(flight.getDepartureICAOCode());
+            holder.arrCodeTv.setText(flight.getArrivalICAOCode());
+        } else {
+            holder.depCodeTv.setText(flight.getDepartureIATACode());
+            holder.arrCodeTv.setText(flight.getArrivalIATACode());
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
         holder.dateTv.setText(dateFormat.format(flight.getStartDutyTime()));
+        holder.flightId = flight.getId();
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickCallback.onItemClicked(holder.getFlightId());
+            }
+        });
     }
 
     @Override
@@ -66,8 +82,15 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
         }
     }
 
+    public void setItemClickCallback(onRecyclerItemClickListener itemClickCallback) {
+        this.itemClickCallback = itemClickCallback;
+    }
 
-    public class FlightViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface onRecyclerItemClickListener {
+        void onItemClicked(long flightId);
+    }
+
+    public class FlightViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.flight_number_vh_tv)
         TextView fltNumTv;
@@ -78,15 +101,24 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
         @BindView(R.id.date_vh_tv)
         TextView dateTv;
 
+        long flightId;
+
+        View.OnClickListener onClickListener;
+        View view;
+
         public FlightViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
-            v.setOnClickListener(this);
+            view = v;
         }
 
-        @Override
-        public void onClick(View view) {
+        public void setOnClickListener(View.OnClickListener listener) {
+            onClickListener = listener;
+            view.setOnClickListener(listener);
+        }
 
+        public long getFlightId() {
+            return flightId;
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.FlightPresenter;
 import com.aliakseipilko.flightdutytracker.view.activity.CreateFlightActivity;
+import com.aliakseipilko.flightdutytracker.view.activity.FlightDetailsActivity;
 import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 import com.malinskiy.superrecyclerview.OnMoreListener;
@@ -21,14 +22,11 @@ import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListen
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
-public class FlightFragment extends BaseFragment {
+public class FlightFragment extends BaseFragment implements FlightAdapter.onRecyclerItemClickListener {
 
     @BindView(R.id.flight_recylerview)
     SuperRecyclerView recyclerView;
-    @BindView(R.id.flight_fast_scroller)
-    VerticalRecyclerViewFastScroller scroller;
     private Unbinder unbinder;
 
     private FlightPresenter presenter;
@@ -79,10 +77,13 @@ public class FlightFragment extends BaseFragment {
         recyclerView.setupMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-
-                presenter.getMultipleFlightsByIdCount(overallItemsCount + 1, 15);
+                if (adapter.getItemCount() < 6) {
+                    recyclerView.setLoadingMore(false);
+                    return;
+                }
+                presenter.getMultipleFlightsByIdCount(overallItemsCount + 1, 14);
             }
-        }, 10);
+        }, 7);
         recyclerView.setupSwipeToDismiss(new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
             @Override
             public boolean canDismiss(int position) {
@@ -97,12 +98,6 @@ public class FlightFragment extends BaseFragment {
 
         });
 
-        scroller.setRecyclerView(recyclerView.getRecyclerView());
-        recyclerView.setOnScrollListener(scroller.getOnScrollListener());
-
-        if (adapter.getItemCount() == 0) {
-            hideScroller();
-        }
     }
 
     @Override
@@ -110,20 +105,9 @@ public class FlightFragment extends BaseFragment {
         getActivity().startActivity(new Intent(getContext(), CreateFlightActivity.class));
     }
 
-    public FlightAdapter getAdapter() {
-        return adapter;
-    }
-
     public void setAdapter(FlightAdapter adapter) {
         this.adapter = adapter;
-    }
-
-    public void showScroller() {
-        scroller.setVisibility(View.VISIBLE);
-    }
-
-    public void hideScroller() {
-        scroller.setVisibility(View.INVISIBLE);
+        adapter.setItemClickCallback(this);
     }
 
     @Override
@@ -132,4 +116,10 @@ public class FlightFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onItemClicked(long flightId) {
+        Intent intent = new Intent(getContext(), FlightDetailsActivity.class);
+        intent.putExtra("flightId", flightId);
+        getActivity().startActivity(intent);
+    }
 }

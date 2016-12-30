@@ -91,6 +91,7 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
 
+        //TODO Fix this
 //        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
         repository.getAllFlights(getMultipleFlightsCallback);
     }

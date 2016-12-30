@@ -41,7 +41,9 @@ public class CreateFlightFragment extends BaseFragment {
     TextView flightFromDateTextView;
     @BindView(R.id.flight_to_date_tv)
     TextView flightToDateTextView;
+
     Date startDutyDate, endDutyDate, startFlightDate, endFlightDate;
+
     private CreateFlightPresenter presenter;
     private Unbinder unbinder;
 
@@ -118,14 +120,14 @@ public class CreateFlightFragment extends BaseFragment {
 
     public void saveFlight() {
         if (validateAllInputs()) {
-            presenter.addFlight(departureEditText.getText().toString().trim(),
-                    arrivalEditText.getText().toString().trim(),
+            presenter.addFlight(departureEditText.getText().toString().trim().toUpperCase(),
+                    arrivalEditText.getText().toString().trim().toUpperCase(),
                     startDutyDate,
                     startFlightDate,
                     endFlightDate,
                     endDutyDate,
-                    "N/A",
-                    flightNumberEditText.getText().toString().trim());
+                    "N/A", //TODO Allow A/C type to be added
+                    flightNumberEditText.getText().toString().trim().toUpperCase());
         }
     }
 
@@ -148,7 +150,7 @@ public class CreateFlightFragment extends BaseFragment {
             departureEditText.setError("Codes must both be either IATA or ICAO.");
             arrivalEditText.setError("Codes must both be either IATA or ICAO.");
         }
-        if (depText.trim().length() != 3 || depText.trim().length() != 4) {
+        if (depText.trim().length() != 3 && depText.trim().length() != 4) {
             departureEditText.setError("Code invalid");
             arrivalEditText.setError("Code invalid");
         }

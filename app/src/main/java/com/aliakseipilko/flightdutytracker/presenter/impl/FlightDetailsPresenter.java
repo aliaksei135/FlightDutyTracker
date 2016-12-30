@@ -4,7 +4,7 @@ import com.aliakseipilko.flightdutytracker.presenter.IFlightDetailsPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
-import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.FlightDetailsFragment;
 
 public class FlightDetailsPresenter implements IFlightDetailsPresenter {
 
@@ -13,9 +13,9 @@ public class FlightDetailsPresenter implements IFlightDetailsPresenter {
 
     private FlightRepository repository;
 
-    private BaseFragment view;
+    private FlightDetailsFragment view;
 
-    public FlightDetailsPresenter(BaseFragment view) {
+    public FlightDetailsPresenter(FlightDetailsFragment view) {
         this.view = view;
 
         //TODO inject this with Dagger
@@ -37,7 +37,7 @@ public class FlightDetailsPresenter implements IFlightDetailsPresenter {
         getSingleFlightCallback = new IFlightRepository.OnGetSingleFlightCallback() {
             @Override
             public void OnSuccess(Flight flight) {
-                //TODO send this to the view
+                view.setFlight(flight);
             }
 
             @Override

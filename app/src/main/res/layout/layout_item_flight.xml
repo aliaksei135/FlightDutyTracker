@@ -7,12 +7,26 @@
     android:layout_margin="@dimen/margin_small"
     card_view:cardBackgroundColor="@color/about_libraries_window_background"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="6dp"
+    card_view:cardElevation="4dp"
     card_view:contentPadding="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/flight_number_vh_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:text="FLT NO."
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/departure_code_vh_tv"
@@ -24,7 +38,7 @@
             android:layout_toLeftOf="@+id/arrow_vh_iv"
             android:layout_toStartOf="@+id/arrow_vh_iv"
             android:gravity="center"
-            android:text="DEP"
+            android:text="DEPR"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
         <TextView
@@ -41,20 +55,6 @@
             android:gravity="center"
             android:text="28/07/16"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
-
-        <TextView
-            android:id="@+id/flight_number_vh_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical|start"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:text="FLT NO."
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <ImageView
             android:id="@+id/arrow_vh_iv"
@@ -75,7 +75,7 @@
             android:layout_toEndOf="@+id/arrow_vh_iv"
             android:layout_toRightOf="@+id/arrow_vh_iv"
             android:gravity="center"
-            android:text="ARR"
+            android:text="ARRV"
             android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
 
     </RelativeLayout>
