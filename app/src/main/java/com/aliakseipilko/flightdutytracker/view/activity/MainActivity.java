@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 import butterknife.BindColor;
@@ -167,7 +168,8 @@ public class MainActivity extends BaseActivity
 
                 break;
             case FRAGMENT_HOURS:
-
+                newFragment = HourFragment.newInstance();
+                fab.hide();
                 break;
         }
 
@@ -198,8 +200,10 @@ public class MainActivity extends BaseActivity
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white));
                 }
                 break;
-            case R.id.nav_gallery:
-
+            case R.id.nav_hours:
+                newFragment = HourFragment.newInstance();
+                CURRENT_FRAGMENT_TAG = FRAGMENT_HOURS;
+                fab.hide();
                 break;
             case R.id.nav_slideshow:
 

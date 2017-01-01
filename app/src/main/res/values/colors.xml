@@ -7,4 +7,12 @@
     <color name="successColor">#4caf50</color>
     <color name="failureColor">#f44336</color>
     <color name="warningColor">#ffc107</color>
+
+    <string-array name="mv_mark_colors">
+        <item>#D50000</item>
+        <item>#FF6D00</item>
+        <item>#FFD600</item>
+        <item>#8BC34A</item>
+        <item>#8BC34A</item>
+    </string-array>
 </resources>

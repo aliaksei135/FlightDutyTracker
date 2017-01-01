@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.aliakseipilko.flightdutytracker.dagger.components.DaggerRepositoryComponent;
 import com.aliakseipilko.flightdutytracker.dagger.components.RepositoryComponent;
+import com.aliakseipilko.flightdutytracker.dagger.modules.RealmModule;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
@@ -24,8 +25,8 @@ public class FlightRepository implements IFlightRepository {
     private RepositoryComponent component;
 
     public FlightRepository() {
-        component = DaggerRepositoryComponent.create();
-        realm = component.inject();
+        component = DaggerRepositoryComponent.builder().realmModule(new RealmModule()).build();
+        component.inject(this);
     }
 
     @Override

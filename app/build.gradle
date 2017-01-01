@@ -40,7 +40,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
 
     //UI Libraries
-    compile 'com.github.xiprox.markview:library:1.1.0'
     compile 'com.redbooth:WelcomeCoordinator:1.0.1'
     compile 'xyz.danoz:recyclerviewfastscroller:0.1.3' //Keeping this for the @dimen resources :/
     compile 'com.malinskiy:superrecyclerview:1.1.4'
@@ -53,8 +52,8 @@ dependencies {
     }
 
     compile 'io.realm:android-adapters:1.4.0'
+    compile 'joda-time:joda-time:2.9.7'
 
     //Permissions Handling
     compile 'com.karumi:dexter:3.0.0'
-
 }

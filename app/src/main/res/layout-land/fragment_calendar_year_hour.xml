@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context="com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.CalendarYearHourFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duty Hours"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+
+        <com.aliakseipilko.flightdutytracker.view.views.MarkView
+            android:id="@+id/year_duty_hours"
+            android:layout_width="172dp"
+            android:layout_height="172dp"
+            android:layout_centerInParent="true"
+            app:mv_strokeWidth="6dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flight Hours"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+
+        <com.aliakseipilko.flightdutytracker.view.views.MarkView
+            android:id="@+id/year_flight_hours"
+            android:layout_width="172dp"
+            android:layout_height="172dp"
+            android:layout_centerInParent="true"
+            app:mv_strokeWidth="6dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

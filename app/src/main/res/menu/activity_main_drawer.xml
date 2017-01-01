@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_flight_black"
             android:title="Flights" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_hours"
+            android:icon="@drawable/ic_hourglass_empty_black"
+            android:title="Hours" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"

@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
@@ -16,7 +15,6 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private static final String PREFS_NAME = "prefs";
     private Application mApplication;
 
     public AppModule(Application application) {
@@ -27,12 +25,6 @@ public class AppModule {
     @Singleton
     Application provideApplication() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences provideSharedPreferences() {
-        return mApplication.getSharedPreferences(PREFS_NAME, 0);
     }
 
     @Provides

@@ -37,7 +37,7 @@ public class FlightPresenter implements IFlightPresenter {
         //Get all flights between today and 7 days ago to start with
         adapter = new FlightAdapter(view.getContext(), null);
         view.setAdapter(adapter);
-        getMultipleFlightsByDateRange(new Date(), cal.getTime());
+        getMultipleFlightsByDateRange(cal.getTime(), new Date());
     }
 
     @Override
@@ -91,7 +91,6 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
 
-        //TODO Fix this
 //        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
         repository.getAllFlights(getMultipleFlightsCallback);
     }

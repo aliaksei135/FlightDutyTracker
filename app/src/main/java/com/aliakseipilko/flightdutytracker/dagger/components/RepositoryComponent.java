@@ -1,14 +1,14 @@
 package com.aliakseipilko.flightdutytracker.dagger.components;
 
 import com.aliakseipilko.flightdutytracker.dagger.modules.RealmModule;
+import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.realm.Realm;
 
 @Singleton
 @Component(modules = {RealmModule.class})
 public interface RepositoryComponent {
-    Realm inject();
+    void inject(FlightRepository repository);
 }
