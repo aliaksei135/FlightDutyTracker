@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:weightSum="2"
     tools:context="com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.SevenDaysHourFragment">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_medium"
         android:layout_weight="1">
 
@@ -29,14 +29,14 @@
     </RelativeLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
         android:layout_margin="8dp"
         android:background="@android:color/darker_gray" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/margin_medium"
         android:layout_weight="1">
 
