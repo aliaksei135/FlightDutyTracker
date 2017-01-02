@@ -1,6 +1,7 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,5 +95,11 @@ public class TwentyEightDaysHourFragment extends BaseHourFragment {
     @Override
     public void showError(String message) {
         ((HourFragment) getParentFragment()).showError(message);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getView().invalidate();
     }
 }

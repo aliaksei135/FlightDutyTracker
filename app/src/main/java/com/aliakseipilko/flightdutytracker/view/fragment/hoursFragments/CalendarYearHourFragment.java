@@ -1,6 +1,7 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,12 @@ public class CalendarYearHourFragment extends BaseHourFragment {
         flightHoursMarkView.setMax(maxFlightMillis);
         flightHoursMarkView.setMark(flightMillis);
         flightHoursMarkView.setText(s);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getView().invalidate();
     }
 
     @Override

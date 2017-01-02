@@ -11,7 +11,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -34,6 +33,7 @@ public class MainActivity extends BaseActivity
     static final String FRAGMENT_DUTIES = "FRAGMENT_DUTIES";
     static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
     static String CURRENT_FRAGMENT_TAG;
+
     @BindColor(R.color.successColor)
     int successColor;
     @BindColor(R.color.warningColor)
@@ -99,9 +99,10 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (CURRENT_FRAGMENT_TAG != null) {
-            showCurrentFragment();
+        if (CURRENT_FRAGMENT_TAG == null) {
+            CURRENT_FRAGMENT_TAG = FRAGMENT_FLIGHT;
         }
+        showCurrentFragment();
     }
 
     @Override
@@ -111,28 +112,6 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -164,6 +143,7 @@ public class MainActivity extends BaseActivity
                 } else {
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white));
                 }
+                getSupportActionBar().setTitle("Flights");
                 break;
             case FRAGMENT_DUTIES:
 
@@ -171,6 +151,7 @@ public class MainActivity extends BaseActivity
             case FRAGMENT_HOURS:
                 newFragment = HourFragment.newInstance();
                 fab.hide();
+                getSupportActionBar().setTitle("Hours");
                 break;
         }
 
@@ -194,17 +175,20 @@ public class MainActivity extends BaseActivity
                 newFragment = FlightFragment.newInstance();
                 CURRENT_FRAGMENT_TAG = FRAGMENT_FLIGHT;
 
+                fab.show();
                 //Change FAB to 'add' icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     fab.setImageDrawable(getDrawable(R.drawable.ic_add_white));
                 } else {
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white));
                 }
+                getSupportActionBar().setTitle("Flights");
                 break;
             case R.id.nav_hours:
                 newFragment = HourFragment.newInstance();
                 CURRENT_FRAGMENT_TAG = FRAGMENT_HOURS;
                 fab.hide();
+                getSupportActionBar().setTitle("Hours");
                 break;
             case R.id.nav_slideshow:
 
