@@ -24,7 +24,8 @@
             android:layout_width="172dp"
             android:layout_height="172dp"
             android:layout_centerInParent="true"
-            app:mv_strokeWidth="6dp" />
+            app:mv_strokeWidth="6dp"
+            app:mv_textSize="32sp" />
 
     </RelativeLayout>
 
@@ -51,7 +52,8 @@
             android:layout_width="172dp"
             android:layout_height="172dp"
             android:layout_centerInParent="true"
-            app:mv_strokeWidth="6dp" />
+            app:mv_strokeWidth="6dp"
+            app:mv_textSize="32sp" />
 
     </RelativeLayout>
 

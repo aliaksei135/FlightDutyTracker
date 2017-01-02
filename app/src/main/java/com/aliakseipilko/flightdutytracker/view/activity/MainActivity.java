@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity
                 //Set Fragment to switch
                 newFragment = FlightFragment.newInstance();
 
+                fab.show();
                 //Change FAB to 'add' icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     fab.setImageDrawable(getDrawable(R.drawable.ic_add_white));

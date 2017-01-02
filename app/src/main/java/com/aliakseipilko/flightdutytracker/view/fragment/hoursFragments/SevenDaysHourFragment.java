@@ -33,7 +33,7 @@ public class SevenDaysHourFragment extends BaseHourFragment {
     StorageComponent storageComponent;
     @Inject
     SharedPreferences prefs;
-    long maxDutyMillis, maxFlightMillis;
+    double maxDutyMillis, maxFlightMillis;
     private HourPresenter presenter;
 
     public SevenDaysHourFragment() {
@@ -57,16 +57,16 @@ public class SevenDaysHourFragment extends BaseHourFragment {
         View view = inflater.inflate(R.layout.fragment_seven_days_hour, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
+        storageComponent.inject(this);
+
+        maxDutyMillis = prefs.getLong("max7DayDutyHours", 60) * 60 * 60 * 1000;
+        maxFlightMillis = prefs.getLong("max7DayFlightHours", 60) * 60 * 60 * 1000;
+
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();
         presenter.getFlightHoursInPastDays(7);
         presenter.getDutyHoursInPastDays(7);
-
-        storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
-        storageComponent.inject(this);
-
-        maxDutyMillis = prefs.getInt("max7DayDutyHours", 60) * 60 * 60 * 1000;
-        maxFlightMillis = prefs.getInt("max7DayFlightHours", 60) * 60 * 60 * 1000;
 
         return view;
     }
@@ -78,16 +78,16 @@ public class SevenDaysHourFragment extends BaseHourFragment {
     }
 
     @Override
-    public void showDutyHours(String s, long dutyMillis) {
-        dutyHoursMarkView.setMax((int) maxDutyMillis);
-        dutyHoursMarkView.setMark((int) dutyMillis);
+    public void showDutyHours(String s, double dutyMillis) {
+        dutyHoursMarkView.setMax(maxDutyMillis);
+        dutyHoursMarkView.setMark(dutyMillis);
         dutyHoursMarkView.setText(s);
     }
 
     @Override
-    public void showFlightHours(String s, long flightMillis) {
-        flightHoursMarkView.setMax((int) maxFlightMillis);
-        flightHoursMarkView.setMark((int) flightMillis);
+    public void showFlightHours(String s, double flightMillis) {
+        flightHoursMarkView.setMax(maxFlightMillis);
+        flightHoursMarkView.setMark(flightMillis);
         flightHoursMarkView.setText(s);
     }
 

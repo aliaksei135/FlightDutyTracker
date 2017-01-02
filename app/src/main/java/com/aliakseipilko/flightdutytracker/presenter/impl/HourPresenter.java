@@ -31,8 +31,7 @@ public class HourPresenter implements IHourPresenter {
     public void getDutyHoursInPastDays(int days) {
 
         DateTime dateTime = DateTime.now();
-        dateTime.minusDays(days);
-        Date startDate = dateTime.toDate();
+        Date startDate = dateTime.minusDays(days).toDate();
 
         repository.getMultipleFlightsByDateRange(startDate, new Date(), getMultipleFlightsDutyHoursCallback);
     }
@@ -41,8 +40,7 @@ public class HourPresenter implements IHourPresenter {
     public void getFlightHoursInPastDays(int days) {
 
         DateTime dateTime = DateTime.now();
-        dateTime.minusDays(days);
-        Date startDate = dateTime.toDate();
+        Date startDate = dateTime.minusDays(days).toDate();
 
         repository.getMultipleFlightsByDateRange(startDate, new Date(), getMultipleFlightsFlightHoursCallback);
     }
@@ -52,16 +50,20 @@ public class HourPresenter implements IHourPresenter {
         getMultipleFlightsDutyHoursCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-                long dutyMillis = 0;
+                double dutyMillis = 0;
 
                 for (Flight flight : flights) {
                     dutyMillis += (flight.getEndDutyTime().getTime() - flight.getStartDutyTime().getTime());
                 }
 
-                Duration dutyDuration = Duration.millis(dutyMillis);
+                Duration dutyDuration = Duration.millis((long) dutyMillis);
                 long hours = dutyDuration.getStandardHours();
                 long minutes = dutyDuration.minus(hours * 60 * 60 * 1000).getStandardMinutes();
-                view.showDutyHours(hours + ":" + minutes, dutyMillis);
+                if (minutes < 10) {
+                    view.showDutyHours(hours + ":0" + minutes, dutyMillis);
+                } else {
+                    view.showDutyHours(hours + ":" + minutes, dutyMillis);
+                }
             }
 
             @Override
@@ -72,16 +74,20 @@ public class HourPresenter implements IHourPresenter {
         getMultipleFlightsFlightHoursCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-                long flightMillis = 0;
+                double flightMillis = 0;
 
                 for (Flight flight : flights) {
                     flightMillis += (flight.getEndFlightTime().getTime() - flight.getStartFlightTime().getTime());
                 }
 
-                Duration dutyDuration = Duration.millis(flightMillis);
+                Duration dutyDuration = Duration.standardSeconds((long) (flightMillis / 1000));
                 long hours = dutyDuration.getStandardHours();
                 long minutes = dutyDuration.minus(hours * 60 * 60 * 1000).getStandardMinutes();
-                view.showFlightHours(hours + ":" + minutes, flightMillis);
+                if (minutes < 10) {
+                    view.showFlightHours(hours + ":0" + minutes, flightMillis);
+                } else {
+                    view.showFlightHours(hours + ":" + minutes, flightMillis);
+                }
             }
 
             @Override

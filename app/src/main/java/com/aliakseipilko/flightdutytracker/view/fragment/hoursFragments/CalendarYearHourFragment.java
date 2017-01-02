@@ -32,7 +32,7 @@ public class CalendarYearHourFragment extends BaseHourFragment {
     StorageComponent storageComponent;
     @Inject
     SharedPreferences prefs;
-    long maxDutyMillis, maxFlightMillis;
+    double maxDutyMillis, maxFlightMillis;
     private HourPresenter presenter;
 
     public CalendarYearHourFragment() {
@@ -57,17 +57,17 @@ public class CalendarYearHourFragment extends BaseHourFragment {
         View view = inflater.inflate(R.layout.fragment_calendar_year_hour, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
+        storageComponent.inject(this);
+
+        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("maxYearDutyHours", 1000L)) * 60 * 60 * 1000;
+        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("maxYearFlightHours", 900L)) * 60 * 60 * 1000;
+
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();
         //TODO Fix this for leap years
         presenter.getFlightHoursInPastDays(365);
         presenter.getDutyHoursInPastDays(365);
-
-        storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
-        storageComponent.inject(this);
-
-        maxDutyMillis = prefs.getInt("maxYearDutyHours", 60) * 60 * 60 * 1000;
-        maxFlightMillis = prefs.getInt("maxYearFlightHours", 60) * 60 * 60 * 1000;
 
         return view;
     }
@@ -79,16 +79,16 @@ public class CalendarYearHourFragment extends BaseHourFragment {
     }
 
     @Override
-    public void showDutyHours(String s, long dutyMillis) {
-        dutyHoursMarkView.setMax((int) maxDutyMillis);
-        dutyHoursMarkView.setMark((int) dutyMillis);
+    public void showDutyHours(String s, double dutyMillis) {
+        dutyHoursMarkView.setMax(maxDutyMillis);
+        dutyHoursMarkView.setMark(dutyMillis);
         dutyHoursMarkView.setText(s);
     }
 
     @Override
-    public void showFlightHours(String s, long flightMillis) {
-        flightHoursMarkView.setMax((int) maxFlightMillis);
-        flightHoursMarkView.setMark((int) flightMillis);
+    public void showFlightHours(String s, double flightMillis) {
+        flightHoursMarkView.setMax(maxFlightMillis);
+        flightHoursMarkView.setMark(flightMillis);
         flightHoursMarkView.setText(s);
     }
 

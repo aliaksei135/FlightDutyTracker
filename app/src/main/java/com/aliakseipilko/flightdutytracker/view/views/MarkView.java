@@ -36,7 +36,7 @@ import com.aliakseipilko.flightdutytracker.utils.MarkViewUtils;
  * @author Ihsan Isik
  *         <p/>
  *         An android custom view that displays a circle with a colored arc given a mark.
- * @see #setMark(int)
+ * @see #setMark(long)
  * <p/>
  */
 public class MarkView extends View {
@@ -51,13 +51,13 @@ public class MarkView extends View {
     private static final String STATE_MAX = "max";
     private static final String STATE_TEXT = "text";
 
-    private final int DEFAULT_START_POINT = 0;
-    private final int DEFAULT_STROKE_COLOR = Color.parseColor("#999999");
+    private final int DEFAULT_START_POINT = 270;
+    private final int DEFAULT_STROKE_COLOR = Color.parseColor("#b71c1c");
     private final float DEFAULT_STROKE_WIDTH;
     private final float DEFAULT_BG_RING_WIDTH;
     private final int DEFAULT_BG_RING_COLOR = Color.parseColor("#647d7d7d");
     private final int DEFAULT_TEXT_COLOR = Color.parseColor("#656565");
-    private final int DEFAULT_MAX = 5;
+    private final double DEFAULT_MAX = 216000000D;
     private final float DEFAULT_TEXT_SIZE;
     private final int MIN_SIZE;
 
@@ -73,8 +73,8 @@ public class MarkView extends View {
     private float mStrokeWidth;
     private int mBgRingColor;
     private float mBgRingWidth;
-    private int mMark = 0;
-    private int mMax = DEFAULT_MAX;
+    private double mMark = 0;
+    private double mMax = DEFAULT_MAX;
     private int mStartPoint;
 
     private RectF mOuterRect = new RectF();
@@ -123,7 +123,7 @@ public class MarkView extends View {
         mStartPoint = attributes.getInt(R.styleable.MarkView_mv_startPoint, DEFAULT_START_POINT);
 
 
-        setMax(attributes.getInt(R.styleable.MarkView_mv_max, DEFAULT_MAX));
+        setMax(attributes.getInt(R.styleable.MarkView_mv_max, (int) DEFAULT_MAX));
         setMark(attributes.getInt(R.styleable.MarkView_mv_mark, 0));
     }
 
@@ -185,6 +185,7 @@ public class MarkView extends View {
                 delta,
                 getWidth() - delta,
                 getHeight() - delta);
+        float test = getMarkAngle();
 
         float innerCircleRadius = (getWidth() - mStrokeWidth) / 2f;
         canvas.drawCircle(getWidth() / 2f, getHeight() / 2f, innerCircleRadius, mInnerCirclePaint);
@@ -212,8 +213,8 @@ public class MarkView extends View {
         bundle.putFloat(STATE_TEXT_SIZE, getTextSize());
         bundle.putIntArray(STATE_STROKE_COLORS, getStrokeColors());
         bundle.putFloat(STATE_STROKE_WIDTH, getStrokeWidth());
-        bundle.putInt(STATE_MAX, getMax());
-        bundle.putInt(STATE_MARK, getMark());
+        bundle.putDouble(STATE_MAX, getMax());
+        bundle.putDouble(STATE_MARK, getMark());
         return bundle;
     }
 
@@ -227,8 +228,8 @@ public class MarkView extends View {
             mStrokeColors = bundle.getIntArray(STATE_STROKE_COLORS);
             mStrokeWidth = bundle.getFloat(STATE_STROKE_WIDTH);
             initPainters();
-            setMax(bundle.getInt(STATE_MAX));
-            setMark(bundle.getInt(STATE_MARK));
+            setMax(bundle.getDouble(STATE_MAX));
+            setMark(bundle.getDouble(STATE_MARK));
             super.onRestoreInstanceState(bundle.getParcelable(STATE_STATE));
             return;
         }
@@ -251,21 +252,21 @@ public class MarkView extends View {
     }
 
     private float getMarkAngle() {
-        if (!isMarkValid(mMark)) return 360f;
-        return getMark() / (float) mMax * 360f;
+        if (!isMarkValid(mMark)) return 360L;
+        return (float) ((getMark() / mMax) * 360f);
     }
 
     /**
      * Returns the current mark
      */
-    public int getMark() {
+    public double getMark() {
         return mMark;
     }
 
     /**
      * Sets the mark
      */
-    public void setMark(int mark) {
+    public void setMark(double mark) {
         mMark = mark;
         invalidate();
     }
@@ -273,25 +274,23 @@ public class MarkView extends View {
     /**
      * Checks whether a given mark is valid according to the current configuration
      */
-    public boolean isMarkValid(int mark) {
+    public boolean isMarkValid(double mark) {
         return mark > 0 && mark <= mMax;
     }
 
     /**
      * Returns the highest mark this MarkView accepts
      */
-    public int getMax() {
+    public double getMax() {
         return mMax;
     }
 
     /**
      * Sets the highest mark this MarkView accepts
      */
-    public void setMax(int max) {
-        if (max > 0) {
-            mMax = max;
-            invalidate();
-        }
+    public void setMax(double max) {
+        mMax = max;
+        invalidate();
     }
 
     /**
@@ -370,7 +369,7 @@ public class MarkView extends View {
         if (mStrokeColors.length < mMark) {
             return mStrokeColors[mStrokeColors.length - 1];
         }
-        return mStrokeColors[mMark - 1];
+        return DEFAULT_STROKE_COLOR;
     }
 
     /**
