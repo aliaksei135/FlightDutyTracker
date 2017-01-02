@@ -10,7 +10,7 @@
         android:id="@+id/hours_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@android:color/darker_gray"
+        app:tabBackground="@color/materialize_primary_light"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorAccent"
         app:tabMode="fixed"

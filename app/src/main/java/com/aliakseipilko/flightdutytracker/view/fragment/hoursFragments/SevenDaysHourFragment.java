@@ -61,8 +61,8 @@ public class SevenDaysHourFragment extends BaseHourFragment {
         storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
         storageComponent.inject(this);
 
-        maxDutyMillis = prefs.getLong("max7DayDutyHours", 60) * 60 * 60 * 1000;
-        maxFlightMillis = prefs.getLong("max7DayFlightHours", 60) * 60 * 60 * 1000;
+        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("max7DayDutyHours", Double.doubleToLongBits(60D))) * 60 * 60 * 1000;
+        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("max7DayFlightHours", Double.doubleToLongBits(60D))) * 60 * 60 * 1000;
 
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();

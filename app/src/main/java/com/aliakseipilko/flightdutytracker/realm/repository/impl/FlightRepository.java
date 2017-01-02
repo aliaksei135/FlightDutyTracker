@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static com.aliakseipilko.flightdutytracker.utils.AirportCode.CODE_TYPES.ICAO_CODE;
 
@@ -242,7 +243,7 @@ public class FlightRepository implements IFlightRepository {
     @Override
     public void getMultipleFlightsByIdCount(long startId, int count, @NonNull OnGetMultipleFlightsCallback callback) {
         RealmResults<Flight> results = realm.where(Flight.class)
-                .between("id", startId, startId + count)
+                .between("id", startId + 1, startId + count + 1)
                 .findAll();
 
         if (results.isLoaded()) {
@@ -256,7 +257,7 @@ public class FlightRepository implements IFlightRepository {
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate, @NonNull OnGetMultipleFlightsCallback callback) {
         RealmResults<Flight> results = realm.where(Flight.class)
                 .between("startDutyTime", startDate, endDate)
-                .findAll();
+                .findAllSorted("startDutyTime", Sort.DESCENDING);
 
         if (results.isLoaded()) {
             callback.OnSuccess(results);

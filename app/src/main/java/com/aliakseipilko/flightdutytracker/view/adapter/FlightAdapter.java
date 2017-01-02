@@ -1,6 +1,5 @@
 package com.aliakseipilko.flightdutytracker.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
+import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -28,9 +28,12 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
 
     private onRecyclerItemClickListener itemClickCallback;
 
-    public FlightAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Flight> data) {
-        super(context, data, true);
+    private FlightFragment fragment;
+
+    public FlightAdapter(@NonNull FlightFragment fragment, @Nullable OrderedRealmCollection<Flight> data) {
+        super(fragment.getContext(), data, true);
         flights = data;
+        this.fragment = fragment;
     }
 
     @Override
@@ -80,6 +83,7 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
         for (Flight f : moreFlights) {
             flights.add(f);
         }
+        fragment.setLoadingMore(false);
     }
 
     public void setItemClickCallback(onRecyclerItemClickListener itemClickCallback) {

@@ -8,7 +8,8 @@ import com.aliakseipilko.flightdutytracker.utils.AirportCode;
 import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 import io.realm.RealmResults;
@@ -32,12 +33,9 @@ public class FlightPresenter implements IFlightPresenter {
 
     public void initAdapaterData() {
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -7);
-        //Get all flights between today and 7 days ago to start with
-        adapter = new FlightAdapter(view.getContext(), null);
+        adapter = new FlightAdapter(view, null);
         view.setAdapter(adapter);
-        getMultipleFlightsByDateRange(cal.getTime(), new Date());
+        getMultipleFlightsByDateRange(DateTime.now().minusDays(7).toDate(), new Date());
     }
 
     @Override
@@ -91,8 +89,7 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
 
-//        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
-        repository.getAllFlights(getMultipleFlightsCallback);
+        repository.getMultipleFlightsByDateRange(startDate, endDate, getMultipleFlightsCallback);
     }
 
 

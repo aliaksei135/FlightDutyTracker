@@ -77,13 +77,16 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
         recyclerView.setupMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-                if (adapter.getItemCount() < 6) {
+                if (adapter.getItemCount() <= maxLastVisiblePosition) {
                     recyclerView.setLoadingMore(false);
+                    recyclerView.hideMoreProgress();
                     return;
                 }
-                presenter.getMultipleFlightsByIdCount(overallItemsCount + 1, 14);
+                recyclerView.showMoreProgress();
+                presenter.getMultipleFlightsByIdCount(overallItemsCount, 14);
             }
         }, 7);
+        recyclerView.hideMoreProgress();
         recyclerView.setupSwipeToDismiss(new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
             @Override
             public boolean canDismiss(int position) {
@@ -95,7 +98,6 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
             public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions) {
 
             }
-
         });
 
     }
@@ -108,6 +110,23 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
     public void setAdapter(FlightAdapter adapter) {
         this.adapter = adapter;
         adapter.setItemClickCallback(this);
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        if (recyclerView != null) {
+            recyclerView.setRefreshing(refreshing);
+        }
+    }
+
+    public void setLoadingMore(boolean loadingMore) {
+        if (recyclerView != null) {
+            recyclerView.setLoadingMore(loadingMore);
+            if (loadingMore) {
+                recyclerView.showMoreProgress();
+            } else {
+                recyclerView.hideMoreProgress();
+            }
+        }
     }
 
     @Override

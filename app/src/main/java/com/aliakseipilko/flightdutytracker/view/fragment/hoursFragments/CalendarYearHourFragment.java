@@ -61,8 +61,8 @@ public class CalendarYearHourFragment extends BaseHourFragment {
         storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
         storageComponent.inject(this);
 
-        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("maxYearDutyHours", 1000L)) * 60 * 60 * 1000;
-        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("maxYearFlightHours", 900L)) * 60 * 60 * 1000;
+        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("maxYearDutyHours", Double.doubleToLongBits(1800D))) * 60 * 60 * 1000;
+        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("maxYearFlightHours", Double.doubleToLongBits(900D))) * 60 * 60 * 1000;
 
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();

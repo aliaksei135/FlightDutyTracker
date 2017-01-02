@@ -61,8 +61,8 @@ public class TwentyEightDaysHourFragment extends BaseHourFragment {
         storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
         storageComponent.inject(this);
 
-        maxDutyMillis = prefs.getLong("max28DayDutyHours", 190) * 60 * 60 * 1000;
-        maxFlightMillis = prefs.getLong("max28DayFlightHours", 100) * 60 * 60 * 1000;
+        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("max28DayDutyHours", Double.doubleToLongBits(190D))) * 60 * 60 * 1000;
+        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("max28DayFlightHours", Double.doubleToLongBits(100D))) * 60 * 60 * 1000;
 
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();
