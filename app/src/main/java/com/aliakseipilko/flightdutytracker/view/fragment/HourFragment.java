@@ -1,5 +1,6 @@
 package com.aliakseipilko.flightdutytracker.view.fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -57,6 +58,12 @@ public class HourFragment extends BaseFragment {
     @Override
     public void onFABClicked() {
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        viewPager.setAdapter(adapter);
     }
 
     @Override

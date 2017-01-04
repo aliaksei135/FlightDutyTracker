@@ -1,5 +1,6 @@
 package com.aliakseipilko.flightdutytracker.view.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -190,9 +191,9 @@ public class MainActivity extends BaseActivity
                 fab.hide();
                 getSupportActionBar().setTitle("Hours");
                 break;
-            case R.id.nav_slideshow:
-
-                break;
+            case R.id.nav_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

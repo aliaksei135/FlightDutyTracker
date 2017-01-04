@@ -1,7 +1,6 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +60,8 @@ public class CalendarYearHourFragment extends BaseHourFragment {
         storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
         storageComponent.inject(this);
 
-        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("maxYearDutyHours", Double.doubleToLongBits(1800D))) * 60 * 60 * 1000;
-        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("maxYearFlightHours", Double.doubleToLongBits(900D))) * 60 * 60 * 1000;
+        maxDutyMillis = (double) prefs.getInt("maxYearDutyHours", 1800) * 60 * 60 * 1000;
+        maxFlightMillis = (double) prefs.getInt("maxYearFlightHours", 1000) * 60 * 60 * 1000;
 
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();
@@ -91,12 +90,6 @@ public class CalendarYearHourFragment extends BaseHourFragment {
         flightHoursMarkView.setMax(maxFlightMillis);
         flightHoursMarkView.setMark(flightMillis);
         flightHoursMarkView.setText(s);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        getView().invalidate();
     }
 
     @Override

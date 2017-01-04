@@ -1,7 +1,6 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +60,8 @@ public class TwentyEightDaysHourFragment extends BaseHourFragment {
         storageComponent = DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build();
         storageComponent.inject(this);
 
-        maxDutyMillis = Double.longBitsToDouble(prefs.getLong("max28DayDutyHours", Double.doubleToLongBits(190D))) * 60 * 60 * 1000;
-        maxFlightMillis = Double.longBitsToDouble(prefs.getLong("max28DayFlightHours", Double.doubleToLongBits(100D))) * 60 * 60 * 1000;
+        maxDutyMillis = prefs.getInt("max28DayDutyHours", 190) * 60 * 60 * 1000;
+        maxFlightMillis = prefs.getInt("max28DayFlightHours", 100) * 60 * 60 * 1000;
 
         presenter = new HourPresenter(this);
         presenter.subscribeAllCallbacks();
@@ -95,11 +94,5 @@ public class TwentyEightDaysHourFragment extends BaseHourFragment {
     @Override
     public void showError(String message) {
         ((HourFragment) getParentFragment()).showError(message);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        getView().invalidate();
     }
 }

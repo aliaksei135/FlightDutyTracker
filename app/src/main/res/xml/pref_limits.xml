@@ -1,0 +1,55 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Duty Hour Limitations">
+
+        <EditTextPreference
+            android:defaultValue="@string/default_7days_duty"
+            android:inputType="number"
+            android:key="max7DayDutyHours"
+            android:numeric="integer"
+            android:selectAllOnFocus="true"
+            android:summary=""
+            android:title="7 Days" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_28days_duty"
+            android:inputType="number"
+            android:key="max28DayDutyHours"
+            android:selectAllOnFocus="true"
+            android:title="28 Days" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_year_duty"
+            android:inputType="number"
+            android:key="maxYearDutyHours"
+            android:selectAllOnFocus="true"
+            android:title="1 Year" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Block Hour Limitations">
+
+        <EditTextPreference
+            android:defaultValue="@string/default_7days_flight"
+            android:inputType="number"
+            android:key="max7DayFlightHours"
+            android:selectAllOnFocus="true"
+            android:title="7 Days" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_28days_flight"
+            android:inputType="number"
+            android:key="max28DayFlightHours"
+            android:selectAllOnFocus="true"
+            android:title="28 Days" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_year_flight"
+            android:inputType="number"
+            android:key="maxYearFlightHours"
+            android:selectAllOnFocus="true"
+            android:title="1 Year" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
