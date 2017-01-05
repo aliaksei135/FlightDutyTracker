@@ -18,7 +18,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        google {
+            //Set Google Play donations for Donations Lib
+            buildConfigField "boolean", "DONATIONS_GOOGLE", "true"
+        }
+    }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -60,6 +68,9 @@ dependencies {
 
     compile 'io.realm:android-adapters:1.4.0'
     compile 'joda-time:joda-time:2.9.7'
+
+    //Donations
+    compile 'org.sufficientlysecure:donations:2.5'
 
     //Permissions Handling
     compile 'com.karumi:dexter:3.0.0'

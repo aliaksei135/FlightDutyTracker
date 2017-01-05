@@ -23,6 +23,8 @@ import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.StatsFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
+import org.sufficientlysecure.donations.DonationsFragment;
+
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,9 +34,11 @@ public class MainActivity extends BaseActivity
 
     //Fragment constants
     static final String FRAGMENT_FLIGHT = "FRAGMENT_FLIGHT";
-    static final String FRAGMENT_DUTIES = "FRAGMENT_DUTIES";
     static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
     static final String FRAGMENT_STATS = "FRAGMENT_STATS";
+    static final String FRAGMENT_DONATE = "FRAGMENT_DONATE";
+    private static final String GOOGLE_PUBKEY = "";//TODO
+    private static final String[] GOOGLE_CATALOG = new String[10];
     static String CURRENT_FRAGMENT_TAG;
 
     @BindColor(R.color.successColor)
@@ -130,6 +134,17 @@ public class MainActivity extends BaseActivity
         showCurrentFragment();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (CURRENT_FRAGMENT_TAG.equals(FRAGMENT_DONATE)) {
+            //Propagate resusl to fragment to be handled
+            Fragment donateFragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_DONATE);
+            donateFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     void showCurrentFragment() {
 
         Fragment newFragment = null;
@@ -148,13 +163,27 @@ public class MainActivity extends BaseActivity
                 }
                 getSupportActionBar().setTitle("Flights");
                 break;
-            case FRAGMENT_DUTIES:
-
-                break;
             case FRAGMENT_HOURS:
                 newFragment = HourFragment.newInstance();
                 fab.hide();
                 getSupportActionBar().setTitle("Hours");
+                break;
+            case FRAGMENT_STATS:
+                newFragment = StatsFragment.newInstance();
+                fab.hide();
+                getSupportActionBar().setTitle("Stats");
+                break;
+            case FRAGMENT_DONATE:
+                newFragment = DonationsFragment.newInstance(true, //TODO Change this for release versions
+                        true,
+                        GOOGLE_PUBKEY,
+                        GOOGLE_CATALOG,
+                        getResources().getStringArray(R.array.google_catalog_values),
+                        false, null, null, null, //PayPal
+                        false, null, null, //Flattr
+                        false, null);//BTC
+                fab.hide();
+                getSupportActionBar().setTitle("Donate");
                 break;
         }
 
@@ -202,6 +231,18 @@ public class MainActivity extends BaseActivity
             case R.id.nav_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
+            case R.id.nav_donate:
+                newFragment = DonationsFragment.newInstance(true, //TODO Change this for release versions
+                        true,
+                        GOOGLE_PUBKEY,
+                        GOOGLE_CATALOG,
+                        getResources().getStringArray(R.array.google_catalog_values),
+                        false, null, null, null, //PayPal
+                        false, null, null, //Flattr
+                        false, null);//BTC
+                CURRENT_FRAGMENT_TAG = FRAGMENT_DONATE;
+                fab.hide();
+                getSupportActionBar().setTitle("Donate");
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
