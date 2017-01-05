@@ -12,7 +12,6 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
-
     <string name="default_7days_duty">60</string>
     <string name="default_28days_duty">190</string>
     <string name="default_year_duty">1800</string>

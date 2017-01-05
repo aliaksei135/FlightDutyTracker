@@ -8,6 +8,7 @@ import com.aliakseipilko.flightdutytracker.utils.AirportCode;
 import java.util.Date;
 
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public interface IFlightRepository extends IBaseRepository {
 
@@ -31,7 +32,7 @@ public interface IFlightRepository extends IBaseRepository {
 
     void getMultipleFlightsByIdCount(long startId, int count, @NonNull OnGetMultipleFlightsCallback callback);
 
-    void getMultipleFlightsByDateRange(Date startDate, Date endDate, @NonNull OnGetMultipleFlightsCallback callback);
+    void getMultipleFlightsByDateRange(Date startDate, Date endDate, Sort sort, @NonNull OnGetMultipleFlightsCallback callback);
 
     interface OnAddFlightCallback {
         void OnSuccess();

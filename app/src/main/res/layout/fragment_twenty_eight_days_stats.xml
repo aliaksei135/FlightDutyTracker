@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aliakseipilko.flightdutytracker.view.fragment.statsFragments.TwentyEightDaysStatsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Duty Hours"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/twenty_eight_day_duty_barstat"
+                android:layout_width="match_parent"
+                android:layout_height="312dp"
+                android:layout_margin="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="8dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Flight Hours"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/twenty_eight_day_flight_barstat"
+                android:layout_width="match_parent"
+                android:layout_height="312dp"
+                android:layout_margin="4dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

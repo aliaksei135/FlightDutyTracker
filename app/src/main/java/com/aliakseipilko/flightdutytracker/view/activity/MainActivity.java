@@ -20,6 +20,7 @@ import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.StatsFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 import butterknife.BindColor;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity
     static final String FRAGMENT_FLIGHT = "FRAGMENT_FLIGHT";
     static final String FRAGMENT_DUTIES = "FRAGMENT_DUTIES";
     static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
+    static final String FRAGMENT_STATS = "FRAGMENT_STATS";
     static String CURRENT_FRAGMENT_TAG;
 
     @BindColor(R.color.successColor)
@@ -190,6 +192,12 @@ public class MainActivity extends BaseActivity
                 CURRENT_FRAGMENT_TAG = FRAGMENT_HOURS;
                 fab.hide();
                 getSupportActionBar().setTitle("Hours");
+                break;
+            case R.id.nav_statistics:
+                newFragment = StatsFragment.newInstance();
+                CURRENT_FRAGMENT_TAG = FRAGMENT_STATS;
+                fab.hide();
+                getSupportActionBar().setTitle("Stats");
                 break;
             case R.id.nav_settings:
                 startActivity(new Intent(this, SettingsActivity.class));

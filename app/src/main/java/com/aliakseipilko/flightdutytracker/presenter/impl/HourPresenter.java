@@ -12,6 +12,7 @@ import org.joda.time.Duration;
 import java.util.Date;
 
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 
 public class HourPresenter implements IHourPresenter {
@@ -33,7 +34,7 @@ public class HourPresenter implements IHourPresenter {
         DateTime dateTime = DateTime.now();
         Date startDate = dateTime.minusDays(days).toDate();
 
-        repository.getMultipleFlightsByDateRange(startDate, new Date(), getMultipleFlightsDutyHoursCallback);
+        repository.getMultipleFlightsByDateRange(startDate, new Date(), Sort.DESCENDING, getMultipleFlightsDutyHoursCallback);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class HourPresenter implements IHourPresenter {
         DateTime dateTime = DateTime.now();
         Date startDate = dateTime.minusDays(days).toDate();
 
-        repository.getMultipleFlightsByDateRange(startDate, new Date(), getMultipleFlightsFlightHoursCallback);
+        repository.getMultipleFlightsByDateRange(startDate, new Date(), Sort.DESCENDING, getMultipleFlightsFlightHoursCallback);
     }
 
     @Override

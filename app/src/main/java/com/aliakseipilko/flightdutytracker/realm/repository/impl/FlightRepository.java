@@ -254,10 +254,10 @@ public class FlightRepository implements IFlightRepository {
     }
 
     @Override
-    public void getMultipleFlightsByDateRange(Date startDate, Date endDate, @NonNull OnGetMultipleFlightsCallback callback) {
+    public void getMultipleFlightsByDateRange(Date startDate, Date endDate, Sort sort, @NonNull OnGetMultipleFlightsCallback callback) {
         RealmResults<Flight> results = realm.where(Flight.class)
                 .between("startDutyTime", startDate, endDate)
-                .findAllSorted("startDutyTime", Sort.DESCENDING);
+                .findAllSorted("startDutyTime", sort);
 
         if (results.isLoaded()) {
             callback.OnSuccess(results);

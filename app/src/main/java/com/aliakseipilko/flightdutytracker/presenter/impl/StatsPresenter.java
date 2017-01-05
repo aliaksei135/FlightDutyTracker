@@ -1,14 +1,12 @@
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
-import com.aliakseipilko.flightdutytracker.presenter.IFlightPresenter;
+import com.aliakseipilko.flightdutytracker.presenter.IStatsPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
-import com.aliakseipilko.flightdutytracker.view.adapter.FlightAdapter;
-import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
-
-import org.joda.time.DateTime;
+import com.aliakseipilko.flightdutytracker.view.adapter.BaseChartAdapter;
+import com.aliakseipilko.flightdutytracker.view.fragment.statsFragments.base.BaseStatsFragment;
 
 import java.util.Date;
 
@@ -16,51 +14,20 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 
-public class FlightPresenter implements IFlightPresenter {
+public class StatsPresenter implements IStatsPresenter {
 
     private IFlightRepository.OnGetMultipleFlightsCallback getMultipleFlightsCallback;
-    private IFlightRepository.OnDeleteFlightCallback deleteFlightCallback;
 
-    private FlightFragment view;
-    private FlightAdapter adapter;
+    private BaseStatsFragment view;
+
+    private BaseChartAdapter chartAdapter;
 
     private FlightRepository repository;
 
-    public FlightPresenter(FlightFragment view) {
-
+    public StatsPresenter(BaseStatsFragment view, BaseChartAdapter chartAdapter) {
         this.view = view;
         repository = new FlightRepository();
-    }
-
-    public void initAdapaterData() {
-
-        adapter = new FlightAdapter(view, null);
-        view.setAdapter(adapter);
-        getMultipleFlightsByDateRange(DateTime.now().minusDays(7).toDate(), new Date());
-    }
-
-    @Override
-    public void deleteFlightById(long id) {
-
-        repository.deleteFlightById(id, deleteFlightCallback);
-    }
-
-    @Override
-    public void deleteFlight(Flight flight) {
-
-        repository.deleteFlight(flight, deleteFlightCallback);
-    }
-
-    @Override
-    public void deleteFlightByFlightNumber(String flightNumber) {
-
-        repository.deleteFlightByFlightNumber(flightNumber, deleteFlightCallback);
-    }
-
-    @Override
-    public void getMultipleFlightsByFlightNumber(String flightNumber) {
-
-        repository.getMultipleFlightsByFlightNumber(flightNumber, getMultipleFlightsCallback);
+        this.chartAdapter = chartAdapter;
     }
 
     @Override
@@ -90,29 +57,15 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByDateRange(Date startDate, Date endDate) {
 
-        repository.getMultipleFlightsByDateRange(startDate, endDate, Sort.DESCENDING, getMultipleFlightsCallback);
+        repository.getMultipleFlightsByDateRange(startDate, endDate, Sort.ASCENDING, getMultipleFlightsCallback);
     }
-
 
     @Override
     public void subscribeAllCallbacks() {
-
         getMultipleFlightsCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-                adapter.addMoreData(flights);
-            }
-
-            @Override
-            public void OnError(String message) {
-                view.showError(message);
-            }
-        };
-
-        deleteFlightCallback = new IFlightRepository.OnDeleteFlightCallback() {
-            @Override
-            public void OnSuccess() {
-                view.showSuccess("Successfully deleted!");
+                chartAdapter.process(flights);
             }
 
             @Override
@@ -125,6 +78,5 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void unsubscribeAllCallbacks() {
         getMultipleFlightsCallback = null;
-        deleteFlightCallback = null;
     }
 }
