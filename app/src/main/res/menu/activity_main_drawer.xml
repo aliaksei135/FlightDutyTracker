@@ -31,6 +31,10 @@
             android:id="@+id/nav_donate"
             android:icon="@drawable/ic_attach_money_black"
             android:title="Donate" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_outline_black"
+            android:title="About" />
     </group>
 
 </menu>

@@ -4,7 +4,7 @@
 
     <header
         android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/ic_info_outline_black"
         android:title="General" />
 
     <header
@@ -14,7 +14,7 @@
 
     <header
         android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
+        android:icon="@drawable/ic_info_black"
         android:title="Sync" />
 
 </preference-headers>

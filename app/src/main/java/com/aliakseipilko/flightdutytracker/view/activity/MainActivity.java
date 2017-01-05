@@ -22,6 +22,7 @@ import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.StatsFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import org.sufficientlysecure.donations.DonationsFragment;
 
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity
     static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
     static final String FRAGMENT_STATS = "FRAGMENT_STATS";
     static final String FRAGMENT_DONATE = "FRAGMENT_DONATE";
+    static final String FRAGMENT_ABOUT = "FRAGMENT_ABOUT";
     private static final String GOOGLE_PUBKEY = "";//TODO
     private static final String[] GOOGLE_CATALOG = new String[10];
     static String CURRENT_FRAGMENT_TAG;
@@ -185,6 +187,16 @@ public class MainActivity extends BaseActivity
                 fab.hide();
                 getSupportActionBar().setTitle("Donate");
                 break;
+            case FRAGMENT_ABOUT:
+                newFragment = new LibsBuilder()
+                        .withAboutAppName("Flight Duty Tracker")
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .withAutoDetect(true)
+                        .withSortEnabled(true)
+                        .supportFragment();
+                fab.hide();
+                getSupportActionBar().setTitle("About");
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -243,6 +255,18 @@ public class MainActivity extends BaseActivity
                 CURRENT_FRAGMENT_TAG = FRAGMENT_DONATE;
                 fab.hide();
                 getSupportActionBar().setTitle("Donate");
+                break;
+            case R.id.nav_about:
+                newFragment = new LibsBuilder()
+                        .withAboutAppName("Flight Duty Tracker")
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .withAutoDetect(true)
+                        .withSortEnabled(true)
+                        .supportFragment();
+                CURRENT_FRAGMENT_TAG = FRAGMENT_ABOUT;
+                fab.hide();
+                getSupportActionBar().setTitle("About");
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
