@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.CalendarYearHourFragment;
-import com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.TwentyEightDaysHourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.statsFragments.SevenDaysStatsFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.statsFragments.TwentyEightDaysStatsFragment;
 
 public class StatsAdapter extends FragmentPagerAdapter {
 
@@ -21,7 +21,7 @@ public class StatsAdapter extends FragmentPagerAdapter {
             case 0:
                 return SevenDaysStatsFragment.newInstance();
             case 1:
-                return TwentyEightDaysHourFragment.newInstance();
+                return TwentyEightDaysStatsFragment.newInstance();
             case 2:
                 return CalendarYearHourFragment.newInstance();
         }

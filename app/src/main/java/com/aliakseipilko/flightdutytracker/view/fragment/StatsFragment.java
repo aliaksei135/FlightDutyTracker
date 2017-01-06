@@ -2,7 +2,6 @@ package com.aliakseipilko.flightdutytracker.view.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,12 +10,13 @@ import android.view.ViewGroup;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.adapter.StatsAdapter;
+import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class StatsFragment extends Fragment {
+public class StatsFragment extends BaseFragment {
 
     @BindView(R.id.stats_tabs)
     TabLayout tabLayout;
@@ -59,5 +59,10 @@ public class StatsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onFABClicked() {
+        //No FAB
     }
 }

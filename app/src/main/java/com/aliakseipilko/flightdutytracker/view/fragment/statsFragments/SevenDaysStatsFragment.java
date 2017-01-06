@@ -9,7 +9,7 @@ import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.StatsPresenter;
 import com.aliakseipilko.flightdutytracker.view.adapter.BaseChartAdapter;
 import com.aliakseipilko.flightdutytracker.view.adapter.DayBarChartAdapter;
-import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.StatsFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.statsFragments.base.BaseStatsFragment;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -101,6 +101,6 @@ public class SevenDaysStatsFragment extends BaseStatsFragment {
 
     @Override
     public void showError(String message) {
-        ((HourFragment) getParentFragment()).showError(message);
+        ((StatsFragment) getParentFragment()).showError(message);
     }
 }
