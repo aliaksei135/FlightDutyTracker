@@ -33,6 +33,8 @@ public class CreateFlightFragment extends BaseFragment {
     EditText arrivalEditText;
     @BindView(R.id.flight_number_et)
     EditText flightNumberEditText;
+    @BindView(R.id.ac_type_et)
+    EditText acTypeEditText;
     @BindView(R.id.duty_from_date_tv)
     TextView dutyFromDateTextView;
     @BindView(R.id.duty_to_date_tv)
@@ -68,8 +70,6 @@ public class CreateFlightFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_create_flight, container, true);
         ButterKnife.setDebug(true);
         unbinder = ButterKnife.bind(this, view);
-
-//        flightNumberEditText = (EditText) view.findViewById(R.id.flight_number_et);
 
         presenter = new CreateFlightPresenter(this);
         presenter.subscribeAllCallbacks();
@@ -126,7 +126,7 @@ public class CreateFlightFragment extends BaseFragment {
                     startFlightDate,
                     endFlightDate,
                     endDutyDate,
-                    "N/A", //TODO Allow A/C type to be added
+                    acTypeEditText.getText().toString().trim().toUpperCase(),
                     flightNumberEditText.getText().toString().trim().toUpperCase());
         }
     }
@@ -134,6 +134,10 @@ public class CreateFlightFragment extends BaseFragment {
     private boolean validateAllInputs() {
         if (TextUtils.isEmpty(flightNumberEditText.getText().toString())) {
             flightNumberEditText.setError("Cannot be empty.");
+            return false;
+        }
+        if (TextUtils.isEmpty(acTypeEditText.getText().toString())) {
+            acTypeEditText.setError("Cannot be empty.");
             return false;
         }
         String depText = departureEditText.getText().toString();

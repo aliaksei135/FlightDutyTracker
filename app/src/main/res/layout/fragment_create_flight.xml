@@ -13,10 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_huge"
+        android:gravity="center"
         android:hint="Flight Number"
-        android:inputType="textNoSuggestions"
+        android:inputType="textCapCharacters|textNoSuggestions"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/flight_number"
         tools:ignore="TextFields" />
 
     <RelativeLayout
@@ -32,8 +35,9 @@
             android:layout_margin="@dimen/margin_medium"
             android:layout_marginLeft="@dimen/margin_large"
             android:layout_marginStart="@dimen/margin_large"
+            android:gravity="center"
             android:hint="Departure"
-            android:inputType="textNoSuggestions"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:paddingBottom="4dp"
             android:paddingTop="4dp" />
 
@@ -55,16 +59,31 @@
             android:layout_margin="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginRight="@dimen/margin_large"
+            android:gravity="center"
             android:hint="Arrival"
-            android:inputType="textNoSuggestions"
+            android:inputType="textCapCharacters|textNoSuggestions"
             android:paddingBottom="4dp"
             android:paddingTop="4dp" />
+
+        <EditText
+            android:id="@+id/ac_type_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/departure_et"
+            android:layout_margin="@dimen/margin_small"
+            android:gravity="center"
+            android:hint="Aircraft Type"
+            android:inputType="textCapCharacters|textNoSuggestions"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:ignore="TextFields" />
 
         <View
             android:id="@+id/duty_time_view_splitter"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/departure_et"
+            android:layout_below="@id/ac_type_et"
             android:layout_margin="@dimen/margin_small"
             android:background="@android:color/darker_gray" />
 

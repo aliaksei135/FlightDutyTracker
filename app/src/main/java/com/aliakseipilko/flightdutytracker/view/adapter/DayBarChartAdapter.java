@@ -54,6 +54,12 @@ public class DayBarChartAdapter extends BaseChartAdapter {
 
             float decHoursDiff = (Seconds.secondsBetween(startDateTime, endDateTime).getSeconds() / 60f) / 60f;
 
+            //Dont display stats for today as they will be malformed
+            if (startDateTime.getDayOfYear() == DateTime.now().getDayOfYear()
+                    && startDateTime.getYear() == DateTime.now().getYear()) {
+                continue;
+            }
+
             if (currentYear == 0 && currentMonth == 0 && currentDay == 0) {
                 currentYear = startDateTime.getYear();
                 currentMonth = startDateTime.getMonthOfYear();
@@ -138,6 +144,12 @@ public class DayBarChartAdapter extends BaseChartAdapter {
             DateTime endDateTime = new DateTime(flight.getEndFlightTime());
 
             float decHoursDiff = (Seconds.secondsBetween(startDateTime, endDateTime).getSeconds() / 60f) / 60f;
+
+            //Dont display stats for today as they will be malformed
+            if (startDateTime.getDayOfYear() == DateTime.now().getDayOfYear()
+                    && startDateTime.getYear() == DateTime.now().getYear()) {
+                continue;
+            }
 
             if (currentYear == 0 && currentMonth == 0 && currentDay == 0) {
                 currentYear = startDateTime.getYear();
