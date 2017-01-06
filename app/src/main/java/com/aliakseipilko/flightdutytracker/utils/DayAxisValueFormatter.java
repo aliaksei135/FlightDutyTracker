@@ -11,14 +11,13 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
 
     final int startCount;
     final int maxDays;
-    boolean isMonthWrapping;
+
     Map<Float, Integer> labels = new HashMap<>();
     int count;
     float previousValue = -1;
-    String[] daysOfMonth = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    String[] daysOfMonth = {"1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31th"};
 
-    public DayAxisValueFormatter(boolean isMonthWrapping, int startCount, int maxDays) {
-        this.isMonthWrapping = isMonthWrapping;
+    public DayAxisValueFormatter(int startCount, int maxDays) {
         this.maxDays = maxDays;
         this.startCount = startCount;
         count = startCount;
@@ -26,19 +25,25 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
+        //Check if value is decimal
+        if (value % 1 != 0) {
+            return null;
+        }
+        //Check for wrapping around
+        //Ensuer array stays in bounds
+        if (count > daysOfMonth.length - 1) {
+            count = 0;
+        }
+        //Ensure month wraps
+        if (count > maxDays - 1) {
+            count = 0;
+        }
         if (previousValue != -1) {
             if (previousValue + 1f != value) {
                 count += (value - previousValue - 1f);
             }
         }
         previousValue = value;
-        if (count > daysOfMonth.length - 1) {
-            count = 0;
-        }
-        if (count > maxDays - 1) {
-            count = 0;
-        }
-
         if (labels.containsKey(value)) {
             count++;
             return daysOfMonth[labels.get(value)];

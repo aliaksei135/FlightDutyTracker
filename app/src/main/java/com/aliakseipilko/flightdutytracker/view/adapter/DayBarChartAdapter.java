@@ -108,13 +108,12 @@ public class DayBarChartAdapter extends BaseChartAdapter {
             }
         }
 
-        IAxisValueFormatter xAxisValueFormatter = new DayAxisValueFormatter(isMonthWrapping, (int) (startDay - 1), maxDaysInMonth);
+        IAxisValueFormatter xAxisValueFormatter = new DayAxisValueFormatter((int) (startDay - 1), maxDaysInMonth);
         IAxisValueFormatter yAxisValueFormatter = new DefaultAxisValueFormatter(2);
         BarDataSet dataSet = new BarDataSet(barDutyEntries, "Duty Hours");
-        dataSet.setValueTextSize(18f);
+        dataSet.setValueTextSize(16f);
         BarData barDutyData = new BarData(dataSet);
         barDutyData.setBarWidth(0.9f);
-        barDutyData.setValueTextSize(18f);
         barDutyData.setHighlightEnabled(false);
 
         view.setupDutyBarChart(barDutyData, xAxisValueFormatter, yAxisValueFormatter);
@@ -194,13 +193,12 @@ public class DayBarChartAdapter extends BaseChartAdapter {
             }
         }
 
-        IAxisValueFormatter xAxisValueFormatter = new DayAxisValueFormatter(isMonthWrapping, (int) (startDay - 1), maxDaysInMonth);
+        IAxisValueFormatter xAxisValueFormatter = new DayAxisValueFormatter((int) (startDay - 1), maxDaysInMonth);
         IAxisValueFormatter yAxisValueFormatter = new DefaultAxisValueFormatter(2);
         BarDataSet dataSet = new BarDataSet(barFlightEntries, "Flight Hours");
-        dataSet.setValueTextSize(18f);
+        dataSet.setValueTextSize(16f);
         BarData barFlightData = new BarData(dataSet);
         barFlightData.setBarWidth(0.9f);
-        barFlightData.setValueTextSize(18f);
         barFlightData.setHighlightEnabled(false);
 
         view.setupFlightBarChart(barFlightData, xAxisValueFormatter, yAxisValueFormatter);

@@ -51,7 +51,7 @@ public class StatsPresenter implements IStatsPresenter {
     @Override
     public void getMultipleFlightsByIdCount(long startId, int count) {
 
-        repository.getMultipleFlightsByIdCount(startId, count, getMultipleFlightsCallback);
+        repository.getMultipleFlightsByIdCount(startId, count, Sort.ASCENDING, getMultipleFlightsCallback);
     }
 
     @Override
