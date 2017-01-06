@@ -84,7 +84,7 @@ public class FlightPresenter implements IFlightPresenter {
     @Override
     public void getMultipleFlightsByIdCount(long startId, int count) {
 
-        repository.getMultipleFlightsByIdCount(startId, count, getMultipleFlightsCallback);
+        repository.getMultipleFlightsByIdCount(startId, count, Sort.DESCENDING, getMultipleFlightsCallback);
     }
 
     @Override

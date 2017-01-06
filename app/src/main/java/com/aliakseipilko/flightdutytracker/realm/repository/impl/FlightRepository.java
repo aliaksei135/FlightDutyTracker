@@ -241,10 +241,10 @@ public class FlightRepository implements IFlightRepository {
     }
 
     @Override
-    public void getMultipleFlightsByIdCount(long startId, int count, @NonNull OnGetMultipleFlightsCallback callback) {
+    public void getMultipleFlightsByIdCount(long startId, int count, Sort sort, @NonNull OnGetMultipleFlightsCallback callback) {
         RealmResults<Flight> results = realm.where(Flight.class)
-                .between("id", startId + 1, startId + count + 1)
-                .findAll();
+                .between("id", startId + 1, startId + count + 1) //Inverted order
+                .findAllSorted("startDutyTime", sort);
 
         if (results.isLoaded()) {
             callback.OnSuccess(results);

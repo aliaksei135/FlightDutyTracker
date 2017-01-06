@@ -30,7 +30,7 @@ public interface IFlightRepository extends IBaseRepository {
 
     void getAllFlights(@NonNull OnGetMultipleFlightsCallback callback);
 
-    void getMultipleFlightsByIdCount(long startId, int count, @NonNull OnGetMultipleFlightsCallback callback);
+    void getMultipleFlightsByIdCount(long startId, int count, Sort sort, @NonNull OnGetMultipleFlightsCallback callback);
 
     void getMultipleFlightsByDateRange(Date startDate, Date endDate, Sort sort, @NonNull OnGetMultipleFlightsCallback callback);
 

@@ -83,9 +83,9 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
                     return;
                 }
                 recyclerView.showMoreProgress();
-                presenter.getMultipleFlightsByIdCount(overallItemsCount, 14);
+                presenter.getMultipleFlightsByIdCount(overallItemsCount, 10);
             }
-        }, 7);
+        }, 5);
         recyclerView.hideMoreProgress();
         recyclerView.setupSwipeToDismiss(new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
             @Override
@@ -126,6 +126,12 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
             } else {
                 recyclerView.hideMoreProgress();
             }
+        }
+    }
+
+    public void refreshRecyclerView() {
+        if (recyclerView != null) {
+            recyclerView.invalidate();
         }
     }
 
