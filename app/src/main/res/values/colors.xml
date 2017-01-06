@@ -8,6 +8,8 @@
     <color name="failureColor">#f44336</color>
     <color name="warningColor">#ffc107</color>
 
+    <color name="flight_number">#1565c0</color>
+
     <string-array name="mv_mark_colors">
         <item>#D50000</item>
         <item>#FF6D00</item>

@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/margin_small"
-    card_view:cardBackgroundColor="@color/about_libraries_window_background"
+    android:layout_margin="2dp"
+    card_view:cardBackgroundColor="@color/cardview_light_background"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
+    card_view:cardElevation="2dp"
     card_view:contentPadding="2dp">
 
     <RelativeLayout
@@ -24,9 +24,13 @@
             android:layout_gravity="center_vertical|start"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:gravity="center"
+            android:layout_toLeftOf="@+id/departure_code_vh_tv"
+            android:layout_toStartOf="@+id/departure_code_vh_tv"
+            android:foregroundGravity="left"
+            android:gravity="left"
             android:text="FLT NO."
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/flight_number" />
 
         <TextView
             android:id="@+id/departure_code_vh_tv"
@@ -34,12 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical|start"
-            android:layout_margin="@dimen/margin_medium"
+            android:layout_margin="12dp"
             android:layout_toLeftOf="@+id/arrow_vh_iv"
             android:layout_toStartOf="@+id/arrow_vh_iv"
-            android:gravity="center"
+            android:gravity="right"
             android:text="DEPR"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/date_vh_tv"
@@ -54,7 +58,7 @@
             android:layout_marginStart="@dimen/margin_large"
             android:gravity="center"
             android:text="28/07/16"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <ImageView
             android:id="@+id/arrow_vh_iv"
@@ -71,12 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical|end"
-            android:layout_margin="@dimen/margin_medium"
+            android:layout_margin="12dp"
             android:layout_toEndOf="@+id/arrow_vh_iv"
             android:layout_toRightOf="@+id/arrow_vh_iv"
-            android:gravity="center"
+            android:gravity="left"
             android:text="ARRV"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </RelativeLayout>
 

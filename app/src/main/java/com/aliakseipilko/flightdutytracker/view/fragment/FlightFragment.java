@@ -2,7 +2,6 @@ package com.aliakseipilko.flightdutytracker.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,13 +66,6 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                showError("Not implemented yet!");
-                recyclerView.setRefreshing(false);
-            }
-        });
         recyclerView.setupMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
@@ -85,7 +77,7 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
                 recyclerView.showMoreProgress();
                 presenter.getMultipleFlightsByIdCount(overallItemsCount, 10);
             }
-        }, 5);
+        }, 7);
         recyclerView.hideMoreProgress();
         recyclerView.setupSwipeToDismiss(new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
             @Override
@@ -126,12 +118,6 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
             } else {
                 recyclerView.hideMoreProgress();
             }
-        }
-    }
-
-    public void refreshRecyclerView() {
-        if (recyclerView != null) {
-            recyclerView.invalidate();
         }
     }
 

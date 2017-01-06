@@ -83,7 +83,7 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
         for (Flight f : moreFlights) {
             flights.add(f);
         }
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
         fragment.setLoadingMore(false);
     }
 
