@@ -9,46 +9,66 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
-        <TextView
-            android:id="@+id/detail_departure_et"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="@dimen/margin_medium"
-            android:layout_marginLeft="@dimen/margin_large"
-            android:layout_marginStart="@dimen/margin_large"
-            android:inputType="textNoSuggestions"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
+        <RelativeLayout
+            android:id="@+id/detail_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/detail_departure_et"
-            android:layout_centerHorizontal="true"
-            android:scaleX="2"
-            android:scaleY="2"
-            android:src="@drawable/ic_arrow_forward_black" />
+            <TextView
+                android:id="@+id/detail_departure_tv"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/detail_departure_tv"
+                android:layout_centerInParent="true"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:src="@drawable/ic_arrow_forward_black" />
+
+            <TextView
+                android:id="@+id/detail_arrival_tv"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/detail_arrival_et"
-            android:layout_width="128dp"
+            android:id="@+id/detail_ac_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginRight="@dimen/margin_large"
-            android:inputType="textNoSuggestions"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
+            android:layout_below="@id/detail_holder"
+            android:layout_margin="@dimen/margin_small"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <View
             android:id="@+id/detail_duty_time_view_splitter"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/detail_departure_et"
+            android:layout_below="@id/detail_ac_tv"
             android:layout_margin="@dimen/margin_small"
             android:background="@android:color/darker_gray" />
 

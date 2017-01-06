@@ -23,10 +23,12 @@ import butterknife.Unbinder;
 public class FlightDetailsFragment extends BaseFragment {
 
     private static long flightId;
-    @BindView(R.id.detail_departure_et)
+    @BindView(R.id.detail_departure_tv)
     TextView departureTv;
-    @BindView(R.id.detail_arrival_et)
+    @BindView(R.id.detail_arrival_tv)
     TextView arrivalTv;
+    @BindView(R.id.detail_ac_tv)
+    TextView acTypeTv;
     @BindView(R.id.detail_duty_from_date_tv)
     TextView dutyFromTv;
     @BindView(R.id.detail_duty_to_date_tv)
@@ -85,6 +87,7 @@ public class FlightDetailsFragment extends BaseFragment {
             departureTv.setText(flight.getDepartureIATACode());
             arrivalTv.setText(flight.getArrivalIATACode());
         }
+        acTypeTv.setText(flight.getAcType());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
         dutyFromTv.setText(sdf.format(flight.getStartDutyTime()));
