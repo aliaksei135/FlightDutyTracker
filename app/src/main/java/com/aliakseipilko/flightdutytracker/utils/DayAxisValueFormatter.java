@@ -30,7 +30,7 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
             return null;
         }
         //Check for wrapping around
-        //Ensuer array stays in bounds
+        //Ensure array stays in bounds
         if (count > daysOfMonth.length - 1) {
             count = 0;
         }

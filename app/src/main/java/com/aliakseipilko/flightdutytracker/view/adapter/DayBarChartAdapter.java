@@ -34,7 +34,7 @@ public class DayBarChartAdapter extends BaseChartAdapter {
         processFlightHours();
     }
 
-    public void processDutyHours() {
+    private void processDutyHours() {
         List<BarEntry> barDutyEntries = new ArrayList<>();
 
         float xValueCount = 0f;
@@ -73,7 +73,7 @@ public class DayBarChartAdapter extends BaseChartAdapter {
                     //Check if days are adjacent
                     //Add skipped days onto xValueCount to display blank spaces in graph
                     if (currentDay + 1 != startDateTime.getDayOfMonth()) {
-                        xValueCount = xValueCount + (startDateTime.getDayOfMonth() - currentDay) - 1;
+                        xValueCount += (startDateTime.getDayOfMonth() - currentDay) - 1;
                     }
                 }
                 //Check if the date is the same as the previous flight
@@ -119,7 +119,7 @@ public class DayBarChartAdapter extends BaseChartAdapter {
         view.setupDutyBarChart(barDutyData, xAxisValueFormatter, yAxisValueFormatter);
     }
 
-    public void processFlightHours() {
+    private void processFlightHours() {
         List<BarEntry> barFlightEntries = new ArrayList<>();
 
         float xValueCount = 0f;
