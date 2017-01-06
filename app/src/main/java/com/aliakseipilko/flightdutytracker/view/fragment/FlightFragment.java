@@ -75,9 +75,9 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
                     return;
                 }
                 recyclerView.showMoreProgress();
-                presenter.getMultipleFlightsByIdCount(overallItemsCount, 10);
+                presenter.getMultipleFlightsByIdCount(overallItemsCount, 15);
             }
-        }, 10);
+        }, 15);
         recyclerView.hideMoreProgress();
         recyclerView.setupSwipeToDismiss(new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
             @Override

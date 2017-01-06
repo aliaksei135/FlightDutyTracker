@@ -32,7 +32,6 @@ import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.dagger.components.DaggerStorageComponent;
 import com.aliakseipilko.flightdutytracker.dagger.modules.PrefsModule;
 import com.aliakseipilko.flightdutytracker.view.activity.base.AppCompatPreferenceActivity;
-import com.mikepenz.materialize.MaterializeBuilder;
 
 import java.util.List;
 
@@ -151,11 +150,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         DaggerStorageComponent.builder().prefsModule(new PrefsModule(getApplicationContext())).build().inject(this);
         prefs = tempPrefs;
-
-        new MaterializeBuilder()
-                .withActivity(this)
-                .withTintedStatusBar(true)
-                .build();
+        //noinspection deprecation
+        //TODO Make status bar turn the right color
+//        getWindow().getDecorView().getRootView().setBackgroundColor(getResources().getColor(R.color.primary_dark));
     }
 
     @Override
@@ -196,10 +193,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         Tbar.setNavigationOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                setTransition();
                 NavUtils.navigateUpFromSameTask(SettingsActivity.this);
             }
         });
         setSupportActionBar(Tbar);
+
+    }
+
+    public void setTransition() {
+        overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
     }
 
     @Override
@@ -207,11 +211,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
+                setTransition();
                 NavUtils.navigateUpFromSameTask(this);
             }
             return true;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setTransition();
     }
 
     /**

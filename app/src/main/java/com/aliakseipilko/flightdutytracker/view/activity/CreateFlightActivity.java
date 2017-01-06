@@ -85,13 +85,24 @@ public class CreateFlightActivity extends BaseActivity implements CreateFlightFr
 
     @Override
     public void onAddFlightComplete() {
+        overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
         NavUtils.navigateUpFromSameTask(this);
         showToast("Flight added!");
     }
 
     @Override
     public void onAddFlightFailed(String message) {
+        overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
         NavUtils.navigateUpFromSameTask(this);
         showToast(message);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
     }
 }

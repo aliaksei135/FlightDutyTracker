@@ -2,19 +2,19 @@
 
     <!-- These settings headers are only used on tablets. -->
 
-    <header
-        android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_outline_black"
-        android:title="General" />
+    <!--<header-->
+    <!--android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$GeneralPreferenceFragment"-->
+    <!--android:icon="@drawable/ic_info_outline_black"-->
+    <!--android:title="General" />-->
 
     <header
         android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$LimitationsPreferenceFragment"
         android:icon="@drawable/ic_access_time_black"
         android:title="Hour Limitations" />
 
-    <header
-        android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_info_black"
-        android:title="Sync" />
+    <!--<header-->
+    <!--android:fragment="com.aliakseipilko.flightdutytracker.view.activity.SettingsActivity$DataSyncPreferenceFragment"-->
+    <!--android:icon="@drawable/ic_info_black"-->
+    <!--android:title="Sync" />-->
 
 </preference-headers>
