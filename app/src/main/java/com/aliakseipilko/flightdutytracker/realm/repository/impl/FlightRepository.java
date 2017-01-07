@@ -51,6 +51,26 @@ public class FlightRepository implements IFlightRepository {
     }
 
     @Override
+    public void editFlight(final Flight flight, @NonNull final OnAddFlightCallback callback) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(flight);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                callback.OnSuccess();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                callback.OnError(error.getMessage());
+            }
+        });
+    }
+
+    @Override
     public void deleteFlight(final Flight flight, @NonNull final OnDeleteFlightCallback callback) {
         //Find the flight by Primary key ID field first
         final RealmResults<Flight> results = realm.where(Flight.class)

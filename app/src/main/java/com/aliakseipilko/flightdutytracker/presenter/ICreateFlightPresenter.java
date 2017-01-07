@@ -14,4 +14,5 @@ public interface ICreateFlightPresenter extends IBasePresenter {
     void addFlight(String departureCode, String arrivalCode, Date startDutyTime, Date startFlightTime, Date endFlightTime, Date endDutyTime, String acType, String flightNumber);
 
     AirportCode.CODE_TYPES determineAirportCodeType(String departureCode, String arrivalCode);
+
 }

@@ -1,8 +1,10 @@
 package com.aliakseipilko.flightdutytracker.view.fragment;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
-import com.aliakseipilko.flightdutytracker.presenter.impl.CreateFlightPresenter;
+import com.aliakseipilko.flightdutytracker.dagger.components.DaggerStorageComponent;
+import com.aliakseipilko.flightdutytracker.dagger.modules.PrefsModule;
+import com.aliakseipilko.flightdutytracker.presenter.impl.EditFlightPresenter;
+import com.aliakseipilko.flightdutytracker.realm.model.Flight;
+import com.aliakseipilko.flightdutytracker.view.activity.FlightDetailsActivity;
 import com.aliakseipilko.flightdutytracker.view.dialog.DateTimePickerDialog;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
@@ -20,110 +26,98 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CreateFlightFragment extends BaseFragment {
+public class EditFlightFragment extends BaseFragment {
 
-    public static CreateFlightFragmentResultListener callback;
-
-    @BindView(R.id.departure_et)
+    @BindView(R.id.edit_departure_et)
     EditText departureEditText;
-    @BindView(R.id.arrival_et)
+    @BindView(R.id.edit_arrival_et)
     EditText arrivalEditText;
-    @BindView(R.id.flight_number_et)
+    @BindView(R.id.edit_flight_number_et)
     EditText flightNumberEditText;
-    @BindView(R.id.ac_type_et)
+    @BindView(R.id.edit_ac_type_et)
     EditText acTypeEditText;
-    @BindView(R.id.duty_from_date_tv)
+    @BindView(R.id.edit_duty_from_date_tv)
     TextView dutyFromDateTextView;
-    @BindView(R.id.duty_to_date_tv)
+    @BindView(R.id.edit_duty_to_date_tv)
     TextView dutyToDateTextView;
-    @BindView(R.id.flight_from_date_tv)
+    @BindView(R.id.edit_flight_from_date_tv)
     TextView flightFromDateTextView;
-    @BindView(R.id.flight_to_date_tv)
+    @BindView(R.id.edit_flight_to_date_tv)
     TextView flightToDateTextView;
 
     Date startDutyDate, endDutyDate, startFlightDate, endFlightDate;
 
-    private CreateFlightPresenter presenter;
-    private Unbinder unbinder;
+    Unbinder unbinder;
 
+    EditFlightPresenter presenter;
 
-    public CreateFlightFragment() {
+    Flight editFlight;
+    long flightId;
 
+    @Inject
+    SharedPreferences prefs;
+
+    public EditFlightFragment() {
+        // Required empty public constructor
     }
 
-    public static CreateFlightFragment newInstance(CreateFlightFragmentResultListener callback) {
-        CreateFlightFragment.callback = callback;
-
-        return new CreateFlightFragment();
+    public void setFlightId(long flightId) {
+        this.flightId = flightId;
     }
-
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_edit_flight, container, false);
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_create_flight, container, false);
         unbinder = ButterKnife.bind(this, view);
+        DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext())).build().inject(this);
 
-        presenter = new CreateFlightPresenter(this);
+        presenter = new EditFlightPresenter(this);
         presenter.subscribeAllCallbacks();
 
-        setDateTimeListeners();
+        presenter.getSingleFlightById(flightId);
+
+        setCurrentValues();
 
         return view;
     }
 
-    private void setDateTimeListeners() {
-        dutyFromDateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickDateTime("Duty Start", TimeType.DUTY_START, dutyFromDateTextView);
-            }
-        });
-        dutyToDateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickDateTime("Duty End", TimeType.DUTY_END, dutyToDateTextView);
-            }
-        });
-        flightFromDateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickDateTime("Flight Start", TimeType.FLIGHT_START, flightFromDateTextView);
-            }
-        });
-        flightToDateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickDateTime("Flight End", TimeType.FLIGHT_END, flightToDateTextView);
-            }
-        });
-    }
-
-    @Override
-    public void onFABClicked() {
-        //No FAB to click
+    public void setEditFlight(Flight editFlight) {
+        this.editFlight = editFlight;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        callback = null;
+    }
+
+    @Override
+    public void showError(String message) {
+        super.showError(message);
+        NavUtils.navigateUpFromSameTask(getActivity());
+    }
+
+    @Override
+    public void showSuccess(String message) {
+        super.showSuccess(message);
+        Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.putExtra("flightId", flightId);
+        startActivity(intent);
     }
 
     public void saveFlight() {
         if (validateAllInputs()) {
-            presenter.addFlight(departureEditText.getText().toString().trim().toUpperCase(),
+            presenter.editFlight(editFlight.getId(),
+                    departureEditText.getText().toString().trim().toUpperCase(),
                     arrivalEditText.getText().toString().trim().toUpperCase(),
                     startDutyDate,
                     startFlightDate,
@@ -132,6 +126,25 @@ public class CreateFlightFragment extends BaseFragment {
                     acTypeEditText.getText().toString().trim().toUpperCase(),
                     flightNumberEditText.getText().toString().trim().toUpperCase());
         }
+    }
+
+    private void setCurrentValues() {
+        flightNumberEditText.setText(editFlight.getFlightNumber());
+        if (prefs.getString("airportCodeType", "IATA").equals("IATA")) {
+            departureEditText.setText(editFlight.getDepartureIATACode());
+            arrivalEditText.setText(editFlight.getArrivalIATACode());
+        } else {
+            departureEditText.setText(editFlight.getDepartureICAOCode());
+            arrivalEditText.setText(editFlight.getArrivalICAOCode());
+        }
+        acTypeEditText.setText(editFlight.getAcType());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
+
+        dutyFromDateTextView.setText(sdf.format(editFlight.getStartDutyTime()));
+        dutyToDateTextView.setText(sdf.format(editFlight.getEndDutyTime()));
+        flightFromDateTextView.setText(sdf.format(editFlight.getStartFlightTime()));
+        flightToDateTextView.setText(sdf.format(editFlight.getEndFlightTime()));
     }
 
     private boolean validateAllInputs() {
@@ -177,11 +190,7 @@ public class CreateFlightFragment extends BaseFragment {
         return true;
     }
 
-    public void setResultListener(CreateFlightFragmentResultListener callback) {
-        CreateFlightFragment.callback = callback;
-    }
-
-    void pickDateTime(String title, final TimeType type, final TextView displayField) {
+    void pickDateTime(String title, final CreateFlightFragment.TimeType type, final TextView displayField) {
         final SwitchDateTimeDialogFragment dialog = DateTimePickerDialog.newInstance(title, "OK", "Cancel");
         dialog.setCancelable(false);
 
@@ -222,6 +231,11 @@ public class CreateFlightFragment extends BaseFragment {
         dialog.show(getFragmentManager(), "DateTimePickerDialog");
     }
 
+    @Override
+    public void onFABClicked() {
+
+    }
+
     enum TimeType {
         DUTY_START,
         DUTY_END,
@@ -229,9 +243,4 @@ public class CreateFlightFragment extends BaseFragment {
         FLIGHT_END
     }
 
-    public interface CreateFlightFragmentResultListener {
-        void onAddFlightComplete();
-
-        void onAddFlightFailed(String message);
-    }
 }

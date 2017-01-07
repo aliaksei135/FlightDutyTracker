@@ -88,7 +88,7 @@ public class CreateFlightActivity extends BaseActivity implements CreateFlightFr
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
         NavUtils.navigateUpFromSameTask(this);
-        showToast("Flight added!");
+        showSnackbar("Flight added!", true);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CreateFlightActivity extends BaseActivity implements CreateFlightFr
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
         NavUtils.navigateUpFromSameTask(this);
-        showToast(message);
+        showSnackbar(message, false);
     }
 
     @Override

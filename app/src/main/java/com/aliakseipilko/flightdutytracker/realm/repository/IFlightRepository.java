@@ -14,6 +14,8 @@ public interface IFlightRepository extends IBaseRepository {
 
     void addFlight(Flight flight, @NonNull OnAddFlightCallback callback);
 
+    void editFlight(Flight flight, @NonNull OnAddFlightCallback callback);
+
     void deleteFlight(Flight flight, @NonNull OnDeleteFlightCallback callback);
 
     void deleteFlightByFlightNumber(String flightNumber, @NonNull OnDeleteFlightCallback callback);

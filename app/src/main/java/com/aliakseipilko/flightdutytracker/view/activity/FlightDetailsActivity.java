@@ -49,7 +49,7 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSnackbar("Not implemented yet", false);
+                ((FlightDetailsFragment) getSupportFragmentManager().findFragmentByTag("FLIGHT_DETAILS")).onFABClicked();
             }
         });
 
@@ -96,6 +96,5 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
     public void setToolbarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
-
 
 }

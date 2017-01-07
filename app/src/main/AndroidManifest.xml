@@ -47,6 +47,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".view.activity.EditFlightActivity"
+            android:label="@string/title_activity_edit_flight"
+            android:parentActivityName=".view.activity.FlightDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aliakseipilko.flightdutytracker.view.activity.FlightDetailsActivity" />
+        </activity>
     </application>
 
 </manifest>

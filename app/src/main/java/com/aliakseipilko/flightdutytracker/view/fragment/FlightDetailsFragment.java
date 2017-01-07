@@ -1,6 +1,7 @@
 package com.aliakseipilko.flightdutytracker.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.FlightDetailsPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
+import com.aliakseipilko.flightdutytracker.view.activity.EditFlightActivity;
 import com.aliakseipilko.flightdutytracker.view.activity.FlightDetailsActivity;
 import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
@@ -98,7 +100,9 @@ public class FlightDetailsFragment extends BaseFragment {
 
     @Override
     public void onFABClicked() {
-
+        Intent intent = new Intent(getActivity(), EditFlightActivity.class);
+        intent.putExtra("flightId", flightId);
+        startActivity(intent);
     }
 
     public void setFlight(Flight flight) {

@@ -3,6 +3,7 @@ package com.aliakseipilko.flightdutytracker.dagger.components;
 import com.aliakseipilko.flightdutytracker.dagger.modules.PrefsModule;
 import com.aliakseipilko.flightdutytracker.dagger.modules.RealmModule;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
+import com.aliakseipilko.flightdutytracker.view.fragment.EditFlightFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.SettingsFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.CalendarYearHourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.hoursFragments.SevenDaysHourFragment;
@@ -25,4 +26,6 @@ public interface StorageComponent {
     void inject(FlightRepository repository);
 
     void inject(SettingsFragment fragment);
+
+    void inject(EditFlightFragment fragment);
 }
