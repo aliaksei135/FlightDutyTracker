@@ -54,7 +54,6 @@ dependencies {
 
     //UI Libraries
     compile 'com.redbooth:WelcomeCoordinator:1.0.1'
-    compile 'xyz.danoz:recyclerviewfastscroller:0.1.3' //Keeping this for the @dimen resources :/
     compile 'com.malinskiy:superrecyclerview:1.1.4'
     compile 'com.github.Kunzisoft:Android-SwitchDateTimePicker:1.3'
     compile 'com.hannesdorfmann:swipeback:1.0.4'

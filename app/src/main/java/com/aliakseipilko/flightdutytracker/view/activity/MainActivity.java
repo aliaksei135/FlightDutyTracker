@@ -263,6 +263,8 @@ public class MainActivity extends BaseActivity
                         .withAboutVersionShown(true)
                         .withAutoDetect(true)
                         .withSortEnabled(true)
+                        .withLibraries("MarkView")
+                        .withFields("An android custom view that displays a circle with a colored arc given a mark")
                         .supportFragment();
                 CURRENT_FRAGMENT_TAG = FRAGMENT_ABOUT;
                 fab.hide();

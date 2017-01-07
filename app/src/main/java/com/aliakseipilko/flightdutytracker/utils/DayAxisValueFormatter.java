@@ -27,7 +27,7 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
     public String getFormattedValue(float value, AxisBase axis) {
         //Check if value is decimal
         if (value % 1 != 0) {
-            return null;
+            return "";
         }
         //Check for wrapping around
         //Ensure array stays in bounds
