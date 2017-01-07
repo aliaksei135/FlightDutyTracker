@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="google_catalog_values" />
+    <string-array name="airport_code_types">
+        <item>IATA</item>
+        <item>ICAO</item>
+    </string-array>
 </resources>

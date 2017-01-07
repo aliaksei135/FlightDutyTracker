@@ -41,10 +41,11 @@
         <activity
             android:name=".view.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".view.activity.MainActivity">
+            android:parentActivityName=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aliakseipilko.flightdutytracker.view.activity.MainActivity" />
+                android:value=".view.activity.MainActivity" />
         </activity>
     </application>
 

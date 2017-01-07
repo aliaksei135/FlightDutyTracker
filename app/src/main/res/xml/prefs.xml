@@ -1,5 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="General">
+
+        <ListPreference
+            android:entries="@array/airport_code_types"
+            android:entryValues="@array/airport_code_types"
+            android:key="airportCodeType"
+            android:summary=""
+            android:title="Airport Code Type" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Duty Hour Limitations">
 
         <EditTextPreference
@@ -27,7 +38,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Block Hour Limitations">
+    <PreferenceCategory android:title="Flight Hour Limitations">
 
         <EditTextPreference
             android:defaultValue="@string/default_7days_flight"

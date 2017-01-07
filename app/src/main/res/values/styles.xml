@@ -11,6 +11,12 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--<item name="android:windowExitAnimation">@anim/swipeback_slide_right_out</item>-->
+        <!--<item name="android:windowEnterAnimation">@anim/swipeback_stack_to_front</item>-->
+        <item name="android:activityCloseExitAnimation">@anim/swipeback_slide_right_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/swipeback_slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/swipeback_stack_to_back</item>
+        <item name="android:activityOpenEnterAnimation">@anim/swipeback_stack_to_front</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
