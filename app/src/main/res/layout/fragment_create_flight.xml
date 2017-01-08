@@ -26,50 +26,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/departure_et"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="@dimen/margin_medium"
-            android:layout_marginLeft="@dimen/margin_large"
-            android:layout_marginStart="@dimen/margin_large"
-            android:gravity="center"
-            android:hint="Departure"
-            android:inputType="textCapCharacters|textNoSuggestions"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
+        <RelativeLayout
+            android:id="@+id/airports_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/departure_et"
-            android:layout_centerHorizontal="true"
-            android:scaleX="2"
-            android:scaleY="2"
-            android:src="@drawable/ic_arrow_forward_black" />
+            <EditText
+                android:id="@+id/departure_et"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:gravity="center"
+                android:hint="Departure"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp" />
 
-        <EditText
-            android:id="@+id/arrival_et"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginRight="@dimen/margin_large"
-            android:gravity="center"
-            android:hint="Arrival"
-            android:inputType="textCapCharacters|textNoSuggestions"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/departure_et"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_forward_black" />
+
+            <EditText
+                android:id="@+id/arrival_et"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:gravity="center"
+                android:hint="Arrival"
+                android:inputType="textCapCharacters|textNoSuggestions"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp" />
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/ac_type_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/departure_et"
+            android:layout_below="@id/airports_holder"
             android:layout_margin="@dimen/margin_small"
             android:gravity="center"
             android:hint="Aircraft Type"

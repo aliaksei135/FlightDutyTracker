@@ -12,9 +12,10 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/margin_medium"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:src="@drawable/ic_flight_takeoff_grey" />
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/ic_flight_takeoff_grey"
+        android:tint="#FF9E9E9E" />
 
     <TextView
         android:layout_width="wrap_content"

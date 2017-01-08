@@ -123,6 +123,7 @@ public class FlightDetailsFragment extends BaseFragment {
     @Override
     public void onFABClicked() {
         Intent intent = new Intent(getActivity(), EditFlightActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
     }

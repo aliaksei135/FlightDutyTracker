@@ -112,7 +112,6 @@ public class EditFlightFragment extends BaseFragment {
     public void showError(String message) {
         super.showError(message);
         Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
     }
@@ -121,7 +120,6 @@ public class EditFlightFragment extends BaseFragment {
     public void showSuccess(String message) {
         super.showSuccess(message);
         Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
     }
