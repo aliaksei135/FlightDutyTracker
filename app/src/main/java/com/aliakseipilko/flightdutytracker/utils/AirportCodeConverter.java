@@ -43,6 +43,12 @@ public class AirportCodeConverter {
             jsonReader.beginArray();
             while (jsonReader.hasNext()) {
                 Airport airport = gson.fromJson(jsonReader, Airport.class);
+                if (airport.getIATA() == null) {
+                    airport.setIATA("");
+                }
+                if (airport.getICAO() == null) {
+                    airport.setICAO("");
+                }
                 airports.add(airport);
             }
             jsonReader.endArray();

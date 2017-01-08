@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="google_catalog_values" />
+    <string-array name="google_catalog_values">
+        <item>£1</item>
+        <item>£2</item>
+        <item>£3</item>
+        <item>£4</item>
+        <item>£5</item>
+        <item>£10</item>
+    </string-array>
+
     <string-array name="airport_code_types">
         <item>IATA</item>
         <item>ICAO</item>

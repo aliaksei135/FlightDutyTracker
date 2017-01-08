@@ -49,8 +49,8 @@ public class MainActivity extends BaseActivity
     static final String FRAGMENT_STATS = "FRAGMENT_STATS";
     static final String FRAGMENT_DONATE = "FRAGMENT_DONATE";
     static final String FRAGMENT_ABOUT = "FRAGMENT_ABOUT";
-    private static final String GOOGLE_PUBKEY = "";//TODO
-    private static final String[] GOOGLE_CATALOG = new String[10];
+    private static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnWPdEBR35BwTB/93oHcEu/T25h6bBlSB9TQtBq0zTWuCf62wqaDDCfR27uFQY+rYnm5Oknw1gCEizeUXcmhPyf+riWUE2ROqLOCnlx0lqbLKCYHN5QotVLpr/DF8oL00I8bGHoWbbyBBxSKot7pRsJPb/2hVpbsCYmepRsHY2gzp/fpG8EcRCmakf+tvBmAQ9k7hNgYYP1rK1GEso1gMGzHhmEn9xyNmJg8qdd1RKUoBvryQ+TvZBvCaGXHjauhBdawUvzvEYYmuDfTXToV6h6tG6pU+ErcB+kQrTEdBfs4O6+kh2Fy495jFnutV+sD0okQTqV3S8czeVwegdau3fwIDAQAB";
+    private static final String[] GOOGLE_CATALOG = {"£1", "£2", "£3", "£4", "£5", "£10"};
     static String CURRENT_FRAGMENT_TAG;
 
     @BindColor(R.color.successColor)
@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity
                 getSupportActionBar().setTitle("Stats");
                 break;
             case FRAGMENT_DONATE:
-                newFragment = DonationsFragment.newInstance(true, //TODO Change this for release versions
+                newFragment = DonationsFragment.newInstance(false,
                         true,
                         GOOGLE_PUBKEY,
                         GOOGLE_CATALOG,
@@ -256,7 +256,7 @@ public class MainActivity extends BaseActivity
                 overridePendingTransition(R.anim.swipeback_stack_right_in, R.anim.swipeback_stack_to_back);
                 return true;
             case R.id.nav_donate:
-                newFragment = DonationsFragment.newInstance(true, //TODO Change this for release versions
+                newFragment = DonationsFragment.newInstance(false,
                         true,
                         GOOGLE_PUBKEY,
                         GOOGLE_CATALOG,
