@@ -1,10 +1,14 @@
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.GsonBuilder;
+
 import com.aliakseipilko.flightdutytracker.presenter.IEditFlightPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
+import com.aliakseipilko.flightdutytracker.utils.AirportCodeConverter;
 import com.aliakseipilko.flightdutytracker.view.fragment.EditFlightFragment;
 
 import java.util.Date;
@@ -17,10 +21,14 @@ public class EditFlightPresenter implements IEditFlightPresenter {
 
     EditFlightFragment view;
     FlightRepository repository;
+    AirportCodeConverter codeConverter;
 
     public EditFlightPresenter(EditFlightFragment view) {
         this.view = view;
         repository = new FlightRepository();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.IDENTITY);
+        codeConverter = new AirportCodeConverter(view.getContext().getApplicationContext(), gsonBuilder.create());
     }
 
     @Override
@@ -54,9 +62,13 @@ public class EditFlightPresenter implements IEditFlightPresenter {
         if (codetype == AirportCode.CODE_TYPES.IATA_CODE) {
             flight.setDepartureIATACode(departureCode);
             flight.setArrivalIATACode(arrivalCode);
+            flight.setDepartureICAOCode(codeConverter.convertIATAtoICAO(departureCode));
+            flight.setArrivalICAOCode(codeConverter.convertIATAtoICAO(arrivalCode));
         } else {
             flight.setDepartureICAOCode(departureCode);
             flight.setArrivalICAOCode(arrivalCode);
+            flight.setDepartureIATACode(codeConverter.convertICAOtoIATA(departureCode));
+            flight.setArrivalIATACode(codeConverter.convertICAOtoIATA(arrivalCode));
         }
 
         flight.setId(id);

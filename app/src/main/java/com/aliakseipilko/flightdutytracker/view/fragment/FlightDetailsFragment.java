@@ -2,6 +2,7 @@ package com.aliakseipilko.flightdutytracker.view.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
+import com.aliakseipilko.flightdutytracker.dagger.components.DaggerStorageComponent;
+import com.aliakseipilko.flightdutytracker.dagger.modules.PrefsModule;
 import com.aliakseipilko.flightdutytracker.presenter.impl.FlightDetailsPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.view.activity.EditFlightActivity;
@@ -17,6 +20,8 @@ import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,13 +44,15 @@ public class FlightDetailsFragment extends BaseFragment {
     TextView flightFromTv;
     @BindView(R.id.detail_flight_to_date_tv)
     TextView flightToTv;
+    @Inject
+    SharedPreferences prefs;
     private FlightDetailsPresenter presenter;
     private Unbinder unbinder;
     private Flight flight;
     private FlightDetailsActivity activityCallback;
 
     public FlightDetailsFragment() {
-        presenter = new FlightDetailsPresenter(this);
+
     }
 
     public static FlightDetailsFragment newInstance(long flightId) {
@@ -56,6 +63,7 @@ public class FlightDetailsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DaggerStorageComponent.builder().prefsModule(new PrefsModule(getContext().getApplicationContext())).build().inject(this);
     }
 
     @Override
@@ -65,8 +73,8 @@ public class FlightDetailsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_flight_details, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        presenter = new FlightDetailsPresenter(this);
         presenter.subscribeAllCallbacks();
-
         presenter.getSingleFlightById(flightId);
 
         return view;
@@ -82,7 +90,7 @@ public class FlightDetailsFragment extends BaseFragment {
 
         activityCallback.setToolbarTitle(flight.getFlightNumber());
 
-        if (flight.getDepartureIATACode() == null) {
+        if (prefs.getString("airportCodeType", "IATA").equals("ICAO")) {
             departureTv.setText(flight.getDepartureICAOCode());
             arrivalTv.setText(flight.getArrivalICAOCode());
         } else {

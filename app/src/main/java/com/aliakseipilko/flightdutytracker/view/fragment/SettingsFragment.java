@@ -27,6 +27,7 @@ public class SettingsFragment extends PreferenceFragment {
     private Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
+            prefs.edit().putString(preference.getKey(), value.toString()).commit();
             String stringValue = value.toString();
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -73,7 +74,7 @@ public class SettingsFragment extends PreferenceFragment {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
             prefs.edit().putInt(preference.getKey(), Integer.parseInt(o.toString())).commit();
-            preference.setSummary(o.toString());
+            preference.setSummary(o.toString() + "hrs");
             return true;
         }
     };

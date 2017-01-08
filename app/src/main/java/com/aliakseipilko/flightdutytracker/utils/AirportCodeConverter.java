@@ -7,30 +7,37 @@ import android.content.Context;
 
 import com.aliakseipilko.flightdutytracker.R;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class AirportCodeConverter {
-    @Inject
     Gson gson;
-    @Inject
     Context ctx;
 
-    List<Airport> airports;
+    List<Airport> airports = new ArrayList<>();
 
     @Inject
-    public AirportCodeConverter() {
-
+    public AirportCodeConverter(Context appContext, Gson gson) {
+        this.gson = gson;
+        ctx = appContext;
+        generateAirports();
     }
 
     private void generateAirports() {
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(ctx.getResources().openRawResource(R.raw.airports)));
         try {
-            airports = gson.fromJson(new JsonReader(new FileReader(new File(String.valueOf(ctx.getResources().openRawResource(R.raw.airports))))), Airport.class);
-        } catch (FileNotFoundException e) {
+            jsonReader.beginArray();
+            while (jsonReader.hasNext()) {
+                Airport airport = gson.fromJson(jsonReader, Airport.class);
+                airports.add(airport);
+            }
+            jsonReader.endArray();
+            jsonReader.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -40,8 +47,8 @@ public class AirportCodeConverter {
             generateAirports();
         }
         for (Airport airport : airports) {
-            if (airport.getIATACode().equalsIgnoreCase(IATACode)) {
-                return airport.getICAOCode();
+            if (airport.getIATA().equalsIgnoreCase(IATACode)) {
+                return airport.getICAO();
             }
         }
         return null;
@@ -52,8 +59,8 @@ public class AirportCodeConverter {
             generateAirports();
         }
         for (Airport airport : airports) {
-            if (airport.getICAOCode().equalsIgnoreCase(ICAOCode)) {
-                return airport.getIATACode();
+            if (airport.getICAO().equalsIgnoreCase(ICAOCode)) {
+                return airport.getIATA();
             }
         }
         return null;
@@ -64,8 +71,8 @@ public class AirportCodeConverter {
         String name;
         String city;
         String country;
-        String IATACode;
-        String ICAOCode;
+        String IATA;
+        String ICAO;
         double latitude;
         double longitude;
         int altitude;
@@ -105,52 +112,52 @@ public class AirportCodeConverter {
             this.country = country;
         }
 
-        public String getIATACode() {
-            return IATACode;
+        public String getIATA() {
+            return IATA;
         }
 
-        public void setIATACode(String IATACode) {
-            this.IATACode = IATACode;
+        public void setIATA(String IATACode) {
+            this.IATA = IATACode;
         }
 
-        public String getICAOCode() {
-            return ICAOCode;
+        public String getICAO() {
+            return ICAO;
         }
 
-        public void setICAOCode(String ICAOCode) {
-            this.ICAOCode = ICAOCode;
+        public void setICAO(String ICAOCode) {
+            this.ICAO = ICAOCode;
         }
 
         public double getLatitude() {
             return latitude;
         }
 
-        public void setLatitude(double latitude) {
-            this.latitude = latitude;
+        public void setLatitude(String latitude) {
+            this.latitude = Double.parseDouble(latitude);
         }
 
         public double getLongitude() {
             return longitude;
         }
 
-        public void setLongitude(double longitude) {
-            this.longitude = longitude;
+        public void setLongitude(String longitude) {
+            this.longitude = Double.parseDouble(longitude);
         }
 
         public int getAltitude() {
             return altitude;
         }
 
-        public void setAltitude(int altitude) {
-            this.altitude = altitude;
+        public void setAltitude(String altitude) {
+            this.altitude = Integer.parseInt(altitude);
         }
 
         public float getTimezone() {
             return timezone;
         }
 
-        public void setTimezone(float timezone) {
-            this.timezone = timezone;
+        public void setTimezone(String timezone) {
+            this.timezone = Float.valueOf(timezone);
         }
 
         public char getDST() {

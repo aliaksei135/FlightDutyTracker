@@ -1,20 +1,24 @@
 package com.aliakseipilko.flightdutytracker.view.adapter;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
+import com.aliakseipilko.flightdutytracker.dagger.components.DaggerStorageComponent;
+import com.aliakseipilko.flightdutytracker.dagger.modules.PrefsModule;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,16 +28,17 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapter.FlightViewHolder> {
 
+    @Inject
+    SharedPreferences prefs;
     private OrderedRealmCollection<Flight> flights;
-
     private onRecyclerItemClickListener itemClickCallback;
-
     private FlightFragment fragment;
 
     public FlightAdapter(@NonNull FlightFragment fragment, @Nullable OrderedRealmCollection<Flight> data) {
         super(fragment.getContext(), data, true);
         flights = data;
         this.fragment = fragment;
+        DaggerStorageComponent.builder().prefsModule(new PrefsModule(fragment.getContext().getApplicationContext())).build().inject(this);
     }
 
     @Override
@@ -50,9 +55,8 @@ public class FlightAdapter extends RealmRecyclerViewAdapter<Flight, FlightAdapte
         Flight flight = flights.get(position);
 
         holder.fltNumTv.setText(flight.getFlightNumber());
-        //TODO Allow user to switch between IATA and ICAO
-        //Hardcode IATA for now
-        if (TextUtils.isEmpty(flight.getDepartureIATACode())) {
+
+        if (prefs.getString("airportCodeType", "IATA").equals("ICAO")) {
             holder.depCodeTv.setText(flight.getDepartureICAOCode());
             holder.arrCodeTv.setText(flight.getArrivalICAOCode());
         } else {

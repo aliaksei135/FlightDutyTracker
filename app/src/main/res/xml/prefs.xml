@@ -3,6 +3,7 @@
     <PreferenceCategory android:title="General">
 
         <ListPreference
+            android:defaultValue="IATA"
             android:entries="@array/airport_code_types"
             android:entryValues="@array/airport_code_types"
             android:key="airportCodeType"
