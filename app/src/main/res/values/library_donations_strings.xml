@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_donations"></string>
+    <string name="library_donations_author">Dominik Schürmann</string>
+    <string name="library_donations_authorWebsite">https://github.com/SufficientlySecure/donations</string>
+    <string name="library_donations_libraryName">Donations</string>
+    <string name="library_donations_libraryDescription">Donations library for Android. Supports Google Play Store, Flattr, PayPal, and Bitcoin </string>
+    <string name="library_donations_libraryWebsite">https://github.com/SufficientlySecure/donations</string>
+    <string name="library_donations_libraryVersion">2.5</string>
+    <string name="library_donations_isOpenSource">true</string>
+    <string name="library_donations_repositoryLink">https://github.com/SufficientlySecure/donations</string>
+    <string name="library_donations_classPath">org.sufficientlysercure.donations</string>
+    <string name="library_donations_licenseId">apache_2_0</string>
+</resources>

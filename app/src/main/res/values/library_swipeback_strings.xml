@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_swipeback"></string>
+    <string name="library_swipeback_author">Hannes Dorfmann</string>
+    <string name="library_swipeback_authorWebsite">http://github.com/sockeqwe/SwipeBack</string>
+    <string name="library_swipeback_libraryName">SwipeBack</string>
+    <string name="library_swipeback_libraryDescription">SwipeBack for Android Activities to do pretty the same as the android "back-button" will do, but in a really intuitive way by using a swipe gesture</string>
+    <string name="library_swipeback_libraryWebsite">http://github.com/sockeqwe/SwipeBack</string>
+    <string name="library_swipeback_libraryVersion">1.0.4</string>
+    <string name="library_swipeback_isOpenSource">true</string>
+    <string name="library_swipeback_repositoryLink">http://github.com/sockeqwe/SwipeBack</string>
+    <string name="library_swipeback_classPath">com.hannesdorfmann.swipeback</string>
+    <string name="library_swipeback_licenseId">apache_2_0</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_switchdatetimepicker"></string>
+    <string name="library_switchdatetimepicker_author">Jeremy Jamet</string>
+    <string name="library_switchdatetimepicker_authorWebsite">https://github.com/Kunzisoft/Android-SwitchDateTimePicker</string>
+    <string name="library_switchdatetimepicker_libraryName">SwitchDateTimePicker</string>
+    <string name="library_switchdatetimepicker_libraryDescription">Android library for Date and Time Picker in same dialog </string>
+    <string name="library_switchdatetimepicker_libraryWebsite">https://github.com/Kunzisoft/Android-SwitchDateTimePicker</string>
+    <string name="library_switchdatetimepicker_libraryVersion">1.3</string>
+    <string name="library_switchdatetimepicker_isOpenSource">true</string>
+    <string name="library_switchdatetimepicker_repositoryLink">https://github.com/Kunzisoft/Android-SwitchDateTimePicker</string>
+    <string name="library_switchdatetimepicker_classPath">com.kunzisoft.switchdatetime</string>
+    <string name="library_switchdatetimepicker_licenseId">apache_2_0</string>
+</resources>
