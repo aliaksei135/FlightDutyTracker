@@ -252,6 +252,7 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
+                overridePendingTransition(R.anim.swipeback_stack_right_in, R.anim.swipeback_stack_to_back);
                 return true;
             case R.id.nav_donate:
                 newFragment = DonationsFragment.newInstance(true, //TODO Change this for release versions

@@ -107,6 +107,7 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
     @Override
     public void onFABClicked() {
         getActivity().startActivity(new Intent(getContext(), CreateFlightActivity.class));
+        getActivity().overridePendingTransition(R.anim.swipeback_stack_right_in, R.anim.swipeback_stack_to_back);
     }
 
     public void setAdapter(FlightAdapter adapter) {
@@ -141,6 +142,7 @@ public class FlightFragment extends BaseFragment implements FlightAdapter.onRecy
     public void onItemClicked(long flightId) {
         Intent intent = new Intent(getContext(), FlightDetailsActivity.class);
         intent.putExtra("flightId", flightId);
-        getActivity().startActivity(intent);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.swipeback_stack_right_in, R.anim.swipeback_stack_to_back);
     }
 }

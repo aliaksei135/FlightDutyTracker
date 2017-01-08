@@ -101,9 +101,9 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
 
     @Override
     public void onBackPressed() {
+        startActivity(new Intent(FlightDetailsActivity.this, MainActivity.class));
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
-        startActivity(new Intent(FlightDetailsActivity.this, MainActivity.class));
     }
 
     @Override

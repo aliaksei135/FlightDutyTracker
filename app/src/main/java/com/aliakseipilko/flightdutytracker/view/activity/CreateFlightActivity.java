@@ -64,6 +64,8 @@ public class CreateFlightActivity extends BaseActivity implements CreateFlightFr
             @Override
             public void onClick(View view) {
                 NavUtils.navigateUpFromSameTask(CreateFlightActivity.this);
+                overridePendingTransition(R.anim.swipeback_stack_to_front,
+                        R.anim.swipeback_stack_right_out);
             }
         });
 
@@ -95,17 +97,17 @@ public class CreateFlightActivity extends BaseActivity implements CreateFlightFr
 
     @Override
     public void onAddFlightComplete() {
+        NavUtils.navigateUpFromSameTask(this);
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
-        NavUtils.navigateUpFromSameTask(this);
         showSnackbar("Flight added!", true);
     }
 
     @Override
     public void onAddFlightFailed(String message) {
+        NavUtils.navigateUpFromSameTask(this);
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
-        NavUtils.navigateUpFromSameTask(this);
         showSnackbar(message, false);
     }
 

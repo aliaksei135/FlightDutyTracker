@@ -70,4 +70,11 @@ public class SettingsActivity extends BaseActivity {
                 .replace(R.id.settings_fragment_container, new SettingsFragment())
                 .commit();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
+    }
 }

@@ -94,6 +94,7 @@ public class EditFlightFragment extends BaseFragment {
         presenter.getSingleFlightById(flightId);
 
         setCurrentValues();
+        setDateTimeListeners();
 
         return view;
     }
@@ -114,6 +115,8 @@ public class EditFlightFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
     }
 
     @Override
@@ -122,6 +125,8 @@ public class EditFlightFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.swipeback_stack_to_front,
+                R.anim.swipeback_stack_right_out);
     }
 
     public void saveFlight() {
@@ -202,6 +207,33 @@ public class EditFlightFragment extends BaseFragment {
             return false;
         }
         return true;
+    }
+
+    private void setDateTimeListeners() {
+        dutyFromDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDateTime("Duty Start", CreateFlightFragment.TimeType.DUTY_START, dutyFromDateTextView);
+            }
+        });
+        dutyToDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDateTime("Duty End", CreateFlightFragment.TimeType.DUTY_END, dutyToDateTextView);
+            }
+        });
+        flightFromDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDateTime("Flight Start", CreateFlightFragment.TimeType.FLIGHT_START, flightFromDateTextView);
+            }
+        });
+        flightToDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDateTime("Flight End", CreateFlightFragment.TimeType.FLIGHT_END, flightToDateTextView);
+            }
+        });
     }
 
     void pickDateTime(String title, final CreateFlightFragment.TimeType type, final TextView displayField) {

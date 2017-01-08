@@ -75,6 +75,8 @@ public class EditFlightActivity extends BaseActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra("flightId", flightId);
                 startActivity(intent);
+                overridePendingTransition(R.anim.swipeback_stack_to_front,
+                        R.anim.swipeback_stack_right_out);
             }
         });
 

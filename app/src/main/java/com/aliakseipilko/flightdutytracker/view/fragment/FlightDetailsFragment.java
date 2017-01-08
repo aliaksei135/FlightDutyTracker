@@ -126,6 +126,7 @@ public class FlightDetailsFragment extends BaseFragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.putExtra("flightId", flightId);
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.swipeback_stack_right_in, R.anim.swipeback_stack_to_back);
     }
 
     public void setFlight(Flight flight) {
