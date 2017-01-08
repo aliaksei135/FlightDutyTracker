@@ -52,7 +52,14 @@ public class FlightRepository implements IFlightRepository {
 
     @Override
     public void editFlight(final Flight flight, @NonNull final OnAddFlightCallback callback) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
+
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(flight);
+        realm.commitTransaction();
+        //TODO Work this out
+        callback.OnSuccess();
+
+/*        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(flight);
@@ -67,7 +74,7 @@ public class FlightRepository implements IFlightRepository {
             public void onError(Throwable error) {
                 callback.OnError(error.getMessage());
             }
-        });
+        });*/
     }
 
     @Override
@@ -77,7 +84,16 @@ public class FlightRepository implements IFlightRepository {
                 .equalTo("id", flight.getId())
                 .findAll();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+        if (results.isEmpty()) {
+            callback.OnSuccess();
+        } else {
+            callback.OnError("That didn't work");
+        }
+
+/*        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 //ID is unique, so results should contain at most 1 match, hence deleting all would be same as delete first/last/an index
@@ -93,7 +109,7 @@ public class FlightRepository implements IFlightRepository {
             public void onError(Throwable error) {
                 callback.OnError(error.getMessage());
             }
-        });
+        });*/
     }
 
     @Override
@@ -102,7 +118,16 @@ public class FlightRepository implements IFlightRepository {
                 .equalTo("flightNumber", flightNumber)
                 .findAll();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+        if (results.isEmpty()) {
+            callback.OnSuccess();
+        } else {
+            callback.OnError("That didn't work");
+        }
+
+/*        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 //ID is unique, so results should contain at most 1 match, hence deleting all would be same as delete first/last/an index
@@ -118,7 +143,7 @@ public class FlightRepository implements IFlightRepository {
             public void onError(Throwable error) {
                 callback.OnError(error.getMessage());
             }
-        });
+        });*/
     }
 
     @Override
@@ -127,7 +152,16 @@ public class FlightRepository implements IFlightRepository {
                 .equalTo("id", id)
                 .findAll();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+        if (results.isEmpty()) {
+            callback.OnSuccess();
+        } else {
+            callback.OnError("That didn't work");
+        }
+
+        /*realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 //ID is unique, so results should contain at most 1 match, hence deleting all would be same as delete first/last/an index
@@ -143,7 +177,7 @@ public class FlightRepository implements IFlightRepository {
             public void onError(Throwable error) {
                 callback.OnError(error.getMessage());
             }
-        });
+        });*/
     }
 
     @Override

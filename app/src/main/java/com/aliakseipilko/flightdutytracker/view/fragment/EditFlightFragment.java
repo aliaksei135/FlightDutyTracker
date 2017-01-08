@@ -4,7 +4,6 @@ package com.aliakseipilko.flightdutytracker.view.fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +101,10 @@ public class EditFlightFragment extends BaseFragment {
     @Override
     public void showError(String message) {
         super.showError(message);
-        NavUtils.navigateUpFromSameTask(getActivity());
+        Intent intent = new Intent(getActivity(), FlightDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.putExtra("flightId", flightId);
+        startActivity(intent);
     }
 
     @Override
@@ -141,9 +143,13 @@ public class EditFlightFragment extends BaseFragment {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
 
+        startDutyDate = editFlight.getStartDutyTime();
         dutyFromDateTextView.setText(sdf.format(editFlight.getStartDutyTime()));
+        endDutyDate = editFlight.getEndDutyTime();
         dutyToDateTextView.setText(sdf.format(editFlight.getEndDutyTime()));
+        startFlightDate = editFlight.getStartFlightTime();
         flightFromDateTextView.setText(sdf.format(editFlight.getStartFlightTime()));
+        endFlightDate = editFlight.getEndFlightTime();
         flightToDateTextView.setText(sdf.format(editFlight.getEndFlightTime()));
     }
 

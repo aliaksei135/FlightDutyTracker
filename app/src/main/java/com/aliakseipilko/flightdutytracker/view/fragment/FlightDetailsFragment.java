@@ -106,6 +106,10 @@ public class FlightDetailsFragment extends BaseFragment {
         flightToTv.setText(sdf.format(flight.getEndFlightTime()));
     }
 
+    public void deleteFlight() {
+        presenter.deleteFlightById(flightId);
+    }
+
     @Override
     public void onFABClicked() {
         Intent intent = new Intent(getActivity(), EditFlightActivity.class);

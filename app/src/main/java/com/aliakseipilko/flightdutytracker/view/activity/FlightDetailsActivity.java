@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
@@ -32,6 +34,12 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
     FloatingActionButton fab;
     @BindView(R.id.details_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.details_toolbar_back)
+    ImageView toolbarBack;
+    @BindView(R.id.details_toolbar_bin)
+    ImageView toolbarBin;
+    @BindView(R.id.details_toolbar_title)
+    TextView toolbarTitle;
     @BindView(R.id.flight_details_fragment_container)
     FrameLayout fragmentContainer;
 
@@ -44,6 +52,21 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
                 .setContentView(R.layout.activity_flight_details)
                 .setSwipeBackView(R.layout.swipeback_default);
         ButterKnife.bind(this);
+
+        toolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        toolbarBin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.deleteFlight();
+                onBackPressed();
+            }
+        });
+
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +76,6 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupFragment(getIntent());
     }
@@ -69,9 +91,9 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         overridePendingTransition(R.anim.swipeback_stack_to_front,
                 R.anim.swipeback_stack_right_out);
+        startActivity(new Intent(FlightDetailsActivity.this, MainActivity.class));
     }
 
     @Override
@@ -94,7 +116,7 @@ public class FlightDetailsActivity extends BaseActivity implements FlightDetails
 
     @Override
     public void setToolbarTitle(String title) {
-        getSupportActionBar().setTitle(title);
+        toolbarTitle.setText(title);
     }
 
 }
