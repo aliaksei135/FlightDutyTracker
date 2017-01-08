@@ -166,10 +166,12 @@ public class CreateFlightFragment extends BaseFragment {
         if (depText.trim().length() != arrText.trim().length()) {
             departureEditText.setError("Codes must both be either IATA or ICAO.");
             arrivalEditText.setError("Codes must both be either IATA or ICAO.");
+            return false;
         }
         if (depText.trim().length() != 3 && depText.trim().length() != 4) {
             departureEditText.setError("Code invalid");
             arrivalEditText.setError("Code invalid");
+            return false;
         }
         if (TextUtils.isEmpty(dutyFromDateTextView.getText().toString())) {
             dutyFromDateTextView.setError("Cannot be empty.");
