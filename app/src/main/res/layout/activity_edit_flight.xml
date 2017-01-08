@@ -58,7 +58,7 @@
                     android:layout_marginStart="72dp"
                     android:layout_toEndOf="@+id/toolbar_back"
                     android:layout_toRightOf="@+id/toolbar_back"
-                    android:text="Add Flight"
+                    android:text="Edit Flight"
                     android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                     android:textColor="#FFFFFFFF" />
 
