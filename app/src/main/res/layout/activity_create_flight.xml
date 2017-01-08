@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/create_flight_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".view.activity.CreateFlightActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:fitsSystemWindows="true"
         app:expanded="false">
 
         <android.support.v7.widget.Toolbar
@@ -20,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             tools:ignore="UnusedAttribute">
 
@@ -70,8 +67,8 @@
     <FrameLayout
         android:id="@+id/create_flight_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--android:layout_marginTop="?attr/actionBarSize">-->
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
         <fragment
             android:id="@+id/create_flight_fragment"
@@ -82,4 +79,4 @@
 
     </FrameLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
