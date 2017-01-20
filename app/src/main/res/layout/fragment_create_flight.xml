@@ -16,7 +16,7 @@
         android:gravity="center"
         android:hint="Flight Number"
         android:inputType="textCapCharacters|textNoSuggestions"
-        android:paddingBottom="4dp"
+        android:paddingBottom="8dp"
         android:paddingTop="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/flight_number"
@@ -44,7 +44,7 @@
                 android:gravity="center"
                 android:hint="Departure"
                 android:inputType="textCapCharacters|textNoSuggestions"
-                android:paddingBottom="4dp"
+                android:paddingBottom="8dp"
                 android:paddingTop="4dp" />
 
             <ImageView
@@ -67,7 +67,7 @@
                 android:gravity="center"
                 android:hint="Arrival"
                 android:inputType="textCapCharacters|textNoSuggestions"
-                android:paddingBottom="4dp"
+                android:paddingBottom="8dp"
                 android:paddingTop="4dp" />
 
         </RelativeLayout>
@@ -81,7 +81,7 @@
             android:gravity="center"
             android:hint="Aircraft Type"
             android:inputType="textCapCharacters|textNoSuggestions"
-            android:paddingBottom="4dp"
+            android:paddingBottom="8dp"
             android:paddingTop="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             tools:ignore="TextFields" />
