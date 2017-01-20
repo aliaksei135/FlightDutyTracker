@@ -1,0 +1,15 @@
+language: android
+
+android:
+  components:
+#    - platform-tools
+#    - tools
+    - build-tools-25.0.0
+    - android-25
+    
+    #Extras
+    - extra-android-m2repository
+    - extra-google-google_play_services
+    
+script:
+    - ./gradlew build connectedCheck
