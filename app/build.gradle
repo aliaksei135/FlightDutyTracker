@@ -24,6 +24,9 @@ android {
             buildConfigField "boolean", "DONATIONS_GOOGLE", "true"
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 
