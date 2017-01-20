@@ -11,6 +11,8 @@ android:
     #Extras
     - extra-android-m2repository
     - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-support
     
     licenses:
     - 'android-sdk-preview-license-.+'
