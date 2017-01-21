@@ -1,4 +1,4 @@
-# Flight Duty Tracker
+# Flight Duty Tracker [![Build Status](https://travis-ci.org/aliaksei135/FlightDutyTracker.svg?branch=master)](https://travis-ci.org/aliaksei135/FlightDutyTracker)
 Keep track of the number of hours you spend on duty and in the air. Add flights by either IATA or ICAO code, then change your mind later, the codes will be converted.
 
 Set custom duty and flight hour limitations for 7 day, 28 day and year long rolling periods and use the progress circle to see how close you are to the limits. Statistics are available for these periods as well, showing the distribution of hours, with more to come soon...
