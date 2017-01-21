@@ -6,6 +6,12 @@ env:
     - ANDROID_TARGET=android-25
     - ANDROID_ABI=armeabi-v7a
 
+branches:
+  only:
+    - master
+    - dev
+    - release
+
 android:
   components:
     - tools
