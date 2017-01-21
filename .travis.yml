@@ -8,8 +8,9 @@ env:
 
 android:
   components:
-    - platform-tools
     - tools
+    - tools
+    - platform-tools
     - build-tools-25.0.0
     - android-25
     
@@ -19,17 +20,14 @@ android:
     - extra-google-m2repository
     - extra-android-support
     
-#    licenses:
-#    - 'android-sdk-preview-license-.+'
-#    - 'android-sdk-license-.+'
-#    - 'google-gdk-license-.+'
-    
 before_install:
     - chmod +x gradlew
  
 script:
-    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-    - emulator -avd test -no-skin -no-audio -no-window &
-    - android-wait-for-emulator
-    - adb shell input keyevent 82 &
-    - ./gradlew build connectedCheck --stacktrace
+#Emulation is a mess in Travis, Disabled till fixed
+#    - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+#    - emulator -avd test -no-skin -no-audio -no-window &
+#    - android-wait-for-emulator
+#    - adb shell input keyevent 82 &
+##
+    - ./gradlew assembleDebug --stacktrace
