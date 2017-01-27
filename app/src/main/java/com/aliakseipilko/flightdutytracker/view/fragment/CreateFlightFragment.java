@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
@@ -54,6 +55,14 @@ public class CreateFlightFragment extends BaseFragment {
     TextView flightFromDateTextView;
     @BindView(R.id.flight_to_date_tv)
     TextView flightToDateTextView;
+    @BindView(R.id.duty_from_set_now)
+    ImageView dutyFromSetNowIcon;
+    @BindView(R.id.duty_to_set_now)
+    ImageView dutyToSetNowIcon;
+    @BindView(R.id.flight_from_set_now)
+    ImageView flightFromSetNowIcon;
+    @BindView(R.id.flight_to_set_now)
+    ImageView flightToSetNowIcon;
 
     Date startDutyDate, endDutyDate, startFlightDate, endFlightDate;
 
@@ -115,6 +124,34 @@ public class CreateFlightFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 pickDateTime("Flight End", TimeType.FLIGHT_END, flightToDateTextView);
+            }
+        });
+        dutyFromSetNowIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDutyDate = new Date();
+                dutyFromDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(startDutyDate));
+            }
+        });
+        dutyToSetNowIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endDutyDate = new Date();
+                dutyToDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(endDutyDate));
+            }
+        });
+        flightFromSetNowIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startFlightDate = new Date();
+                flightFromDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(startFlightDate));
+            }
+        });
+        flightToSetNowIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endFlightDate = new Date();
+                flightToDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(endFlightDate));
             }
         });
     }

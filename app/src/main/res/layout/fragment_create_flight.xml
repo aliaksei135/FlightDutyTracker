@@ -106,7 +106,7 @@
 
         <TextView
             android:id="@+id/duty_from_date_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/duty_from_title_tv"
             android:layout_margin="@dimen/margin_small"
@@ -117,6 +117,15 @@
             android:paddingRight="24dp"
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
+
+        <ImageView
+            android:id="@+id/duty_from_set_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/duty_time_view_splitter"
+            android:layout_alignRight="@+id/duty_time_view_splitter"
+            android:layout_alignTop="@+id/duty_from_date_tv"
+            android:src="@drawable/ic_event_black" />
 
         <TextView
             android:id="@+id/duty_to_title_tv"
@@ -131,7 +140,7 @@
 
         <TextView
             android:id="@+id/duty_to_date_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/duty_to_title_tv"
             android:layout_margin="@dimen/margin_small"
@@ -142,6 +151,15 @@
             android:paddingRight="24dp"
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
+
+        <ImageView
+            android:id="@+id/duty_to_set_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/duty_time_view_splitter"
+            android:layout_alignRight="@+id/duty_time_view_splitter"
+            android:layout_alignTop="@+id/duty_to_date_tv"
+            android:src="@drawable/ic_event_black" />
 
         <View
             android:id="@+id/flight_time_view_splitter"
@@ -163,7 +181,7 @@
 
         <TextView
             android:id="@+id/flight_from_date_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/flight_from_title_tv"
             android:layout_margin="@dimen/margin_small"
@@ -174,6 +192,15 @@
             android:paddingRight="24dp"
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
+
+        <ImageView
+            android:id="@+id/flight_from_set_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/duty_time_view_splitter"
+            android:layout_alignRight="@+id/duty_time_view_splitter"
+            android:layout_alignTop="@+id/flight_from_date_tv"
+            android:src="@drawable/ic_event_black" />
 
         <TextView
             android:id="@+id/flight_to_title_tv"
@@ -188,7 +215,7 @@
 
         <TextView
             android:id="@+id/flight_to_date_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/flight_to_title_tv"
             android:layout_margin="@dimen/margin_small"
@@ -199,6 +226,15 @@
             android:paddingRight="24dp"
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
+
+        <ImageView
+            android:id="@+id/flight_to_set_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/duty_time_view_splitter"
+            android:layout_alignRight="@+id/duty_time_view_splitter"
+            android:layout_alignTop="@+id/flight_to_date_tv"
+            android:src="@drawable/ic_event_black" />
 
     </RelativeLayout>
 
