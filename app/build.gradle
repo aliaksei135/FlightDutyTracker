@@ -8,7 +8,7 @@ android {
         applicationId "com.aliakseipilko.flightdutytracker"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2
+        versionCode 3
         versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -57,7 +57,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
     //JSON handling
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.7'
 
     //UI Libraries
     compile 'com.malinskiy:superrecyclerview:1.1.4'

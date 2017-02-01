@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
@@ -56,13 +55,13 @@ public class CreateFlightFragment extends BaseFragment {
     @BindView(R.id.flight_to_date_tv)
     TextView flightToDateTextView;
     @BindView(R.id.duty_from_set_now)
-    ImageView dutyFromSetNowIcon;
+    TextView dutyFromSetNow;
     @BindView(R.id.duty_to_set_now)
-    ImageView dutyToSetNowIcon;
+    TextView dutyToSetNow;
     @BindView(R.id.flight_from_set_now)
-    ImageView flightFromSetNowIcon;
+    TextView flightFromSetNow;
     @BindView(R.id.flight_to_set_now)
-    ImageView flightToSetNowIcon;
+    TextView flightToSetNow;
 
     Date startDutyDate, endDutyDate, startFlightDate, endFlightDate;
 
@@ -126,28 +125,28 @@ public class CreateFlightFragment extends BaseFragment {
                 pickDateTime("Flight End", TimeType.FLIGHT_END, flightToDateTextView);
             }
         });
-        dutyFromSetNowIcon.setOnClickListener(new View.OnClickListener() {
+        dutyFromSetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startDutyDate = new Date();
                 dutyFromDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(startDutyDate));
             }
         });
-        dutyToSetNowIcon.setOnClickListener(new View.OnClickListener() {
+        dutyToSetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 endDutyDate = new Date();
                 dutyToDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(endDutyDate));
             }
         });
-        flightFromSetNowIcon.setOnClickListener(new View.OnClickListener() {
+        flightFromSetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startFlightDate = new Date();
                 flightFromDateTextView.setText(new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(startFlightDate));
             }
         });
-        flightToSetNowIcon.setOnClickListener(new View.OnClickListener() {
+        flightToSetNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 endFlightDate = new Date();
