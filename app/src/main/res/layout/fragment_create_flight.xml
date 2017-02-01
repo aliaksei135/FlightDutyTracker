@@ -118,14 +118,14 @@
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
 
-        <ImageView
+        <TextView
             android:id="@+id/duty_from_set_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/duty_time_view_splitter"
             android:layout_alignRight="@+id/duty_time_view_splitter"
             android:layout_alignTop="@+id/duty_from_date_tv"
-            android:src="@drawable/ic_event_black" />
+            android:text="Set To Now" />
 
         <TextView
             android:id="@+id/duty_to_title_tv"
@@ -152,14 +152,14 @@
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
 
-        <ImageView
+        <TextView
             android:id="@+id/duty_to_set_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/duty_time_view_splitter"
             android:layout_alignRight="@+id/duty_time_view_splitter"
             android:layout_alignTop="@+id/duty_to_date_tv"
-            android:src="@drawable/ic_event_black" />
+            android:text="Set To Now" />
 
         <View
             android:id="@+id/flight_time_view_splitter"
@@ -193,14 +193,14 @@
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
 
-        <ImageView
+        <TextView
             android:id="@+id/flight_from_set_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/duty_time_view_splitter"
             android:layout_alignRight="@+id/duty_time_view_splitter"
             android:layout_alignTop="@+id/flight_from_date_tv"
-            android:src="@drawable/ic_event_black" />
+            android:text="Set To Now" />
 
         <TextView
             android:id="@+id/flight_to_title_tv"
@@ -227,14 +227,14 @@
             android:paddingStart="24dp"
             android:paddingTop="2dp" />
 
-        <ImageView
+        <TextView
             android:id="@+id/flight_to_set_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/duty_time_view_splitter"
             android:layout_alignRight="@+id/duty_time_view_splitter"
             android:layout_alignTop="@+id/flight_to_date_tv"
-            android:src="@drawable/ic_event_black" />
+            android:text="Set To Now" />
 
     </RelativeLayout>
 
