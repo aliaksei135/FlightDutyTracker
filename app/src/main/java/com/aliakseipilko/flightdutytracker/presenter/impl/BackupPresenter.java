@@ -22,7 +22,6 @@ import com.aliakseipilko.flightdutytracker.utils.BackupUtils;
 import java.io.File;
 import java.io.IOException;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 
@@ -47,7 +46,7 @@ public class BackupPresenter implements IBackupPresenter {
 
     @Override
     public void restoreFlights(File srcFile) {
-        BackupUtils.deserialiseFlightsFileToRealm(Realm.getDefaultInstance(), srcFile);
+        repository.restoreFlightsByFile(srcFile);
     }
 
     @Override

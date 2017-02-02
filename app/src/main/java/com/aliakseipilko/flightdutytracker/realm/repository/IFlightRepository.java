@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
 
+import java.io.File;
 import java.util.Date;
 
 import io.realm.RealmResults;
@@ -23,6 +24,8 @@ import io.realm.Sort;
 public interface IFlightRepository extends IBaseRepository {
 
     void addFlight(Flight flight, @NonNull OnAddFlightCallback callback);
+
+    void restoreFlightsByFile(File srcFile);
 
     void editFlight(Flight flight, @NonNull OnAddFlightCallback callback);
 
