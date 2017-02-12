@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
 import java.io.File;
 import java.util.Date;
@@ -25,7 +26,7 @@ public interface IFlightRepository extends IBaseRepository {
 
     void addFlight(Flight flight, @NonNull OnAddFlightCallback callback);
 
-    void restoreFlightsByFile(File srcFile);
+    void restoreFlightsByFile(File srcFile, BackupRestoreBaseFragment baseFragment);
 
     void editFlight(Flight flight, @NonNull OnAddFlightCallback callback);
 

@@ -12,6 +12,7 @@ package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +22,23 @@ import android.widget.TextView;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.BackupPresenter;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
+import com.github.developerpaul123.filepickerlibrary.FilePicker;
+import com.github.developerpaul123.filepickerlibrary.FilePickerBuilder;
+import com.github.developerpaul123.filepickerlibrary.enums.Request;
+import com.github.developerpaul123.filepickerlibrary.enums.Scope;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
+
 public class BackupFragment extends BackupRestoreBaseFragment {
 
+    private static final int REQUEST_DIR = 5402;
     @BindView(R.id.backupDateTextView)
     TextView backupDate;
 
@@ -51,18 +61,36 @@ public class BackupFragment extends BackupRestoreBaseFragment {
 
         presenter = new BackupPresenter(this);
 
-        backupDate.setText(presenter.getLatestBackupDate());
+        backupDate.setText("Last Backup: " + presenter.getLatestBackupDate());
 
         return view;
     }
 
     @OnClick(R.id.backupButton)
     public void doBackup() {
-        presenter.backupAllFlights();
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Backing up...");
-        progressDialog.show();
+        new FilePickerBuilder(getContext())
+                .withRequest(Request.FILE)
+                .withScope(Scope.ALL)
+                .useMaterialActivity(true)
+                .launch(REQUEST_DIR);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK || data == null) {
+            showError("Couldn't backup flights. Try again");
+        }
+
+        if (requestCode == REQUEST_DIR) {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Backing up...");
+            progressDialog.show();
+            File destFile = new File(data.getStringExtra(FilePicker.FILE_EXTRA_DATA_PATH) + "/flights_backup.json");
+            presenter.backupAllFlights(destFile);
+        }
     }
 
     @Override
@@ -85,7 +113,7 @@ public class BackupFragment extends BackupRestoreBaseFragment {
 
     @Override
     public void setBackupDate(String date) {
-        backupDate.setText(date);
+        backupDate.setText("Last Backup: " + date);
     }
 
     @Override

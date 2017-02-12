@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +56,7 @@ public class BackupUtils {
         return destFile;
     }
 
-    public static void deserialiseFlightsFileToRealm(Realm realm, final File srcFile) {
+    public static void deserialiseFlightsFileToRealm(Realm realm, final File srcFile, final BackupRestoreBaseFragment callingView) {
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -70,12 +71,12 @@ public class BackupUtils {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                //TODO Handle
+                callingView.showSuccess("Restore completed successfully!");
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                //TODO Handle
+                callingView.showError("That didn't work. Try again");
             }
         });
     }

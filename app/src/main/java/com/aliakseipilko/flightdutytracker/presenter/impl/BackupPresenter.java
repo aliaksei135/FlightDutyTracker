@@ -11,7 +11,6 @@
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
 import android.content.SharedPreferences;
-import android.os.Environment;
 
 import com.aliakseipilko.flightdutytracker.presenter.IBackupPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
@@ -37,6 +36,7 @@ public class BackupPresenter implements IBackupPresenter {
     BackupRestoreBaseFragment view;
 
     SharedPreferences prefs = view.getContext().getApplicationContext().getSharedPreferences("prefs", 0);
+    File destFile;
 
     public BackupPresenter(BackupRestoreBaseFragment view) {
 
@@ -45,13 +45,14 @@ public class BackupPresenter implements IBackupPresenter {
     }
 
     @Override
-    public void backupAllFlights() {
+    public void backupAllFlights(File destFile) {
+        this.destFile = destFile;
         repository.getAllFlights(getMultipleFlightsCallback);
     }
 
     @Override
     public void restoreFlights(File srcFile) {
-        repository.restoreFlightsByFile(srcFile);
+        repository.restoreFlightsByFile(srcFile, view);
     }
 
     @Override
@@ -69,7 +70,6 @@ public class BackupPresenter implements IBackupPresenter {
         getMultipleFlightsCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
-                File destFile = new File(Environment.getExternalStorageDirectory().getPath() + "/flights_backup.json");
                 try {
                     BackupUtils.serialiseFlightsRealmToFile(destFile, flights);
 

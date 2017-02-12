@@ -15,7 +15,7 @@ import java.io.File;
 
 public interface IBackupPresenter extends IBasePresenter {
 
-    void backupAllFlights();
+    void backupAllFlights(File destFile);
 
     void restoreFlights(File srcFile);
 

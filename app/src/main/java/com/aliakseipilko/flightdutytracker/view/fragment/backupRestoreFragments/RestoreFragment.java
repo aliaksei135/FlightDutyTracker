@@ -11,19 +11,38 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.BackupPresenter;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
+import com.github.developerpaul123.filepickerlibrary.FilePicker;
+import com.github.developerpaul123.filepickerlibrary.FilePickerBuilder;
+import com.github.developerpaul123.filepickerlibrary.enums.Request;
+import com.github.developerpaul123.filepickerlibrary.enums.Scope;
 
+import java.io.File;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RestoreFragment extends BackupRestoreBaseFragment {
+
+    private static final int REQUEST_FILE = 5401;
+
+    @BindView(R.id.restoreDateTextView)
+    TextView restoreDate;
+    ProgressDialog progressDialog;
 
     Unbinder unbinder;
 
@@ -42,6 +61,8 @@ public class RestoreFragment extends BackupRestoreBaseFragment {
 
         presenter = new BackupPresenter(this);
 
+        restoreDate.setText("Latest Backup: " + presenter.getLatestBackupDate());
+
         return view;
     }
 
@@ -51,8 +72,52 @@ public class RestoreFragment extends BackupRestoreBaseFragment {
         unbinder.unbind();
     }
 
+    @OnClick(R.id.restoreButton)
+    public void doRestore() {
+        new FilePickerBuilder(getContext())
+                .withRequest(Request.FILE)
+                .withScope(Scope.ALL)
+                .useMaterialActivity(true)
+                .launch(REQUEST_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK || data == null) {
+            showError("Couldn't restore flights. Try again");
+        }
+
+        if (requestCode == REQUEST_FILE) {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Restoring...");
+            progressDialog.show();
+            File srcFile = new File(data.getStringExtra(FilePicker.FILE_EXTRA_DATA_PATH));
+            presenter.restoreFlights(srcFile);
+        }
+    }
+
     @Override
     public void setBackupDate(String date) {
+        restoreDate.setText("Latest Backup: " + date);
+    }
 
+    @Override
+    public void showSuccess(String message) {
+        super.showSuccess(message);
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void showError(String message) {
+        super.showError(message);
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onFABClicked() {
+        //No FAB
     }
 }
