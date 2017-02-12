@@ -71,7 +71,9 @@ public class BackupPresenter implements IBackupPresenter {
             @Override
             public void OnSuccess(RealmResults<Flight> flights) {
                 try {
-                    BackupUtils.serialiseFlightsRealmToFile(destFile, flights);
+                    if (BackupUtils.serialiseFlightsRealmToFile(destFile, flights) == null) {
+                        throw new IOException("File not writable");
+                    }
 
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
                     prefs.edit().putString("backupDate", sdf.format(new Date())).commit();

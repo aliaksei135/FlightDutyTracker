@@ -14,17 +14,20 @@ package com.aliakseipilko.flightdutytracker.utils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -32,6 +35,7 @@ import io.realm.RealmResults;
 public class BackupUtils {
 
     public static File serialiseFlightsRealmToFile(File destFile, RealmResults<Flight> data) throws IOException {
+        destFile.createNewFile();
         destFile.setWritable(true);
         if (!destFile.canWrite()) {
             return null;
@@ -41,17 +45,22 @@ public class BackupUtils {
         Gson gson = gsonBuilder
                 .registerTypeAdapter(Flight.class, new FlightSerialiser())
                 .serializeNulls()
+                .setPrettyPrinting()
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
                 .setDateFormat(DateFormat.FULL, DateFormat.FULL)
                 .create();
 
         JsonWriter writer = gson.newJsonWriter(new FileWriter(destFile));
 
+        writer.beginArray();
         for (Flight f : data) {
-            writer.beginObject();
+//            writer.beginArray();
             gson.toJson(f, Flight.class, writer);
-            writer.endObject();
+//            String json = gson.toJson(f, Flight.class);
+//            writer.endArray();
         }
+        writer.endArray();
+        writer.close();
 
         return destFile;
     }
@@ -62,8 +71,39 @@ public class BackupUtils {
             @Override
             public void execute(Realm realm) {
                 try {
-                    InputStream is = new FileInputStream(srcFile);
-                    realm.createAllFromJson(Flight.class, is);
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder
+                            .registerTypeAdapter(Flight.class, new FlightSerialiser())
+                            .serializeNulls()
+                            .setPrettyPrinting()
+                            .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                            .setDateFormat(DateFormat.FULL, DateFormat.FULL)
+                            .create();
+                    JsonReader reader = gson.newJsonReader(new FileReader(srcFile));
+                    List<Flight> flights;
+                    Type type = new TypeToken<List<Flight>>() {
+                    }.getType();
+
+                    flights = gson.fromJson(reader, type);
+
+                    for (Flight f : flights) {
+                        //Check for ID duplication
+                        if (realm.where(Flight.class).equalTo("id", f.getId()).findFirst() == null) {
+                            realm.copyToRealm(f);
+                        } else {
+                            long newId;
+                            Number idNum = realm.where(Flight.class).max("id");
+                            if (idNum == null) {
+                                newId = 1;
+                            } else {
+                                long id = idNum.longValue();
+                                newId = id + 1;
+                            }
+                            f.setId(newId);
+                            realm.copyToRealm(f);
+                        }
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

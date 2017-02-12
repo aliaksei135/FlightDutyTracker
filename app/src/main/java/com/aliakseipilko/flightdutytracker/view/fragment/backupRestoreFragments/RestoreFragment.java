@@ -99,13 +99,17 @@ public class RestoreFragment extends BackupRestoreBaseFragment implements FileCh
     @Override
     public void showSuccess(String message) {
         super.showSuccess(message);
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void showError(String message) {
         super.showError(message);
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
