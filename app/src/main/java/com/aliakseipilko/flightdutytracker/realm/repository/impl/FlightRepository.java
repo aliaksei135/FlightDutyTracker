@@ -18,7 +18,10 @@ import com.aliakseipilko.flightdutytracker.dagger.modules.RealmModule;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.AirportCode;
+import com.aliakseipilko.flightdutytracker.utils.BackupUtils;
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -58,6 +61,11 @@ public class FlightRepository implements IFlightRepository {
                 callback.OnError(error.getMessage());
             }
         });
+    }
+
+    @Override
+    public void restoreFlightsByFile(File srcFile, BackupRestoreBaseFragment baseFragment) {
+        BackupUtils.deserialiseFlightsFileToRealm(realm, srcFile, baseFragment);
     }
 
     @Override
