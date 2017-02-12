@@ -10,10 +10,10 @@
 
 package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base;
 
-import android.support.v4.app.Fragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.base.BaseFragment;
 
 
-public abstract class BackupRestoreBaseFragment extends Fragment {
+public abstract class BackupRestoreBaseFragment extends BaseFragment {
 
     public abstract void setBackupDate(String date);
 }

@@ -76,14 +76,16 @@ public class BackupPresenter implements IBackupPresenter {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
                     prefs.edit().putString("backupDate", sdf.format(new Date())).commit();
                     setLatestBackupDate();
+                    view.showSuccess("Backup was Successful!");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    view.showError("Unable to access file. Try again");
                 }
             }
 
             @Override
             public void OnError(String message) {
-                //TODO Handle
+                view.showError("That didn't work. Try Again");
             }
         };
     }

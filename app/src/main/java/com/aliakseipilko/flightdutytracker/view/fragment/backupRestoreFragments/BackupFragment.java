@@ -11,19 +11,28 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.BackupPresenter;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class BackupFragment extends BackupRestoreBaseFragment {
+
+    @BindView(R.id.backupDateTextView)
+    TextView backupDate;
+
+    ProgressDialog progressDialog;
 
     Unbinder unbinder;
 
@@ -42,7 +51,30 @@ public class BackupFragment extends BackupRestoreBaseFragment {
 
         presenter = new BackupPresenter(this);
 
+        backupDate.setText(presenter.getLatestBackupDate());
+
         return view;
+    }
+
+    @OnClick(R.id.backupButton)
+    public void doBackup() {
+        presenter.backupAllFlights();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Backing up...");
+        progressDialog.show();
+    }
+
+    @Override
+    public void showSuccess(String message) {
+        super.showSuccess(message);
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void showError(String message) {
+        super.showError(message);
+        progressDialog.dismiss();
     }
 
     @Override
@@ -53,6 +85,11 @@ public class BackupFragment extends BackupRestoreBaseFragment {
 
     @Override
     public void setBackupDate(String date) {
+        backupDate.setText(date);
+    }
 
+    @Override
+    public void onFABClicked() {
+        //No FAB
     }
 }
