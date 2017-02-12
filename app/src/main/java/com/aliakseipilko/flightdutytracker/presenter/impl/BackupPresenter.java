@@ -10,17 +10,20 @@
 
 package com.aliakseipilko.flightdutytracker.presenter.impl;
 
+import android.content.SharedPreferences;
 import android.os.Environment;
-import android.view.View;
 
 import com.aliakseipilko.flightdutytracker.presenter.IBackupPresenter;
 import com.aliakseipilko.flightdutytracker.realm.model.Flight;
 import com.aliakseipilko.flightdutytracker.realm.repository.IFlightRepository;
 import com.aliakseipilko.flightdutytracker.realm.repository.impl.FlightRepository;
 import com.aliakseipilko.flightdutytracker.utils.BackupUtils;
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.realm.RealmResults;
 
@@ -31,9 +34,11 @@ public class BackupPresenter implements IBackupPresenter {
 
     FlightRepository repository;
 
-    View view;
+    BackupRestoreBaseFragment view;
 
-    public BackupPresenter(View view) {
+    SharedPreferences prefs = view.getContext().getApplicationContext().getSharedPreferences("prefs", 0);
+
+    public BackupPresenter(BackupRestoreBaseFragment view) {
 
         this.view = view;
         repository = new FlightRepository();
@@ -50,6 +55,16 @@ public class BackupPresenter implements IBackupPresenter {
     }
 
     @Override
+    public String getLatestBackupDate() {
+        return prefs.getString("backupDate", "No Backups made");
+    }
+
+    @Override
+    public void setLatestBackupDate() {
+        view.setBackupDate(prefs.getString("backupDate", "No Backups made"));
+    }
+
+    @Override
     public void subscribeAllCallbacks() {
         getMultipleFlightsCallback = new IFlightRepository.OnGetMultipleFlightsCallback() {
             @Override
@@ -57,6 +72,10 @@ public class BackupPresenter implements IBackupPresenter {
                 File destFile = new File(Environment.getExternalStorageDirectory().getPath() + "/flights_backup.json");
                 try {
                     BackupUtils.serialiseFlightsRealmToFile(destFile, flights);
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY");
+                    prefs.edit().putString("backupDate", sdf.format(new Date())).commit();
+                    setLatestBackupDate();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

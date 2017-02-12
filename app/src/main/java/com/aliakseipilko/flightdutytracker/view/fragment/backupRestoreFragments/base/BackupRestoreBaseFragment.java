@@ -8,18 +8,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.aliakseipilko.flightdutytracker.presenter;
+package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base;
+
+import android.support.v4.app.Fragment;
 
 
-import java.io.File;
+public abstract class BackupRestoreBaseFragment extends Fragment {
 
-public interface IBackupPresenter extends IBasePresenter {
-
-    void backupAllFlights();
-
-    void restoreFlights(File srcFile);
-
-    String getLatestBackupDate();
-
-    void setLatestBackupDate();
+    public abstract void setBackupDate(String date);
 }

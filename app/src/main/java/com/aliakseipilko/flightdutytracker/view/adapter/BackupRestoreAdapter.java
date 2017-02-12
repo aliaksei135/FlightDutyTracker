@@ -15,6 +15,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.BackupFragment;
+import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.RestoreFragment;
+
 public class BackupRestoreAdapter extends FragmentPagerAdapter {
 
     public BackupRestoreAdapter(FragmentManager fm) {
@@ -25,11 +28,9 @@ public class BackupRestoreAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-
-                break;
+                return new BackupFragment();
             case 1:
-
-                break;
+                return new RestoreFragment();
         }
         return null;
     }
