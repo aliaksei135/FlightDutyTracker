@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_androidfilechooser"></string>
+    <string name="library_androidfilechooser_author">Mostafa Nasiri</string>
+    <string name="library_androidfilechooser_authorWebsite">http://github.com/MostafaNasiri/AndroidFileChooser</string>
+    <string name="library_androidfilechooser_libraryName">Android File Chooser</string>
+    <string name="library_androidfilechooser_libraryDescription">Android File Chooser is a simple and customizable file/directory chooser dialog which you can use in your apps to let your users select a file or directory based on your needs.</string>
+    <string name="library_androidfilechooser_libraryWebsite">http://github.com/MostafaNasiri/AndroidFileChooser</string>
+    <string name="library_androidfilechooser_libraryVersion">1.1.0</string>
+    <string name="library_androidfilechooser_isOpenSource">true</string>
+    <string name="library_androidfilechooser_repositoryLink">http://github.com/MostafaNasiri/AndroidFileChooser</string>
+    <string name="library_androidfilechooser_classPath">ir.sohreco.androidfilechooser</string>
+    <string name="library_androidfilechooser_licenseId">apache_2_0</string>
+</resources>

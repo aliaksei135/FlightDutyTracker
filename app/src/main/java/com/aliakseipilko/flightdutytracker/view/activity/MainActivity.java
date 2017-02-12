@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity
                         .withAboutVersionShown(true)
                         .withAutoDetect(true)
                         .withSortEnabled(true)
-                        .withLibraries("markview", "switchdatetimepicker", "swipeback", "donations")
+                        .withLibraries("markview", "switchdatetimepicker", "swipeback", "donations", "androidfilechooser")
                         .supportFragment();
                 fab.hide();
                 getSupportActionBar().setTitle("About");
