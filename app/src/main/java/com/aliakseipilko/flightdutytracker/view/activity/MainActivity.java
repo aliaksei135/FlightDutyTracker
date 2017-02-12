@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.view.activity.base.BaseActivity;
+import com.aliakseipilko.flightdutytracker.view.fragment.BackupRestoreFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.FlightFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.HourFragment;
 import com.aliakseipilko.flightdutytracker.view.fragment.StatsFragment;
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity
     static final String FRAGMENT_HOURS = "FRAGMENT_HOURS";
     static final String FRAGMENT_STATS = "FRAGMENT_STATS";
     static final String FRAGMENT_DONATE = "FRAGMENT_DONATE";
+    static final String FRAGMENT_BACKUP = "FRAGMENT_BACKUP";
     static final String FRAGMENT_ABOUT = "FRAGMENT_ABOUT";
     private static final String GOOGLE_PUBKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnWPdEBR35BwTB/93oHcEu/T25h6bBlSB9TQtBq0zTWuCf62wqaDDCfR27uFQY+rYnm5Oknw1gCEizeUXcmhPyf+riWUE2ROqLOCnlx0lqbLKCYHN5QotVLpr/DF8oL00I8bGHoWbbyBBxSKot7pRsJPb/2hVpbsCYmepRsHY2gzp/fpG8EcRCmakf+tvBmAQ9k7hNgYYP1rK1GEso1gMGzHhmEn9xyNmJg8qdd1RKUoBvryQ+TvZBvCaGXHjauhBdawUvzvEYYmuDfTXToV6h6tG6pU+ErcB+kQrTEdBfs4O6+kh2Fy495jFnutV+sD0okQTqV3S8czeVwegdau3fwIDAQAB";
     private static final String[] GOOGLE_CATALOG = {"donation.1", "donation.2", "donation.3", "donation.4", "donation.5", "donation.10"};
@@ -197,6 +199,11 @@ public class MainActivity extends BaseActivity
                 fab.hide();
                 getSupportActionBar().setTitle("Donate");
                 break;
+            case FRAGMENT_BACKUP:
+                newFragment = BackupRestoreFragment.newInstance();
+                fab.hide();
+                getSupportActionBar().setTitle("Backup and Restore");
+                break;
             case FRAGMENT_ABOUT:
                 newFragment = new LibsBuilder()
                         .withAboutAppName("Flight Duty Tracker")
@@ -267,6 +274,12 @@ public class MainActivity extends BaseActivity
                 CURRENT_FRAGMENT_TAG = FRAGMENT_DONATE;
                 fab.hide();
                 getSupportActionBar().setTitle("Donate");
+                break;
+            case R.id.nav_backup:
+                newFragment = BackupRestoreFragment.newInstance();
+                CURRENT_FRAGMENT_TAG = FRAGMENT_BACKUP;
+                fab.hide();
+                getSupportActionBar().setTitle("Backup and Restore");
                 break;
             case R.id.nav_about:
                 newFragment = new LibsBuilder()

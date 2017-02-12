@@ -35,13 +35,13 @@ public class BackupPresenter implements IBackupPresenter {
 
     BackupRestoreBaseFragment view;
 
-    SharedPreferences prefs = view.getContext().getApplicationContext().getSharedPreferences("prefs", 0);
+    SharedPreferences prefs;
     File destFile;
 
     public BackupPresenter(BackupRestoreBaseFragment view) {
-
         this.view = view;
         repository = new FlightRepository();
+        prefs = view.getContext().getApplicationContext().getSharedPreferences("prefs", 0);
     }
 
     @Override
