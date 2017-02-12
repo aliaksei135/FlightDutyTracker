@@ -11,9 +11,14 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +27,6 @@ import android.widget.TextView;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.BackupPresenter;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
-import com.github.developerpaul123.filepickerlibrary.FilePicker;
-import com.github.developerpaul123.filepickerlibrary.FilePickerBuilder;
-import com.github.developerpaul123.filepickerlibrary.enums.Request;
-import com.github.developerpaul123.filepickerlibrary.enums.Scope;
 
 import java.io.File;
 
@@ -33,12 +34,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import ir.sohreco.androidfilechooser.ExternalStorageNotAvailableException;
+import ir.sohreco.androidfilechooser.FileChooserDialog;
 
-import static android.app.Activity.RESULT_OK;
+public class BackupFragment extends BackupRestoreBaseFragment implements FileChooserDialog.ChooserListener {
 
-public class BackupFragment extends BackupRestoreBaseFragment {
-
-    private static final int REQUEST_DIR = 5402;
+    private static final int PERMISSION_REQUEST_CODE = 4;
     @BindView(R.id.backupDateTextView)
     TextView backupDate;
 
@@ -60,6 +61,7 @@ public class BackupFragment extends BackupRestoreBaseFragment {
         unbinder = ButterKnife.bind(this, view);
 
         presenter = new BackupPresenter(this);
+        presenter.subscribeAllCallbacks();
 
         backupDate.setText("Last Backup: " + presenter.getLatestBackupDate());
 
@@ -68,41 +70,48 @@ public class BackupFragment extends BackupRestoreBaseFragment {
 
     @OnClick(R.id.backupButton)
     public void doBackup() {
-        new FilePickerBuilder(getContext())
-                .withRequest(Request.FILE)
-                .withScope(Scope.ALL)
-                .useMaterialActivity(true)
-                .launch(REQUEST_DIR);
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        } else {
+            FileChooserDialog.Builder builder = new FileChooserDialog.Builder(FileChooserDialog.ChooserType.DIRECTORY_CHOOSER, this)
+                    .setTitle("Select a backup directory:")
+                    .setInitialDirectory(Environment.getExternalStorageDirectory())
+                    .setSelectDirectoryButtonText("Select..");
+
+            try {
+                builder.build().show(getChildFragmentManager(), null);
+            } catch (ExternalStorageNotAvailableException e) {
+                e.printStackTrace();
+                showError("Couldn't access storage. Try again");
+            }
+        }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != RESULT_OK || data == null) {
-            showError("Couldn't backup flights. Try again");
-        }
-
-        if (requestCode == REQUEST_DIR) {
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Backing up...");
-            progressDialog.show();
-            File destFile = new File(data.getStringExtra(FilePicker.FILE_EXTRA_DATA_PATH) + "/flights_backup.json");
-            presenter.backupAllFlights(destFile);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                doBackup();
+            }
         }
     }
 
     @Override
     public void showSuccess(String message) {
         super.showSuccess(message);
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void showError(String message) {
         super.showError(message);
-        progressDialog.dismiss();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -119,5 +128,15 @@ public class BackupFragment extends BackupRestoreBaseFragment {
     @Override
     public void onFABClicked() {
         //No FAB
+    }
+
+    @Override
+    public void onSelect(String path) {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Backing up...");
+        progressDialog.show();
+        File destFile = new File(path + "/flights_backup.json");
+        presenter.backupAllFlights(destFile);
     }
 }

@@ -74,7 +74,7 @@ dependencies {
 
     compile 'io.realm:android-adapters:1.4.0'
     compile 'joda-time:joda-time:2.9.7'
-    compile 'com.github.alirezaaa:FilePickerLibrary:3.5.1'
+    compile 'ir.sohreco.androidfilechooser:android-file-chooser:1.1.0'
 
     //Donations
     compile 'org.sufficientlysecure:donations:2.5'

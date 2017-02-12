@@ -11,9 +11,13 @@
 package com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +26,6 @@ import android.widget.TextView;
 import com.aliakseipilko.flightdutytracker.R;
 import com.aliakseipilko.flightdutytracker.presenter.impl.BackupPresenter;
 import com.aliakseipilko.flightdutytracker.view.fragment.backupRestoreFragments.base.BackupRestoreBaseFragment;
-import com.github.developerpaul123.filepickerlibrary.FilePicker;
-import com.github.developerpaul123.filepickerlibrary.FilePickerBuilder;
-import com.github.developerpaul123.filepickerlibrary.enums.Request;
-import com.github.developerpaul123.filepickerlibrary.enums.Scope;
 
 import java.io.File;
 
@@ -33,13 +33,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import ir.sohreco.androidfilechooser.ExternalStorageNotAvailableException;
+import ir.sohreco.androidfilechooser.FileChooserDialog;
 
-import static android.app.Activity.RESULT_OK;
+public class RestoreFragment extends BackupRestoreBaseFragment implements FileChooserDialog.ChooserListener {
 
-public class RestoreFragment extends BackupRestoreBaseFragment {
-
-    private static final int REQUEST_FILE = 5401;
-
+    private static final int PERMISSION_REQUEST_CODE = 5;
     @BindView(R.id.restoreDateTextView)
     TextView restoreDate;
     ProgressDialog progressDialog;
@@ -60,6 +59,7 @@ public class RestoreFragment extends BackupRestoreBaseFragment {
         unbinder = ButterKnife.bind(this, view);
 
         presenter = new BackupPresenter(this);
+        presenter.subscribeAllCallbacks();
 
         restoreDate.setText("Latest Backup: " + presenter.getLatestBackupDate());
 
@@ -74,28 +74,20 @@ public class RestoreFragment extends BackupRestoreBaseFragment {
 
     @OnClick(R.id.restoreButton)
     public void doRestore() {
-        new FilePickerBuilder(getContext())
-                .withRequest(Request.FILE)
-                .withScope(Scope.ALL)
-                .useMaterialActivity(true)
-                .launch(REQUEST_FILE);
-    }
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        } else {
+            FileChooserDialog.Builder builder = new FileChooserDialog.Builder(FileChooserDialog.ChooserType.FILE_CHOOSER, this)
+                    .setTitle("Select restore file:")
+                    .setInitialDirectory(Environment.getExternalStorageDirectory());
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != RESULT_OK || data == null) {
-            showError("Couldn't restore flights. Try again");
-        }
-
-        if (requestCode == REQUEST_FILE) {
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Restoring...");
-            progressDialog.show();
-            File srcFile = new File(data.getStringExtra(FilePicker.FILE_EXTRA_DATA_PATH));
-            presenter.restoreFlights(srcFile);
+            try {
+                builder.build().show(getChildFragmentManager(), null);
+            } catch (ExternalStorageNotAvailableException e) {
+                e.printStackTrace();
+                showError("Couldn't access storage. Try again");
+            }
         }
     }
 
@@ -119,5 +111,10 @@ public class RestoreFragment extends BackupRestoreBaseFragment {
     @Override
     public void onFABClicked() {
         //No FAB
+    }
+
+    @Override
+    public void onSelect(String path) {
+        presenter.restoreFlights(new File(path));
     }
 }
